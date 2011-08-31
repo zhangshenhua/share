@@ -1,7 +1,7 @@
 #include "hcheckbox.h"
 #include "hwindow.h"
 #include "vmlog.h"
-
+#include "new.h"
 void app_enter()
 {
 #if(0)
@@ -10,8 +10,11 @@ void app_enter()
 	p_plane->p_plane_ops->add_widget(p_plane, p_box);
 	window->validate();
 #else
-	;
-
-
+	
+	void* p;
+	int i;
+	
+		//VM_NEW(p,HCheckBox);
+	do{1;}while(0),1;
 #endif
 }

@@ -1,7 +1,7 @@
 /*---------------------------------
 * FILE Name: new.c
 *
-* Description:
+* Description: malloc with check
 *
 * COPYRIGHT
 *
@@ -10,3 +10,6 @@
 * Modified by zsh on $(date)
 *---------------------------------------------------------------------*/
 #include "new.h"
+#include <vmsys.h>
+
+

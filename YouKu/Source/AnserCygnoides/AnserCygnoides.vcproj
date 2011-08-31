@@ -237,6 +237,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\new.c"
+				>
+			</File>
+			<File
 				RelativePath=".\user.c"
 				>
 			</File>
@@ -407,6 +411,10 @@
 			</File>
 			<File
 				RelativePath=".\mainpage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\new.h"
 				>
 			</File>
 		</Filter>
