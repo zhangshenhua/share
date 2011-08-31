@@ -50,7 +50,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\include;W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer"
+				AdditionalIncludeDirectories=".\include;SolutionDir;.\..\WindowLayer;.\..\WidgetLayer;.\..\PageLayer;.\..\Common"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;_CONSOLE;_MINIGUI_LIB_;_USE_MINIGUIENTRY;_NOUNIX_;_FOR_WNC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -228,64 +228,179 @@
 				RelativePath="AnserCygnoides.def"
 				>
 			</File>
+			<File
+				RelativePath=".\business.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c"
+				>
+			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
+			Name="Common"
 			>
 			<File
-				RelativePath=".\connect_page.h"
+				RelativePath="..\Common\herrorcode.c"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\herrorcode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\hlist.c"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\hlist.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+			>
+		</Filter>
+		<Filter
+			Name="PageLayer"
+			>
+			<File
+				RelativePath="..\PageLayer\page.c"
+				>
+			</File>
+			<File
+				RelativePath="..\PageLayer\page.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="WidgetLayer"
+			>
+			<File
+				RelativePath="..\WidgetLayer\hcheckbox.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hcheckbox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hcontainer.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hcontainer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\himage.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\himage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hlabel.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hlabel.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hlookandfeel.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hlookandfeel.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hplane.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hplane.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hpopupmenu.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hpopupmenu.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hpushbutton.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hpushbutton.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hstatusbar.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hstatusbar.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\htextarea.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\htextarea.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\htextinput.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\htextinput.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hwidget.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\hwidget.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="WindowLayer"
+			>
+			<File
+				RelativePath="..\WindowLayer\hwindow.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WindowLayer\hwindow.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Include Files"
+			>
+			<File
+				RelativePath=".\connectpage.h"
 				>
 			</File>
 			<File
 				RelativePath=".\defines.h"
 				>
 			</File>
-			<Filter
-				Name="appframework"
+			<File
+				RelativePath=".\mainpage.h"
 				>
-				<File
-					RelativePath="AnserCygnoides.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\hcheckbox.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\himage.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\hlabel.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\hlookandfeel.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\hpushbutton.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\htextarea.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\htextinput.h"
-					>
-				</File>
-				<File
-					RelativePath="W:\AixGalericulata\KaiXin\AppFramework\Source\WidgetLayer\hwidget.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-			>
+			</File>
 		</Filter>
 		<File
 			RelativePath="ReadMe.txt"

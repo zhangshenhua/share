@@ -4,5 +4,6 @@
 typedef char * cstr;
 #define classdef(typename) typedef struct typename typename; \
 						   struct typename
-
+#define private
+#define public
 #endif
