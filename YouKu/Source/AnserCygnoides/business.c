@@ -12,7 +12,7 @@
 #if(0)
 #include "MainPage.h"
 #include "connectpage.h"
-
+#include "business.h"
 
 ConnectPage* p_connectpage;
 PromptPage*  p_promptpage;

@@ -41,7 +41,9 @@ SOURCE_FILES= \
 
 	./business.c \
 
-	../../../../AixGalericulata/KaiXin/AppFramework/Source/AppFramework/user.c
+	./mainpage.c \
+
+	./user.c
 
 COMMON= \
 

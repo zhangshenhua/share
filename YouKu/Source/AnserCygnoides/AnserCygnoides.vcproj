@@ -394,6 +394,10 @@
 			Name="Include Files"
 			>
 			<File
+				RelativePath=".\business.h"
+				>
+			</File>
+			<File
 				RelativePath=".\connectpage.h"
 				>
 			</File>

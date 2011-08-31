@@ -5,35 +5,30 @@ w:\AnserCygnoides\YouKu\Source\AnserCygnoides\AnserCygnoides.c
 w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c
 "W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\PageLayer\page.h", line 16: Warning: C2215W: Deprecated declaration page_switch_controller_new() - give arg types
 "W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WidgetLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WidgetLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
+"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WidgetLayer\hcontainer.h", line 21: Warning: C2215W: Deprecated declaration hcontainer_new() - give arg types
+"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WidgetLayer\hplane.h", line 18: Warning: C2215W: Deprecated declaration hplane_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\AnserCygnoides\MainPage.h", line 27: Warning: C2215W: Deprecated declaration MainPage_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\AnserCygnoides\MainPage.h", line 28: Warning: C2215W: Deprecated declaration MainPage_delete() - give arg types
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\connectpage.h", line 32: Warning: C2215W: Deprecated declaration ConnectPage_new() - give arg types
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\connectpage.h", line 33: Warning: C2215W: Deprecated declaration ConnectPage_delete() - give arg types
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 18: Error: C2225W: declaration lacks type/storage-class (assuming 'int'): 'PromptPage'
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 18: Error: C2285E: expected ';' or ',' - inserted ';' before '*'
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 18: Error: C2225W: declaration lacks type/storage-class (assuming 'int'): 'p_promptpage'
-"w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 28: Warning: C2207W: inventing 'extern int MainPage_new();'
-"w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 28: Error: C3029E: '=': implicit cast of non-0 int to pointer
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 32: Warning: C2207W: inventing 'extern int PromptPage_new();'
 "w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c", line 32: Error: C3029E: '=': implicit cast of non-0 int to pointer
-w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c: 6 warnings, 5 errors, 0 serious errors
+w:\AnserCygnoides\YouKu\Source\AnserCygnoides\business.c: 11 warnings, 4 errors, 0 serious errors
 
-w:\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WindowLayer\..\WidgetLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WindowLayer\..\WidgetLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WindowLayer\..\WidgetLayer\hcontainer.h", line 21: Warning: C2215W: Deprecated declaration hcontainer_new() - give arg types
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WindowLayer\..\WidgetLayer\hplane.h", line 18: Warning: C2215W: Deprecated declaration hplane_new() - give arg types
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WindowLayer\..\PageLayer\page.h", line 16: Warning: C2215W: Deprecated declaration page_switch_controller_new() - give arg types
-"W:\AnserCygnoides\YouKu\Source\AnserCygnoides\..\WindowLayer\hwindow.h", line 20: Warning: C2215W: Deprecated declaration hwindow_init() - give arg types
-"w:\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c", line 9: Error: C3028E: <argument 2 to function call>: implicit cast of pointer to non-equal pointer
-w:\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c: 7 warnings, 1 error, 0 serious errors
-
+w:\AnserCygnoides\YouKu\Source\AnserCygnoides\mainpage.c
+w:\AnserCygnoides\YouKu\Source\AnserCygnoides\user.c
 w:\AnserCygnoides\YouKu\Source\Common\herrorcode.c
 w:\AnserCygnoides\YouKu\Source\Common\hlist.c
 w:\AnserCygnoides\YouKu\Source\PageLayer\page.c
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcheckbox.c
 "w:\AnserCygnoides\YouKu\Source\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcheckbox.c", line 279: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcheckbox.c", line 345: Warning: C2871W: static 'widget_destroy' declared but not used
+"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcheckbox.c", line 280: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcheckbox.c", line 346: Warning: C2871W: static 'widget_destroy' declared but not used
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcheckbox.c: 2 warnings, 1 error, 0 serious errors
 
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcontainer.c
@@ -64,19 +59,6 @@ w:\AnserCygnoides\YouKu\Source\WidgetLayer\hlookandfeel.c
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hlookandfeel.c: 7 warnings, 5 errors, 0 serious errors
 
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.c
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hcontainer.h", line 21: Warning: C2215W: Deprecated declaration hcontainer_new() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.h", line 18: Warning: C2215W: Deprecated declaration hplane_new() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\..\WindowLayer\..\PageLayer\page.h", line 16: Warning: C2215W: Deprecated declaration page_switch_controller_new() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\..\WindowLayer\hwindow.h", line 20: Warning: C2215W: Deprecated declaration hwindow_init() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.c", line 22: Warning: C2215W: Deprecated declaration create_hcontainer_ops() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.c", line 23: Warning: C2215W: Deprecated declaration create_hwidget_ops() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.c", line 24: Warning: C2215W: Deprecated declaration create_plane_ops() - give arg types
-"w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.c", line 48: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
-w:\AnserCygnoides\YouKu\Source\WidgetLayer\hplane.c: 10 warnings, 1 error, 0 serious errors
-
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hpopupmenu.c
 w:\AnserCygnoides\YouKu\Source\WidgetLayer\hpushbutton.c
 "w:\AnserCygnoides\YouKu\Source\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
