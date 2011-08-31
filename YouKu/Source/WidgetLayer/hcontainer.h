@@ -110,11 +110,14 @@ struct _HContainerOperation {
 	* Para(in) s_dy : vertical scroll value
 	************************************************************************/
 	void (*scroll)(HContainer *p_container, short s_dx, short s_dy);
+<<<<<<< HEAD
 
 	/************************************************************************
 	* whether the container can be scroll, return yes(1), or no(0)
 	************************************************************************/
 	int (*can_scroll)(HContainer *p_container);
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 };
 
 

@@ -72,9 +72,12 @@ struct _HWindow {
 	* validate the window's all planes
 	************************************************************************/
 	void (*validate)();
+<<<<<<< HEAD
 
 	/*repaint all planes*/
 	void (*repaint)();
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 };
 
 

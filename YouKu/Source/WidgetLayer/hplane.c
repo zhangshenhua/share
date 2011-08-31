@@ -45,7 +45,11 @@ HPlane * hplane_new()
 	((HWidget *)ph)->p_widget_ops->set_max_height((HWidget *)ph, vm_graphic_get_screen_height());
 	// new ph->p_content
 	ph->p_content = hcontainer_new();
+<<<<<<< HEAD
 	((HWidget *)ph->p_content)->p_parent = (HContainer *)ph;
+=======
+	((HWidget *)ph->p_content)->p_parent = ph;
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 	hlist_append(((HContainer *)ph)->p_children, ph->p_content, NULL);
 	((HWidget *)ph->p_content)->p_widget_ops->set_max_width((HWidget *)ph, vm_graphic_get_screen_width());
 	((HWidget *)ph->p_content)->p_widget_ops->set_max_height((HWidget *)ph, vm_graphic_get_screen_height());
@@ -151,6 +155,7 @@ static void set_enable_transparent_bg(HPlane *p_plane, int i_enable)
 	p_plane->i_enable_transparent_bg = i_enable;
 }
 
+<<<<<<< HEAD
 /************************************************************************
 * 
 ************************************************************************/
@@ -278,6 +283,8 @@ static void hanle_pen_move(HWidget *p_widget, short s_x, short s_y)
 	}
 }
 
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 static void create_hwidget_ops(HWidgetOperation *p_widget_ops_prototype)
 {
 	gp_hwidget_ops = vm_malloc(sizeof(HWidgetOperation));
@@ -288,9 +295,12 @@ static void create_hwidget_ops(HWidgetOperation *p_widget_ops_prototype)
 	gp_hwidget_ops->get_class = get_class;
 	gp_hwidget_ops->destroy = hplane_delete;
 	gp_hwidget_ops->validate = plane_validate;
+<<<<<<< HEAD
 	gp_hwidget_ops->pen_press = hanle_pen_press;
 	gp_hwidget_ops->pen_move = hanle_pen_move;
 	gp_hwidget_ops->pen_release = hanle_pen_release;
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 }
 
 static void create_hcontainer_ops(HContainerOperation *p_container_ops_prototype)

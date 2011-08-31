@@ -202,10 +202,17 @@ int hlist_remove(hlist_node_t *p_hlist, void *pv_data)
 
 			//TODO: at here we can't do this
 
+<<<<<<< HEAD
 			if (p_index->pv_data)
 				vm_free(p_index->pv_data);
 
 			vm_free(p_index);
+=======
+//			if (p_index->pv_data)
+//				vm_free(p_index->pv_data);
+
+//			vm_free(p_index);
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 
 			return HERRORCODE_SUCCESS;
 		}

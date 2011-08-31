@@ -7,6 +7,7 @@
 #ifndef _PAGE_H_
 #define _PAGE_H_
 
+<<<<<<< HEAD
 typedef struct _Page Page;
 typedef struct _PageModel PageModel;
 typedef struct _PageView PageView;
@@ -50,6 +51,35 @@ struct _PageView {
 
 	/*destroy the page view, free its memory*/
 	void (*destroy)(PageView *p_this);
+=======
+#include "../Common/herrorcode.h"
+#include "../Common/hlist.h"
+
+typedef struct _Page Page;
+typedef struct _PageSwitchController PageSwitchController;
+
+/*new a PageSwitchController instance*/
+PageSwitchController * page_switch_controller_new();
+
+struct _Page {
+	/*user defined a unique id*/
+	int i_page_id;
+
+	/*the page type. user should define it*/
+	int i_page_type;
+
+	/* Init page view, create widgets after page creating or resume complete */
+	void init(Page *p_page);
+
+	/*show this page */
+	void (*fire_visible)(Page *p_this);
+
+	/* hide this page */
+	void (*fire_hide)(Page *);
+
+	/*destroy the page , free its memory*/
+	void (*destroy)(Page *p_this);
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 };
 
 struct _PageSwitchController {
@@ -57,10 +87,17 @@ struct _PageSwitchController {
 	/************************  private member *****************************/
 
 	/*a root page , does not belong to a specific page*/
+<<<<<<< HEAD
 	Page root_page;
 
 	/*current page*/
 	Page *p_cur_page;
+=======
+	hlist_node_t root_page_node;
+
+	/*current page*/
+	hlist_node_t *p_cur_page_node;
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 
 	/************************  public member *****************************/
 
@@ -76,15 +113,24 @@ struct _PageSwitchController {
 	/*find a page by  page id*/
 	Page * (*find_page_by_page_id)(PageSwitchController *p_this, int i_page_id);
 
+<<<<<<< HEAD
 	/*through p_model to create a page view*/
 	PageView * (*create_page_view)(PageSwitchController *p_this, PageModel *p_model);
 
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 	/*show the current page*/
 	void (*show_cur_page)(PageSwitchController *p_this);
 
 	/*set current page*/
 	void (*set_cur_page)(PageSwitchController *p_this, Page *p_page);
 
+<<<<<<< HEAD
+=======
+	/* get current page */
+	Page * (*get_cur_page)(PageSwitchController *p_this);
+
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 	/*show back page*/
 	void (*go_back)(PageSwitchController *p_this);
 	

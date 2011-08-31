@@ -133,11 +133,14 @@ static void paint()
 	vm_graphic_flush_layer(p_handles, i_handle_idx);
 }
 
+<<<<<<< HEAD
 static void repaint()
 {
 	paint();
 }
 
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 static HPlane * get_default_plane()
 {
 	HPlane *p_plane;
@@ -212,5 +215,8 @@ void hwindow_init()
 	window->get_page_switch_contrller = get_page_switch_contrller;
 	window->update_new_page = update_new_page;
 	window->validate = validate;
+<<<<<<< HEAD
 	window->repaint = repaint;
+=======
+>>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 }
