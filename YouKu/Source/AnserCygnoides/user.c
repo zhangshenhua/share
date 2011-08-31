@@ -11,10 +11,6 @@ void app_enter()
 	window->validate();
 #else
 	
-	void* p;
-	int i;
-	
-		//VM_NEW(p,HCheckBox);
-	do{1;}while(0),1;
+
 #endif
 }

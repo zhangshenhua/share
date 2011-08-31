@@ -237,15 +237,15 @@
 				>
 			</File>
 			<File
-<<<<<<< HEAD
 				RelativePath=".\new.c"
 				>
 			</File>
 			<File
+				RelativePath=".\Prompt.c"
+				>
+			</File>
+			<File
 				RelativePath=".\user.c"
-=======
-				RelativePath="..\..\..\..\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c"
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 				>
 			</File>
 		</Filter>
@@ -402,13 +402,10 @@
 			Name="Include Files"
 			>
 			<File
-<<<<<<< HEAD
 				RelativePath=".\business.h"
 				>
 			</File>
 			<File
-=======
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 				RelativePath=".\connectpage.h"
 				>
 			</File>
@@ -420,13 +417,14 @@
 				RelativePath=".\mainpage.h"
 				>
 			</File>
-<<<<<<< HEAD
 			<File
 				RelativePath=".\new.h"
 				>
 			</File>
-=======
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
+			<File
+				RelativePath=".\Prompt.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="ReadMe.txt"

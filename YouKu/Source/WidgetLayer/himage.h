@@ -22,7 +22,9 @@ struct _HImage_
 {
 	HImageOperation *p_oper;	// Its operation pointer
 	VMINT	i_canvas;			// canvas
-	HPoint	st_pos;				// Image's coordinate relative to its container
+	HRect	st_pos_size;		// Image's relative position & the restricting size
+	short	s_width;
+	short	s_height;
 };
 
 
@@ -92,6 +94,23 @@ struct _HImageOperation_
 	
 	/*	
 	Function Name:
+		set_size
+	Description: 
+		set the size of the image's painting area
+	Parameters:
+		(in) p_this	  : Pointer of HImage self	
+		(in) s_width  : the width;	If <= 0, the real width of the iamge will be set.
+		(in) s_height : the height; If <= 0, the real height of the iamge will be set.
+	Note:
+		If the given width or height value is less than the real size of image, then
+		the image will be cut;
+		If the given width or height value is larger than the real size of image, then
+		the iamge will be painted to its real size.
+		*/	
+	void (*set_size)(HImage *p_this, short s_width, short s_height);
+
+	/*	
+	Function Name:
 		get_position
 	Description: 
 		get the relative position of the image
@@ -103,6 +122,28 @@ struct _HImageOperation_
 
 	/*	
 	Function Name:
+	get_image_real_width
+	Description: 
+	get the real width of image
+	Parameters:
+	p_this : [IN] Pointer of HImage self	
+	Return:
+	the width	*/
+	short (*get_image_real_width)(HImage *p_this);
+
+	/*	
+	Function Name:
+	get_image_real_height
+	Description: 
+	get the real height of image
+	Parameters:
+	p_this : [IN] Pointer of HImage self	
+	Return:
+	the position	*/
+	short (*get_image_real_height)(HImage *p_this);
+
+	/*	
+	Function Name:
 		get_frame_num
 	Description: 
 		get the frame number of the image
@@ -111,14 +152,6 @@ struct _HImageOperation_
 	*/
 	int (*get_frame_num)(HImage *p_this);
 
-	/*	
-	Function Name:
-		clean
-	Description: 
-		Free the resource the image object used.
-	Parameters:
-		p_this: Pointer of HImage self	*/	
-	void (*clean)(HImage *p_this);
 };
 
 
@@ -131,10 +164,20 @@ struct _HImageOperation_
 	Note:
 		This is the first function you must call if you want to use a HImage object!
 */	
-extern void himage_init( HImage *p_img );
+/*extern void himage_init( HImage *p_img );*/
+extern HImage *himage_new();
+
+/*	
+Function Name:
+himage_delete
+Description: 
+Free the resource the image object used.
+Parameters:
+p_this: Pointer of HImage self	*/	
+extern void himage_delete(HImage *p_this);
 
 
-/*	A simple simple:
+/*	A simple example:
 
 	{
 		HImage img;

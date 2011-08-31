@@ -45,6 +45,15 @@ struct _HTextInputOperation {
 	 Para(in) i_input_method: Default input method of HTextInput
 	-----------------------------*/
 	void (*set_input_method)(HTextInput *p_textinput, int i_input_method);
+
+	/*-----------------------------
+	Function Name: set_is_password
+	Description: Set password flag of HTextInput
+	Para(in) p_htextinput: Pointer of HTextInput self
+	Para(in) i_password: password flag of HTextInput 
+			0 false;  1 true
+	-----------------------------*/
+	void (*set_is_password)(HTextInput *p_textinput, int i_password);
 };
 
 struct _HTextInput {
@@ -69,11 +78,9 @@ struct _HTextInput {
 /*-----------------------------
  Function Name: htextinput_new
  Description: Get a new HTextInput
- Para(in) i_is_password: Flag of password model
- Para(in) i_input_method: Default input method of HTextInput
  Return: Pointer of new HTextInput
 -----------------------------*/
-extern HTextInput * htextinput_new(int i_is_password, int i_input_method);
+extern HTextInput * htextinput_new();
 
 /*-----------------------------
  Function Name: htextinput_new

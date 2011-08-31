@@ -9,14 +9,12 @@
 *
 * Modified by zsh on $(date)
 *---------------------------------------------------------------------*/
-#if(0)
+#if(1)
 #include "MainPage.h"
 #include "connectpage.h"
-<<<<<<< HEAD
+#include "Prompt.h"
 #include "business.h"
-=======
 
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 
 ConnectPage* p_connectpage;
 PromptPage*  p_promptpage;

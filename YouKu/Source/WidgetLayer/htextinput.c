@@ -17,6 +17,8 @@
 #include "vmchset.h"
 #include "vmstdlib.h"
 
+#include "hlookandfeel.h"
+
 #define TEXT_MAX_SIZE 70
 
 static HTextInputOperation *p_textinput_ops;	/* Single instance of HTextInput Operations  */
@@ -60,8 +62,8 @@ static int get_len(HTextInput *p_textinput)
 	int i_len;
 	i_len = strlen(p_textinput->pc_text);
 
-	w_str = (VMWSTR)vm_malloc(i_len * sizeof(VMWCHAR));
-	vm_gb2312_to_ucs2(w_str, i_len * sizeof(VMWCHAR) , p_textinput->pc_text);
+	w_str = (VMWSTR)vm_malloc((i_len + 1) * sizeof(VMWCHAR));
+	vm_gb2312_to_ucs2(w_str, (i_len + 1)* sizeof(VMWCHAR) , p_textinput->pc_text);
 	i_len = vm_wstrlen(w_str);
 
 	vm_free(w_str);
@@ -75,6 +77,18 @@ static void set_input_method(HTextInput *p_textinput, int i_input_method)
 	p_textinput->c_input_method = i_input_method;
 }
 
+/* Set password flag of HTextInput */
+static void set_is_password(HTextInput *p_textinput, int i_password)
+{
+	p_textinput->c_is_password = i_password;
+
+	if (1 == i_password)
+		p_textinput->c_input_method |= VM_INPUT_METHOD_PASSWORD;
+
+	if (0 == i_password) 
+		p_textinput->c_input_method &= (~VM_INPUT_METHOD_PASSWORD);
+}
+
 /* Internal functions */
 /* Input method callback function */
 static void input_method_callback(VMINT state, VMWSTR str)
@@ -85,8 +99,8 @@ static void input_method_callback(VMINT state, VMWSTR str)
 	if (VM_INPUT_OK != state)
 		return;
 
-	p_buf = (char *)vm_malloc(vm_wstrlen(str) * sizeof(VMWCHAR));
-	vm_ucs2_to_gb2312(p_buf, vm_wstrlen(str) * sizeof(VMWCHAR), str);
+	p_buf = (char *)vm_malloc((vm_wstrlen(str) + 1) * sizeof(VMWCHAR));
+	vm_ucs2_to_gb2312(p_buf, (vm_wstrlen(str) + 1) * sizeof(VMWCHAR), str);
 
 	i_len = strlen(p_buf);
 	p_textinput_buf->pc_text = (char *)vm_malloc(i_len + 1);
@@ -100,8 +114,8 @@ static void input_method_callback(VMINT state, VMWSTR str)
 static void call_input_method(HTextInput *p_textinput)
 {
 	VMWSTR str;
-	str = (VMWSTR)vm_malloc(strlen(p_textinput->pc_text) * sizeof(VMWCHAR));
-	vm_gb2312_to_ucs2(str, strlen(p_textinput->pc_text) * sizeof(VMWCHAR), p_textinput->pc_text);
+	str = (VMWSTR)vm_malloc((strlen(p_textinput->pc_text) + 1) * sizeof(VMWCHAR));
+	vm_gb2312_to_ucs2(str, (strlen(p_textinput->pc_text) + 1) * sizeof(VMWCHAR), p_textinput->pc_text);
 
 	p_textinput_buf = p_textinput;
 	vm_input_text3(str, TEXT_MAX_SIZE, p_textinput->c_input_method, input_method_callback);
@@ -111,7 +125,8 @@ static void call_input_method(HTextInput *p_textinput)
 
 	vm_free(str);
 
-	p_textinput->base.action_performed((HWidget *)p_textinput, NULL);
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, NULL);
 }
 
 /* Base class Operations */
@@ -148,6 +163,18 @@ static void pen_move(HWidget *p_widget, short s_x, short s_y)
 	/*****************************************
 	Nothing to do for now
 	******************************************/
+}
+
+/* pen move enter callback*/
+static void pen_enter(HWidget *p_widget, short s_x, short s_y)
+{
+
+}
+
+/* pen move leave callback*/
+static void pen_leave(HWidget *p_widget, short s_x, short s_y)
+{
+
 }
 
 /* Keyboard press event callback */
@@ -219,45 +246,7 @@ static short get_prefered_height(HWidget *p_widget)
 /* Paint the HCheckBox */
 static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)
 {
-	VMUINT8 *buf;
-	HTextInput *p_textinput;
-	VMUINT16 us_line_color;
-
-	VMINT i_gb2312_string_len;
-	VMWCHAR *p_ucs2_string = NULL;
-	char *p_passward_text;
-
-	p_textinput = (HTextInput *)p_widget;
-	buf = vm_graphic_get_layer_buffer(i_handle);
-
-	/* draw rect */
-	if(p_widget->p_widget_ops->has_focus(p_widget))
-		us_line_color = VM_COLOR_RED;
-	else
-		us_line_color = VM_COLOR_BLACK;
-	if (p_widget->p_widget_ops->is_enable_bgcolor(p_widget))
-		vm_graphic_fill_rect(buf, s_screen_x, s_screen_y, 
-			p_widget->s_width, p_widget->s_height, us_line_color,p_widget->i_bgcolor);
-	else
-		vm_graphic_rect(buf, s_screen_x, s_screen_y,
-			p_widget->s_width, p_widget->s_height, us_line_color);
-
-	/* draw text*/
-	i_gb2312_string_len = strlen(p_textinput->pc_text);
-	p_ucs2_string = vm_malloc( ((i_gb2312_string_len+1)/2+1) * sizeof(VMWCHAR) );
-	if (p_textinput->c_is_password){
-		p_passward_text = vm_malloc((i_gb2312_string_len+1) * sizeof(char));
-		memset(p_passward_text, 0, i_gb2312_string_len+1);
-		memset(p_passward_text, '*', i_gb2312_string_len);
-		vm_gb2312_to_ucs2(p_ucs2_string, i_gb2312_string_len, p_passward_text);
-		vm_free(p_passward_text);
-	}
-	else
-		vm_gb2312_to_ucs2(p_ucs2_string, i_gb2312_string_len, p_textinput->pc_text);
-
-	vm_graphic_textout(buf, s_screen_x+p_widget->uc_padding_left, s_screen_y+p_widget->uc_padding_top, 
-		p_ucs2_string, p_widget->s_width-p_widget->uc_padding_right-p_widget->uc_padding_left,  p_widget->i_color);
-	vm_free(p_ucs2_string);
+	look_paint_textinput((HTextInput *)p_widget, i_handle, s_screen_x, s_screen_y);
 }
 
 /* Destroy a HWidget */
@@ -297,6 +286,7 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 		p_textinput_ops->set_text = set_text;
 		p_textinput_ops->set_input_method = set_input_method;
 		p_textinput_ops->get_len = get_len;
+		p_textinput_ops->set_is_password = set_is_password;
 	}
 
 	if (!p_base_ops) {
@@ -306,6 +296,8 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 		p_base_ops->pen_press = pen_press;
 		p_base_ops->pen_release = pen_release;
 		p_base_ops->pen_move = pen_move;
+		p_base_ops->pen_enter = pen_enter;
+		p_base_ops->pen_leave = pen_leave;
 		p_base_ops->key_press = key_press;
 		p_base_ops->is_container = is_container;
 		p_base_ops->is_plane = is_plane;
@@ -316,19 +308,9 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 		p_base_ops->destroy = hwidget_delete;
 	}
 
-	/* Init private member */
-	if (i_is_password > 0)
-		p_textinput->c_is_password = i_is_password;
-	else 
-		p_textinput->c_is_password = 0;
+	p_textinput->c_is_password = 0;
 
-	if (i_input_method < 0)
-		p_textinput->c_input_method = VM_INPUT_METHOD_TEXT;
-	else
-		p_textinput->c_input_method = i_input_method;
-
-	if (p_textinput->c_is_password)
-		p_textinput->c_input_method |= VM_INPUT_METHOD_PASSWORD;
+	p_textinput->c_input_method = VM_INPUT_METHOD_TEXT;
 
 	p_textinput->p_textinput_ops = p_textinput_ops;
 	p_textinput->base.p_widget_ops = p_base_ops;
@@ -338,7 +320,7 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 	p_textinput->base.uc_padding_right = 8;
 	p_textinput->base.uc_padding_top = 8;
 	p_textinput->base.uc_padding_bottom = 8;
-	p_textinput->base.c_font = VM_SMALL_FONT;
+	p_textinput->base.c_font = FONT_SMALL;
 
 	return p_textinput;
 }

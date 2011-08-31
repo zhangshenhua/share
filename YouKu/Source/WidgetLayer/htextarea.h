@@ -55,6 +55,14 @@ struct _HTextAreaOperation {
 	void (*set_inputmethod)(HTextArea *p_textarea, int i_method);
 
 	/*
+	Function Name: set_max_len
+	Description: Set max length of HTextArea's text.
+	Para(in) p_htextarea: Pointer of HTextArea self.
+	Para(in) i_method: Max length of HTextArea's text.
+	*/
+	void (*set_max_len)(HTextArea *p_textarea, int i_len);
+
+	/*
 	Function Name: set_line_num
 	Description: Set line number of HTextArea.
 	Para(in) p_htextarea: Pointer of HTextArea self.
@@ -114,17 +122,16 @@ struct _HTextArea {
 /*
  Function Name: heditor_new
  Description: Get a new HEditor
-
- Para(in) i_method: Default input method for MRE input method
+	i_method: Default input method for MRE input method
 	VM_INPUT_METHOD_TEXT,		 Input text and the default input method is PINYIN 
 	VM_INPUT_METHOD_NUMERIC,	 Input number and the default input method is phone number
 	VM_INPUT_METHOD_ALPHABETIC, Input English and the default input method is multitap abc
 	If i_method = -1, the default method is PINYIN (VM_INPUT_METHOD_TEXT) 
- Para(in) i_max_len: Set max length of HEditor's text (word)
+	i_max_len: Set max length of HEditor's text (word)
 	If i_max_len = -2, the default length is 140
  Return: Pointer of a new HEditor
 */
-extern HTextArea* htextarea_new(int i_input_method, int i_max_len);
+extern HTextArea* htextarea_new();
 
 /*
  Function Name: heditor_destroy

@@ -1,3 +1,4 @@
+#if(0)
 
 #include "../WidgetLayer/hpushbutton.h"
 #include "Prompt.h"
@@ -70,3 +71,5 @@ PromptPage* PromptPage_delete()
 {
 
 }
+
+#endif

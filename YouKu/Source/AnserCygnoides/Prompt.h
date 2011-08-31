@@ -1,6 +1,22 @@
+/*---------------------------------
+* FILE Name: new.h
+*
+* Description:
+*
+* COPYRIGHT
+*
+* Created on: $(date) Author: yan.guanglei
+*
+* Modified by yan.guanglei, zhang.shenhua on $(date)
+*---------------------------------------------------------------------*/
+#ifndef _PROMPT_H_
+#define _PROMPT_H_
+
+
 /***** Class Definition *********/
 #include "page.h"
 #include "hpushbutton.h"
+#include "hcontainer.h"
 
 #define Retry_Txt_Height ;
 #define Retry_Txt_Width  ;
@@ -24,3 +40,4 @@ typedef struct _Prompt_Page
 extern PromptPage* PromptPage_new();
 extern PromptPage* PromptPage_delete();
 
+#endif
