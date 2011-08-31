@@ -1,0 +1,14 @@
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\hcontainer.h", line 21: Warning: C2215W: Deprecated declaration hcontainer_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\hplane.h", line 18: Warning: C2215W: Deprecated declaration hplane_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\PageLayer\page.h", line 16: Warning: C2215W: Deprecated declaration page_switch_controller_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\hwindow.h", line 20: Warning: C2215W: Deprecated declaration hwindow_init() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\hpushbutton.h", line 78: Warning: C2215W: Deprecated declaration hpushbutton_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\..\WidgetLayer\hlabel.h", line 88: Warning: C2215W: Deprecated declaration hlabel_new() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\hwindow.c", line 23: Warning: C2215W: Deprecated declaration paint() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\hwindow.c", line 24: Warning: C2215W: Deprecated declaration get_default_plane() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\hwindow.c", line 27: Warning: C2215W: Deprecated declaration app_enter() - give arg types
+"w:\AnserCygnoides\YouKu\Source\WindowLayer\hwindow.c", line 76: Warning: C2809W: character sequence /* inside comment
+w:\AnserCygnoides\YouKu\Source\WindowLayer\hwindow.c: 13 warnings, 0 errors, 0 serious errors
