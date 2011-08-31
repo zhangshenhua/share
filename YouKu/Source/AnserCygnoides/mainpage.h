@@ -1,20 +1,31 @@
 /*---------------------------------
-* FILE Name:
+* FILE Name: mainpage.h
 *
 * Description:
 *
 * COPYRIGHT
 *
-* Created on: $(date) Author: Name
+* Created on: $(date) Author: zhang.shenhua
 *
-* Modified by name on $(date)
+* Modified by zsh on $(date)
 *---------------------------------------------------------------------*/
 #ifndef _MAINPAGE_H_
 #define _MAINPAGE_H_
 #include "defines.h"
-#
+#include "page.h"
+#include "hplane.h"
+
 classdef(MainPage) 
 {
-	int a;
+	Page base;
+	
+	HPlane* p_plane_boby;
+	HPlane* p_plane_buttongroup;       //area for recommend,search,.....
+	
 };
+
+extern MainPage* MainPage_new();
+extern void MainPage_delete();
+
+
 #endif

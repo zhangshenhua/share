@@ -233,6 +233,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\mainpage.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c"
 				>
 			</File>
