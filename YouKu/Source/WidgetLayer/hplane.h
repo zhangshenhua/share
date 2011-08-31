@@ -42,6 +42,9 @@ struct _HPlane {
 	/*enable/disable transparent the plane's background*/
 	int i_enable_transparent_bg;
 
+	/*the cur own focus widget*/
+	HWidget *p_own_focus_widget;
+
 	/********************** public member **************************/
 
 	/* plane operation */

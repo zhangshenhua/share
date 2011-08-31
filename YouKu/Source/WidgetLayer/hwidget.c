@@ -8,6 +8,7 @@
 #include "stdlib.h"
 #include "vmsys.h"
 #include "string.h"
+#include "vmgraph.h"
 
 #include "hwidget.h"
 #include "hcontainer.h"
@@ -325,9 +326,11 @@ static void repaint(HWidget *p_widget)
 	if (!i_bgcolor_enable) {
 		i_bgcolor = p_widget->p_widget_ops->get_default_bgcolor(p_widget);
 		//TODO: use i_bgcolor to fill a rect(p_widget->s_width,p_widget->s_height) at position p
+		vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handle), p.s_x, p.s_y, p_widget->s_width, p_widget->s_height, i_bgcolor, i_bgcolor);
 	}
 	p_widget->p_widget_ops->paint(p_widget, i_handle, p.s_x, p.s_y);
 	//TODO: flush the screen
+	vm_graphic_flush_layer(&i_handle, 1);
 }
 
 /*validate the widget preferred size, size , and max size*/
@@ -358,14 +361,16 @@ static void invalidate(HWidget *p_widget)
 static HPoint get_screen_point(HWidget *p_widget, short s_x, short s_y)
 {
 	HPoint point;
-	struct _HContainer *pc;
 	point.s_x = s_x + p_widget->s_top_x;
 	point.s_y = s_y + p_widget->s_top_y;
-	for (pc = p_widget->p_parent; pc && !((HWidget *)pc)->p_parent; pc = ((HWidget *)pc)->p_parent) {
-		point.s_x += ((HWidget *)pc)->s_top_x + pc->s_translate_x + ((HWidget *)pc)->uc_padding_left;
-		point.s_y += ((HWidget *)pc)->s_top_y + pc->s_translate_y + ((HWidget *)pc)->uc_padding_top;
+	if (p_widget->p_widget_ops->is_plane(p_widget)) {
+		return point;
 	}
-	if (((HWidget *)pc)->p_widget_ops->is_plane(((HWidget *)pc))) {
+	for (p_widget = (HWidget *)p_widget->p_parent; p_widget && p_widget->p_parent; p_widget = (HWidget *)p_widget->p_parent) {
+		point.s_x += p_widget->s_top_x + ((HContainer *)p_widget)->s_translate_x + p_widget->uc_padding_left;
+		point.s_y += p_widget->s_top_y + ((HContainer *)p_widget)->s_translate_y + p_widget->uc_padding_top;
+	}
+	if (p_widget->p_widget_ops->is_plane(p_widget)) {
 		return point;
 	}
 	//the p_widet is not in a HPlane
@@ -442,13 +447,27 @@ static int is_plane(HWidget *p_widget)
 	return 0;
 }
 
+static int can_travel(HWidget *p_widget, int keycode)
+{
+	return 0;
+}
+
+#if 0
+static void focus_changed(HWidget *p_widget, int i_gained_focus)
+{
+	p_widget->p_widget_ops->set_focus(p_widget, i_gained_focus);
+	p_widget->p_widget_ops->repaint(p_widget);
+}
+#endif
+
 /*get the widget root widget(its a HPlane), if the widget not in a plane, NULL will be returned*/
 static HPlane* get_root(HWidget *p_widget)
 {
-	HContainer *pc;
-	for (pc = p_widget->p_parent; pc && !((HWidget *)pc)->p_parent; pc = ((HWidget *)pc)->p_parent);
-	if (((HWidget *)pc)->p_widget_ops->is_plane((HWidget *)pc))
-		return (HPlane *)pc;
+	if (p_widget->p_widget_ops->is_plane(p_widget))
+		return (HPlane*)p_widget;
+	for (p_widget = (HWidget *)p_widget->p_parent; p_widget && p_widget->p_parent; p_widget = (HWidget *)p_widget->p_parent);
+	if (p_widget->p_widget_ops->is_plane(p_widget))
+		return (HPlane *)p_widget;
 	return NULL;
 }
 
@@ -529,6 +548,8 @@ static void create_widget_ops()
  	gp_widget_ops->key_press = key_press;
 	gp_widget_ops->is_container = is_container;
 	gp_widget_ops->is_plane = is_plane;
+	gp_widget_ops->can_travel = can_travel;
+//	gp_widget_ops->focus_changed = focus_changed;
 	gp_widget_ops->get_root = get_root;
 	gp_widget_ops->get_paint_handle = get_paint_handle;
 	gp_widget_ops->clone = clone;

@@ -237,7 +237,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\AixGalericulata\KaiXin\AppFramework\Source\AppFramework\user.c"
+				RelativePath=".\user.c"
 				>
 			</File>
 		</Filter>

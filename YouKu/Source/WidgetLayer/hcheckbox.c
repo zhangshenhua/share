@@ -147,13 +147,12 @@ static short get_prefered_width(HWidget *p_widget)
 	int i_len = 0;
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
 
+	if (p_checkbox->base.s_prefered_width)
+		return p_checkbox->base.s_prefered_width;
+
 	i_len = strlen(p_checkbox->pc_label);
 	w_str = (VMWSTR)vm_malloc((i_len + 1) * sizeof(VMWCHAR));
 	vm_gb2312_to_ucs2(w_str, (i_len + 1) * sizeof(VMWCHAR), p_checkbox->pc_label);
-	w_str[i_len + 1] = '\0';
-
-	if (p_checkbox->base.s_prefered_width)
-		return p_checkbox->base.s_prefered_width;
 	
 	p_checkbox->base.s_prefered_width = vm_graphic_get_string_width(w_str) + 
 		(p_checkbox->base.s_height - p_checkbox->base.uc_padding_top - p_checkbox->base.uc_padding_bottom)
@@ -223,7 +222,12 @@ static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_scr
 
 	if (p_checkbox->base.p_widget_ops->is_enable_bgcolor(p_widget))
 		vm_graphic_fill_roundrect(p_handle_buf, s_screen_x, s_screen_y, p_checkbox->base.s_width, p_checkbox->base.s_height, 
-			p_checkbox->base.uc_padding_top/2, p_checkbox->base.p_widget_ops->get_bgcolor(p_widget));
+		p_checkbox->base.uc_padding_top/2, p_checkbox->base.p_widget_ops->get_bgcolor(p_widget));
+/*
+	vm_graphic_set_clip(s_screen_x, s_screen_y, 
+		p_checkbox->base.s_width - p_checkbox->base.uc_padding_left - p_checkbox->base.uc_padding_right,
+		p_checkbox->base.s_height- p_checkbox->base.uc_padding_top - p_checkbox->base.uc_padding_bottom);
+*/
 
 	if (p_checkbox->base.p_widget_ops->has_focus(p_widget))
 		vm_graphic_rect(p_handle_buf, s_rect_x, s_rect_y, s_rect_width, s_rect_height, VM_COLOR_RED);
@@ -231,17 +235,14 @@ static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_scr
 		vm_graphic_rect(p_handle_buf, s_rect_x, s_rect_y, s_rect_width, s_rect_height, VM_COLOR_BLACK);
 
 
-	if (p_checkbox->p_checkbox_ops->get_check_state(p_checkbox))
-		vm_graphic_fill_rect(p_handle_buf, s_rect_x + 2, s_rect_y + 2, s_rect_width - 4, s_rect_height - 4 ,VM_COLOR_BLACK, VM_COLOR_BLACK);    /* Todo draw check */
-
-	vm_graphic_set_clip(s_text_x, s_text_y, 
-		p_checkbox->base.s_width - p_checkbox->base.uc_padding_left - p_checkbox->base.uc_padding_right,
-		p_checkbox->base.s_height- p_checkbox->base.uc_padding_top - p_checkbox->base.uc_padding_bottom);
+	if (p_checkbox->p_checkbox_ops->get_check_state(p_checkbox) == HCHECKBOX_SELECTED)
+		vm_graphic_fill_rect(p_handle_buf, s_rect_x + 2, s_rect_y + 2, s_rect_width - 4, s_rect_height - 4 ,VM_COLOR_BLACK, VM_COLOR_RED);    /* Todo draw check */
 
 	c_font = (p_checkbox->base.c_font & 7) >> 1;
 	vm_graphic_set_font(c_font);
-	s_rect_x += s_rect_width + 4;
-	s_rect_y += (p_checkbox->base.s_height - vm_graphic_get_character_height()) / 2;
+	s_text_x = s_rect_x + s_rect_width + 4;
+	s_text_y = s_rect_y + (s_rect_height - vm_graphic_get_character_height()) / 2;
+
 	vm_gb2312_to_ucs2(str, 70, p_checkbox->pc_label);
 	vm_graphic_textout(p_handle_buf, s_text_x, s_text_y, str, vm_wstrlen(str), p_checkbox->base.p_widget_ops->get_color(p_widget));
 

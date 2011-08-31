@@ -44,8 +44,7 @@ void hcontainer_init(HContainer *p_container)
 	p_container->p_container_ops = gp_container_ops;
 	//container enable drag
 	p_container->base.p_widget_ops->set_enable_drag(&p_container->base, 1);
-	//init the p_children
-	if (!p_container->p_children)
+	if (p_container->p_children == NULL)
 		p_container->p_children = hlist_new();
 }
 
@@ -53,7 +52,7 @@ void hcontainer_operation_init(HContainerOperation *p_container_ops)
 {
 	if (!gp_container_ops)
 		create_hcontainer_ops();
-	if (p_container_ops != p_container_ops)
+	if (p_container_ops != gp_container_ops)
 		memcpy(p_container_ops, gp_container_ops, sizeof(HContainerOperation));
 }
 
@@ -67,6 +66,7 @@ static void add_widget(HContainer *p_container, HWidget *p_widget)
 
 static void remove_widget(HContainer *p_container, HWidget *p_widget)
 {
+
 	hlist_remove(p_container->p_children, p_widget);
 }
 
@@ -111,8 +111,8 @@ static void calc_preffered_size(HContainer *pc)
 	short s_h = 0;
 	hlist_for_each(pn, pc->p_children) {
 		pw = (HWidget *)pn->pv_data;
-		s_w = (s_w > pw->p_widget_ops->get_width(pw) + pw->s_top_x) ? s_w : pw->s_prefered_width + pw->s_top_x;
-		s_h = (s_h > pw->p_widget_ops->get_height(pw) + pw->s_top_y) ? s_h : pw->s_prefered_height + pw->s_top_y;
+		s_w = (s_w > pw->p_widget_ops->get_width(pw) + pw->s_top_x) ? s_w : pw->s_width + pw->s_top_x;
+		s_h = (s_h > pw->p_widget_ops->get_height(pw) + pw->s_top_y) ? s_h : pw->s_height + pw->s_top_y;
 	}
 	pw = (HWidget *)pc;
 	s_w += pw->uc_padding_left + pw->uc_padding_right;
@@ -157,7 +157,7 @@ static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_scr
 	//paint children
 	hlist_for_each(pn, pc->p_children) {
 		pw = (HWidget *)pn->pv_data;
-		pw->p_widget_ops->paint(pw, 
+		pw->p_widget_ops->paint(pw,
 			i_handle,
 			s_screen_x + p_widget->uc_padding_left + pw->s_top_x + pc->s_translate_x,
 			s_screen_y + p_widget->uc_padding_top + pw->s_top_y + pc->s_translate_y);
@@ -214,10 +214,20 @@ static int is_container(HWidget *p_widget)
 	return 1;
 }
 
+static int can_scroll(HContainer *p_container)
+{
+	HWidget *pw = (HWidget *)p_container;
+	return pw->s_max_width < pw->s_width || pw->s_max_height < pw->s_height;
+}
+
  void hcontainer_delete(HWidget *p_widget)
 {
 	HContainer *pc;
+	hlist_node_t *pn;
 	pc = (HContainer *)p_widget;
+	hlist_for_each(pn, pc->p_children) {
+		((HWidget *)pn->pv_data)->p_widget_ops->destroy((HWidget *)pn->pv_data);
+	}
 	hlist_destroy(&pc->p_children);
 	vm_free(pc);
 }
@@ -253,4 +263,5 @@ static void create_hcontainer_ops()
 	gp_container_ops->remove_all = clear;
 //	gp_container_ops->delete_all = delete_all;
 	gp_container_ops->scroll = scroll;
+	gp_container_ops->can_scroll = can_scroll;
 }

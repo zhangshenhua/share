@@ -198,10 +198,10 @@ struct _HWidgetOperation {
 	/*set the widget height. if s_height is 0, then will generate a best height for you*/
 	void (*set_height)(HWidget *p_widget, short s_height);
 
-	/*[abstract function] get the widget preferred width*/
+	/*[pure abstract function] get the widget preferred width*/
 	short (*get_prefered_width)(HWidget *p_widget);
 
-	/*[abstract function]get the widget preferred height*/
+	/*[pure abstract function]get the widget preferred height*/
 	short (*get_prefered_height)(HWidget *p_widget);
 
 	/*get the widget max width*/
@@ -228,7 +228,7 @@ struct _HWidgetOperation {
 	/*set the widget padding bottom*/
 	void (*set_padding_bottom)(HWidget *p_widget, unsigned char s_padding_bottom);
 
-	/*[abstract function] paint the widget*/
+	/*[pure abstract function] paint the widget*/
 	void (*paint)(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y);
 
 	/*only repaint the widget itself*/
@@ -278,6 +278,12 @@ struct _HWidgetOperation {
 
 	/*[abstract function] get the widget class info*/
 	HClass (*get_class)(HWidget *p_widget);
+
+	/*[abstract function] whether the direction key can travel in the widget. if not , focus will goto next widget*/
+	int (*can_travel)(HWidget *p_widget, int keycode);
+
+	/*[abstract function] i_gained_focus is 0 means focus lost, 1 means gain focus*/
+//	void (*focus_changed)(HWidget *p_widget, int i_gained_focus);
 
 	/*get the widget root widget(its a HPlane), if the widget not in a plane, NULL will be returned*/
 	struct _HPlane* (*get_root)(HWidget *p_widget);
