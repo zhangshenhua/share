@@ -1,0 +1,6 @@
+*.o *.obj *.orig
+./YouKu/Source/Common/*  
+./YouKu/Source/PageLayer/*   
+./YouKu/Source/WidgetLayer/*  
+./YouKu/Source/WindowLayer/*
+
