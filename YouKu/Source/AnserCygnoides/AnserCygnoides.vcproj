@@ -426,6 +426,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Tools"
+			>
+			<File
+				RelativePath=".\tools.c"
+				>
+			</File>
+			<File
+				RelativePath=".\tools.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="ReadMe.txt"
 			>

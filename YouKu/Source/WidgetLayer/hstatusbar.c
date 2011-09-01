@@ -28,7 +28,7 @@ static void UI_StatusBar_SetKey(HStatusBar *p_this, ENUM_SOFTKEY_TYPE e_type, VM
 		p_this->p_Btns[e_type] = NULL;
 	}
 
-	p_this->p_Btns[e_type] = hpushbutton_new());
+	p_this->p_Btns[e_type] = hpushbutton_new();
 
 	if( NULL == p_this->p_Btns[e_type] )	// ∑÷≈‰ ß∞‹
 		return;

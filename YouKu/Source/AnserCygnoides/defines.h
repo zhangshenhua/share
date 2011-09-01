@@ -21,4 +21,5 @@ typedef char * cstr;
 #define private
 #define public
 
+
 #endif
