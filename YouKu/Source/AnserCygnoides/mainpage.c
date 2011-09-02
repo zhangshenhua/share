@@ -11,8 +11,11 @@
 *---------------------------------------------------------------------*/
 #include <vmvideo.h>
 #include "mainpage.h"
-#include "hplane.h"
-#include "hpushbutton.h"
+#include "new.h"
+#include ".\..\WindowLayer\hwindow.h"
+
+static void init(MainPage*);
+static void main_firevisible(MainPage* mainpage);
 
 MainPage* MainPage_new()
 {
@@ -23,9 +26,21 @@ MainPage* MainPage_new()
 
 }
 
+void MainPage_delete(MainPage* p_mainpage)
+{
+	p_mainpage->base.destroy(p_mainpage);
+
+}
+
 static void init(MainPage* p_mainpage)
 {
-
+	const int screen_width  = vm_graphic_get_screen_width();
+	const int screen_height = vm_graphic_get_screen_height();
+	/************************************************************************/
+	/*                        init functions                                */
+	/************************************************************************/
+	p_mainpage->show = main_firevisible;
+	
 	/************************************************************************/
 	/* set container                                                                      */
 	/************************************************************************/
@@ -35,93 +50,93 @@ static void init(MainPage* p_mainpage)
 	p_mainpage->p_container_buttongroup  = hcontainer_new();
 
 	//construct 5 pushbuttons
-	p_mainpage->pbutton1 = hpushbutton_new("");	
-	p_mainpage->pbutton2 = hpushbutton_new("");	
-	p_mainpage->pbutton3 = hpushbutton_new("");	
-	p_mainpage->pbutton4 = hpushbutton_new("");	
-	p_mainpage->pbutton5 = hpushbutton_new("");	
-
-
+	p_mainpage->pbutton1 = hpushbutton_new("推荐");	
+	p_mainpage->pbutton2 = hpushbutton_new("分\n类");	
+	p_mainpage->pbutton3 = hpushbutton_new("搜索");	
+	p_mainpage->pbutton4 = hpushbutton_new("最热");	
+	p_mainpage->pbutton5 = hpushbutton_new("我的\n优酷");	
+	
 	
 	//add widgets into containers
-	p_mainpage->p_container_total->p_container_ops->add_widget( p_mainpage->p_container_total, p_mainpage->p_container_boby );
-	p_mainpage->p_container_total->p_container_ops->add_widget( p_mainpage->p_container_total, p_mainpage->p_container_buttongroup );
+	p_mainpage->p_container_total->p_container_ops->add_widget( p_mainpage->p_container_total, (HWidget*)p_mainpage->p_container_boby );
+	p_mainpage->p_container_total->p_container_ops->add_widget( p_mainpage->p_container_total, (HWidget*)p_mainpage->p_container_buttongroup );
 	
-	p_mainpage->p_container_total.base.s_top_x = 0;
+	p_mainpage->p_container_total->base.s_top_x = 0;
 	p_mainpage->p_container_total->base.s_top_y = 0;
-	p_mainpage->p_container_total->base.s_width = vm_graphic_get_screen_width();
-	p_mainpage->p_container_total->base.s_height = vm_graphic_get_screen_height();
-
-	p_mainpage->pbutton1->base->s_top_x = UNKNOW; 
-	p_mainpage->pbutton1->base->s_top_y = UNKNOW;
-	p_mainpage->pbutton1->base->s_width = UNKNOW;
-	p_mainpage->pbutton1->base->s_height = UNKNOW;
-
-	p_mainpage->pbutton2->base->s_top_x = UNKNOW; 
-	p_mainpage->pbutton2->base->s_top_y = UNKNOW;
-	p_mainpage->pbutton2->base->s_width = UNKNOW;
-	p_mainpage->pbutton2->base->s_height = UNKNOW;
-
-	p_mainpage->pbutton3->base->s_top_x = UNKNOW; 
-	p_mainpage->pbutton3->base->s_top_y = UNKNOW;
-	p_mainpage->pbutton3->base->s_width = UNKNOW;
-	p_mainpage->pbutton3->base->s_height = UNKNOW;
-
-	p_mainpage->pbutton4->base->s_top_x = UNKNOW; 
-	p_mainpage->pbutton4->base->s_top_y = UNKNOW;
-	p_mainpage->pbutton4->base->s_width = UNKNOW;
-	p_mainpage->pbutton4->base->s_height = UNKNOW;
-
-	p_mainpage->pbutton5->base->s_top_x = UNKNOW; 
-	p_mainpage->pbutton5->base->s_top_y = UNKNOW;
-	p_mainpage->pbutton5->base->s_width = UNKNOW;
-	p_mainpage->pbutton5->base->s_height = UNKNOW;
+	p_mainpage->p_container_total->base.s_width  = screen_width;
+	p_mainpage->p_container_total->base.s_height = screen_height;
+	
+	p_mainpage->p_container_buttongroup->base.s_top_x = 0;	
+	p_mainpage->p_container_buttongroup->base.s_top_y = screen_height - screen_width / 5 ;
+	p_mainpage->p_container_buttongroup->base.s_width  = p_mainpage->p_container_total->base.s_width;
+	p_mainpage->p_container_buttongroup->base.s_height = p_mainpage->p_container_total->base.s_height;
 
 
-	p_mainpage->p_plane_boby		= hplane_new();			//plane contains video list, etc
-	p_mainpage->p_plane_buttongroup->p_plane_ops->set_top_widget(p_mainpage->p_plane_buttongroup, )
+	p_mainpage->pbutton1->base.s_top_x = 64*0; 
+	p_mainpage->pbutton1->base.s_top_y = 0;
+	p_mainpage->pbutton1->base.s_width = 64;
+	p_mainpage->pbutton1->base.s_height = 64;
+
+	p_mainpage->pbutton2->base.s_top_x = 64*1; 
+	p_mainpage->pbutton2->base.s_top_y = 0;
+	p_mainpage->pbutton2->base.s_width = 64;
+	p_mainpage->pbutton2->base.s_height = 64;
+
+	p_mainpage->pbutton3->base.s_top_x  = 64*2; 
+	p_mainpage->pbutton3->base.s_top_y  = 0;
+	p_mainpage->pbutton3->base.s_width  = 64;
+	p_mainpage->pbutton3->base.s_height = 64;
+
+	p_mainpage->pbutton4->base.s_top_x = 64*3; 
+	p_mainpage->pbutton4->base.s_top_y = 0;
+	p_mainpage->pbutton4->base.s_width = 64;
+	p_mainpage->pbutton4->base.s_height = 64;
+
+	p_mainpage->pbutton5->base.s_top_x = 64*4; 
+	p_mainpage->pbutton5->base.s_top_y = 0;
+	p_mainpage->pbutton5->base.s_width = 64;
+	p_mainpage->pbutton5->base.s_height = 64;
+
+
+	p_mainpage->p_container_boby = hcontainer_new();			//plane contains video list, etc
+
+#if 0 
+	p_mainpage->p_container_buttongroup->p_plane_ops->set_top_widget(p_mainpage->p_plane_buttongroup, )
 	loginpage->container.base.s_top_x = LOGIN_CONTAINER_S_TOP_X;
 	loginpage->container->base.s_top_y = LOGIN_CONTAINER_S_TOP_Y;
 	loginpage->container->base.s_width = LOGIN_CONTAINER_WIDTH;
 	loginpage->container.base.s_height = LOGIN_CONTAINER_HEIGHT;
-
-	/************************************************************************/
-	/* set bg_image                                                                     */
-	/************************************************************************/
-	loginpage->bg_image = himage_init(LOGIN_BG_NAME);
-
-	/************************************************************************/
-	/* set login_button                                                                     */
-	/************************************************************************/
-	loginpage->login_button = hpushbutton_new();
-
-	loginpage->login_button->set_text(loginpage->login_button,"login");
-	loginpage->login_button.base.s_top_x = LOGIN_BUTTON_S_TOP_X;
-	loginpage->login_button->base.s_top_y = LOGIN_BUTTON_S_TOP_Y;
-
-	/************************************************************************/
-	/* set name_textarea and pwd_textarea                                                                    */
-	/************************************************************************/
-
-	loginpage->name_textinput = htextarea_new();
-	loginpage->name_textinput->base.s_top_x = LOGIN_NAME_TEXTINPUT_S_TOP_X;
-	loginpage->name_textinput->base.s_top_y = LOGIN_NAME_HTEXINPUT_S_TOP_Y;
-
-	loginpage->pwd_textinput = htextarea_new();
-
-	loginpage->pwd_textinput->base.s_top_x = LOGIN_PWD_HTEXTINPUT_S_TOP_X;
-	loginpage->pwd_textinput->base.s_top_y = LOGIN_PWD_HTEXINPUT_S_TOP_Y;
+#endif
+	
 
 	/************************************************************************/
 	/* add widgets to the container                                                                      */
 	/************************************************************************/
-	loginpage->container->p_container_ops->add_widget(loginpage->container,loginpage->login_button);
-	loginpage->container->p_container_ops->add_widget(loginpage->container, loginpage->bg_image);
-	loginpage->container->p_container_ops->add_widget(loginpage->container, loginpage->name_textinput);
-	loginpage->container->p_container_ops->add_widget(loginpage->container, loginpage->pwd_textinput);
-
-
+	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton1);
+	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton2);
+	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton3);
+	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton4);
+	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton5);
 }
+
+/************************************************************************/
+/* add plane                                                                      */
+/************************************************************************/
+
+static void main_firevisible(MainPage* mainpage)
+{
+	window->get_default_plane()->p_plane_ops->add_widget(window->get_default_plane(), (HWidget*)mainpage->p_container_total);
+	window->validate();
+	
+}
+
+
+void  main_switchtonewpage()
+{
+	// to do something 
+}
+
+
 
 static void show_recommend_interface(MainPage* p_mainpage)
 {
