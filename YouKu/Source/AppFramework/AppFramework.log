@@ -1,7 +1,0 @@
-"e:\work\PageLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
-"e:\work\PageLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
-"e:\work\PageLayer\page.h", line 17: Warning: C2215W: Deprecated declaration page_switch_controller_new() - give arg types
-"e:\work\PageLayer\page.c", line 61: Warning: C2870W: variable 'p_node_tmp' declared but not used
-"e:\work\PageLayer\page.c", line 83: Warning: C2870W: variable 'p_node_tmp' declared but not used
-"e:\work\PageLayer\page.c", line 105: Warning: C2870W: variable 'p_node_tmp' declared but not used
-e:\work\PageLayer\page.c: 6 warnings, 0 errors, 0 serious errors
