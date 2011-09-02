@@ -9,7 +9,7 @@
 *
 * Modified by zsh on $(date)
 *---------------------------------------------------------------------*/
-#if(1)
+#if(0)
 #include "MainPage.h"
 #include "connectpage.h"
 #include "Prompt.h"

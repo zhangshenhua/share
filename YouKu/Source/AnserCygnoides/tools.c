@@ -27,8 +27,8 @@ HRect make_shift_rect (const HRect source_rect, const int dx, const int dy)
 	HRect dest_rect;
 	dest_rect.s_x = source_rect.s_x + dx ;
 	dest_rect.s_y = source_rect.s_y + dy ;
-	dest_rect.s_width  = source_rect->s_width;
-	dest_rect.s_height = source_rect->s_height;
+	dest_rect.s_width  = source_rect.s_width;
+	dest_rect.s_height = source_rect.s_height;
 	return dest_rect;
 }
 

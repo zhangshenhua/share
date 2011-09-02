@@ -36,10 +36,7 @@ static void init(MainPage* p_mainpage)
 {
 	const int screen_width  = vm_graphic_get_screen_width();
 	const int screen_height = vm_graphic_get_screen_height();
-	/************************************************************************/
-	/*                        init functions                                */
-	/************************************************************************/
-	p_mainpage->show = main_firevisible;
+
 	
 	/************************************************************************/
 	/* set container                                                                      */
@@ -79,7 +76,7 @@ static void init(MainPage* p_mainpage)
 
 	p_mainpage->pbutton2->base.s_top_x = 64*1; 
 	p_mainpage->pbutton2->base.s_top_y = 0;
-	p_mainpage->pbutton2->base.s_width = 64;
+	p_mainpage->pbutton2->base.s_width  = 64;
 	p_mainpage->pbutton2->base.s_height = 64;
 
 	p_mainpage->pbutton3->base.s_top_x  = 64*2; 
@@ -117,6 +114,14 @@ static void init(MainPage* p_mainpage)
 	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton3);
 	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton4);
 	p_mainpage->p_container_buttongroup->p_container_ops->add_widget(p_mainpage->p_container_buttongroup, (HWidget*)p_mainpage->pbutton5);
+
+
+	/************************************************************************/
+	/*                        init functions                                */
+	/************************************************************************/
+	p_mainpage->show = main_firevisible;
+	
+
 }
 
 /************************************************************************/

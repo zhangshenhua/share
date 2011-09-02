@@ -41,13 +41,13 @@ SOURCE_FILES= \
 
 	./business.c \
 
-<<<<<<< HEAD
 	./mainpage.c \
 
+	./new.c \
+
+	./Prompt.c \
+
 	./user.c
-=======
-	../../../../AixGalericulata/KaiXin/AppFramework/Source/AppFramework/user.c
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
 
 COMMON= \
 
@@ -125,13 +125,25 @@ WINDOWLAYER= \
 
 INCLUDE_FILES= \
 
+	./business.h \
+
 	./connectpage.h \
 
 	./defines.h \
 
-	./mainpage.h
+	./mainpage.h \
 
-SRCS=$(SOURCE_FILES) $(COMMON) $(RESOURCE_FILES) $(PAGELAYER) $(WIDGETLAYER) $(WINDOWLAYER) $(INCLUDE_FILES) 
+	./new.h \
+
+	./Prompt.h
+
+TOOLS= \
+
+	./tools.c \
+
+	./tools.h
+
+SRCS=$(SOURCE_FILES) $(COMMON) $(RESOURCE_FILES) $(PAGELAYER) $(WIDGETLAYER) $(WINDOWLAYER) $(INCLUDE_FILES) $(TOOLS) 
 
 OBJS=$(patsubst %.cxx,%.o,$(patsubst %.cpp,%.o,$(patsubst %.cc,%.o,$(patsubst %.c,%.o,$(filter %.c %.cc %.cpp %.cxx ,$(SRCS))))))
 

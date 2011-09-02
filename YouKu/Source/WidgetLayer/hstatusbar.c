@@ -1,3 +1,5 @@
+
+#if 0
 #include "hstatusbar.h"
 
 
@@ -28,7 +30,7 @@ static void UI_StatusBar_SetKey(HStatusBar *p_this, ENUM_SOFTKEY_TYPE e_type, VM
 		p_this->p_Btns[e_type] = NULL;
 	}
 
-	p_this->p_Btns[e_type] = hpushbutton_new();
+	p_this->p_Btns[e_type] = hpushbutton_new("xxxx");
 
 	if( NULL == p_this->p_Btns[e_type] )	// ·ÖÅäÊ§°Ü
 		return;
@@ -121,3 +123,5 @@ void hstatusbar_init(HStatusBar* p_this)
 		p_this->p_Btns[i] = NULL;
 	}
 }
+
+#endif

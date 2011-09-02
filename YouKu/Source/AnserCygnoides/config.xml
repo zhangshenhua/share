@@ -13,11 +13,9 @@
     <category>BitStream</category>
     <category>Contact</category>
     <category>MMS</category>
-<<<<<<< HEAD
-    <category>SMSMng</category>
-=======
+
     <category>SMSMng</category>    
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
+
   </APIAuth>
   <targetconfig>
     <mem>500</mem>
@@ -27,15 +25,7 @@
     <autoadaptable>unchecked</autoadaptable>
     <sysmem>500</sysmem>
     <usesysmemory>unchecked</usesysmemory>
-<<<<<<< HEAD
-    <sysdisk>
-    </sysdisk>
-  </targetconfig>
-  <namelist>
-    <english>YouKu</english>
-    <chinese>YouKu</chinese>
-    <cht>YouKu</cht>
-=======
+
   </targetconfig>
   <namelist>
     <english>YouKu</english>
@@ -43,7 +33,7 @@
     </chinese>
     <cht>
     </cht>
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
+
   </namelist>
   <operationinfo>
     <content>content</content>
@@ -68,16 +58,11 @@
     <size>14</size>
   </font>
   <image>
-<<<<<<< HEAD
+
   </image>
   <icon>
     <path>
     </path>
-=======
-    <item></item>
-  </image>
-  <icon>
-    <path></path>
->>>>>>> f80d0d445eaf66846a228a82d7a9c713794052cc
+
   </icon>
 </packageinfo>
