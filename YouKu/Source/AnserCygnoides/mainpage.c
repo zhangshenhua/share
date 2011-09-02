@@ -9,6 +9,7 @@
 *
 * Modified by name on $(date)
 *---------------------------------------------------------------------*/
+#include <vmvideo.h>
 #include "mainpage.h"
 #include "hplane.h"
 #include "hpushbutton.h"
@@ -28,46 +29,53 @@ static void init(MainPage* p_mainpage)
 	/************************************************************************/
 	/* set container                                                                      */
 	/************************************************************************/
-	//construct 5 pushbuttons
+	//construct containers
 	p_mainpage->p_container_total = hcontainer_new();
 	p_mainpage->p_container_boby = hcontainer_new();
 	p_mainpage->p_container_buttongroup  = hcontainer_new();
 
+	//construct 5 pushbuttons
 	p_mainpage->pbutton1 = hpushbutton_new("");	
 	p_mainpage->pbutton2 = hpushbutton_new("");	
 	p_mainpage->pbutton3 = hpushbutton_new("");	
 	p_mainpage->pbutton4 = hpushbutton_new("");	
 	p_mainpage->pbutton5 = hpushbutton_new("");	
-	
 
+
+	
+	//add widgets into containers
 	p_mainpage->p_container_total->p_container_ops->add_widget( p_mainpage->p_container_total, p_mainpage->p_container_boby );
 	p_mainpage->p_container_total->p_container_ops->add_widget( p_mainpage->p_container_total, p_mainpage->p_container_buttongroup );
 	
-	p_mainpage->pbutton1->base->s_top_x = ; 
-	p_mainpage->pbutton1->base->s_top_y = ;
-	p_mainpage->pbutton1->base->s_width = ;
-	p_mainpage->pbutton1->base->s_height = ;
+	p_mainpage->p_container_total.base.s_top_x = 0;
+	p_mainpage->p_container_total->base.s_top_y = 0;
+	p_mainpage->p_container_total->base.s_width = vm_graphic_get_screen_width();
+	p_mainpage->p_container_total->base.s_height = vm_graphic_get_screen_height();
 
-	p_mainpage->pbutton1->base->s_top_x = ; 
-	p_mainpage->pbutton1->base->s_top_y = ;
-	p_mainpage->pbutton1->base->s_width = ;
-	p_mainpage->pbutton1->base->s_height = ;
+	p_mainpage->pbutton1->base->s_top_x = UNKNOW; 
+	p_mainpage->pbutton1->base->s_top_y = UNKNOW;
+	p_mainpage->pbutton1->base->s_width = UNKNOW;
+	p_mainpage->pbutton1->base->s_height = UNKNOW;
 
-	p_mainpage->pbutton1->base->s_top_x = ; 
-	p_mainpage->pbutton1->base->s_top_y = ;
-	p_mainpage->pbutton1->base->s_width = ;
-	p_mainpage->pbutton1->base->s_height = ;
+	p_mainpage->pbutton2->base->s_top_x = UNKNOW; 
+	p_mainpage->pbutton2->base->s_top_y = UNKNOW;
+	p_mainpage->pbutton2->base->s_width = UNKNOW;
+	p_mainpage->pbutton2->base->s_height = UNKNOW;
 
-	p_mainpage->pbutton1->base->s_top_x = ; 
-	p_mainpage->pbutton1->base->s_top_y = ;
-	p_mainpage->pbutton1->base->s_width = ;
-	p_mainpage->pbutton1->base->s_height = ;
+	p_mainpage->pbutton3->base->s_top_x = UNKNOW; 
+	p_mainpage->pbutton3->base->s_top_y = UNKNOW;
+	p_mainpage->pbutton3->base->s_width = UNKNOW;
+	p_mainpage->pbutton3->base->s_height = UNKNOW;
 
-	p_mainpage->pbutton1->base->s_top_x = ; 
-	p_mainpage->pbutton1->base->s_top_y = ;
-	p_mainpage->pbutton1->base->s_width = ;
-	p_mainpage->pbutton1->base->s_height = ;
+	p_mainpage->pbutton4->base->s_top_x = UNKNOW; 
+	p_mainpage->pbutton4->base->s_top_y = UNKNOW;
+	p_mainpage->pbutton4->base->s_width = UNKNOW;
+	p_mainpage->pbutton4->base->s_height = UNKNOW;
 
+	p_mainpage->pbutton5->base->s_top_x = UNKNOW; 
+	p_mainpage->pbutton5->base->s_top_y = UNKNOW;
+	p_mainpage->pbutton5->base->s_width = UNKNOW;
+	p_mainpage->pbutton5->base->s_height = UNKNOW;
 
 
 	p_mainpage->p_plane_boby		= hplane_new();			//plane contains video list, etc
