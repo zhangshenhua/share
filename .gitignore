@@ -1,14 +1,1 @@
-*.slo
-*.lo
-*.o
-*.so
-*.lai
-*.la
-*.a
-YouKu/Source/Common/
-YouKu/Source/PageLayer/
-YouKu/Source/WidgetLayer/
-YouKu/Source/WindowLayer/
-YouKu/Source/type_and_macro.h
-YouKu/Source/AnserCygnoides/Debug/
 
