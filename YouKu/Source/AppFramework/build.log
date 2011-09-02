@@ -1,0 +1,75 @@
+
+Compile file:
+C:\Program Files\MRE SDK v1.0\lib\src\vmmain.c
+e:\work\AppFramework\AppFramework.c
+e:\work\AppFramework\user.c
+e:\work\Common\herrorcode.c
+e:\work\Common\hlist.c
+e:\work\WidgetLayer\hcheckbox.c
+"e:\work\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"e:\work\WidgetLayer\hcheckbox.c", line 308: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hcheckbox.c", line 376: Warning: C2871W: static 'widget_destroy' declared but not used
+e:\work\WidgetLayer\hcheckbox.c: 2 warnings, 1 error, 0 serious errors
+
+e:\work\WidgetLayer\hcontainer.c
+e:\work\WidgetLayer\himage.c
+e:\work\WidgetLayer\hlabel.c
+e:\work\WidgetLayer\hlookandfeel.c
+"e:\work\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"e:\work\WidgetLayer\himage.h", line 168: Warning: C2215W: Deprecated declaration himage_new() - give arg types
+"e:\work\WidgetLayer\hpushbutton.h", line 28: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 36: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 44: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 52: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 60: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 68: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"e:\work\WidgetLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
+"e:\work\WidgetLayer\hcontainer.h", line 21: Warning: C2215W: Deprecated declaration hcontainer_new() - give arg types
+"e:\work\WidgetLayer\hplane.h", line 18: Warning: C2215W: Deprecated declaration hplane_new() - give arg types
+"e:\work\WidgetLayer\htextinput.h", line 83: Warning: C2215W: Deprecated declaration htextinput_new() - give arg types
+"e:\work\WidgetLayer\htextarea.h", line 134: Warning: C2215W: Deprecated declaration htextarea_new() - give arg types
+"e:\work\WidgetLayer\hlabel.h", line 88: Warning: C2215W: Deprecated declaration hlabel_new() - give arg types
+"e:\work\WidgetLayer\hlookandfeel.c", line 19: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 21: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 23: Error: C3028E: <argument 1 to 'vm_graphic_fill_rect'>: implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 26: Error: C3028E: <argument 1 to 'vm_graphic_blt_ex'>: implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 26: Error: C3028E: <argument 4 to 'vm_graphic_blt_ex'>: implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 222: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 227: Error: C3028E: <argument 1 to 'vm_graphic_fill_rect'>: implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 240: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hlookandfeel.c", line 244: Error: C3028E: <argument 1 to 'vm_graphic_rect'>: implicit cast of pointer to non-equal pointer
+e:\work\WidgetLayer\hlookandfeel.c: 15 warnings, 9 errors, 0 serious errors
+
+e:\work\WidgetLayer\hplane.c
+e:\work\WidgetLayer\hpopupmenu.c
+e:\work\WidgetLayer\hpushbutton.c
+"e:\work\WidgetLayer\hwidget.h", line 57: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"e:\work\WidgetLayer\himage.h", line 168: Warning: C2215W: Deprecated declaration himage_new() - give arg types
+"e:\work\WidgetLayer\hpushbutton.h", line 28: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 36: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 44: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 52: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 60: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\hpushbutton.h", line 68: Warning: C2926W: 'struct _hPushButton' invented in parameter list
+"e:\work\WidgetLayer\..\Common\herrorcode.h", line 30: Warning: C2220W: Superfluous ',' in 'enum' declaration
+"e:\work\WidgetLayer\..\Common\hlist.h", line 53: Warning: C2215W: Deprecated declaration hlist_new() - give arg types
+"e:\work\WidgetLayer\hcontainer.h", line 21: Warning: C2215W: Deprecated declaration hcontainer_new() - give arg types
+"e:\work\WidgetLayer\hplane.h", line 18: Warning: C2215W: Deprecated declaration hplane_new() - give arg types
+"e:\work\WidgetLayer\htextinput.h", line 83: Warning: C2215W: Deprecated declaration htextinput_new() - give arg types
+"e:\work\WidgetLayer\htextarea.h", line 134: Warning: C2215W: Deprecated declaration htextarea_new() - give arg types
+"e:\work\WidgetLayer\hlabel.h", line 88: Warning: C2215W: Deprecated declaration hlabel_new() - give arg types
+"e:\work\WidgetLayer\hpushbutton.c", line 298: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hpushbutton.c", line 299: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hpushbutton.c", line 300: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hpushbutton.c", line 301: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hpushbutton.c", line 302: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+"e:\work\WidgetLayer\hpushbutton.c", line 303: Error: C3028E: '=': implicit cast of pointer to non-equal pointer
+e:\work\WidgetLayer\hpushbutton.c: 15 warnings, 6 errors, 0 serious errors
+
+e:\work\WidgetLayer\hstatusbar.c
+e:\work\WidgetLayer\htextarea.c
+e:\work\WidgetLayer\htextinput.c
+e:\work\WidgetLayer\hwidget.c
+e:\work\WindowLayer\hwindow.c
+e:\work\PageLayer\page.c
