@@ -11,7 +11,8 @@ classdef(ListBox)
 			
 };
 
-extern ListBox* ListBox_new(ListBox  );
+extern ListBox* ListBox_new(    );
+extern void ListBox_delete(ListBox* it);
 
 
 
