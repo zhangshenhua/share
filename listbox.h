@@ -7,12 +7,12 @@ classdef(ListBox)
 
 	
 //public:
-	additem( ListBox* p_this, VideoItem* p_vitem);
+	void additem( ListBox* p_this, VideoItem* p_vitem);
 			
 };
 
-extern ListBox* ListBox_new(    );
-extern void ListBox_delete(ListBox* it);
+extern ListBox* ListBox_new( Rect rect );
+extern void ListBox_delete( ListBox* p_it );
 
 
 
