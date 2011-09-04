@@ -32,7 +32,8 @@ set showcmd             " display incomplete commands
 set incsearch           " do incremental searching
 set nu
 set smartindent
-set mouse=a
+set mouse=v
+set clipboard=unnamed
 set selection=exclusive
 set selectmode=mouse,key
 set nobackup
@@ -75,12 +76,16 @@ if has("autocmd")
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+  autocmd BufReadPost *
+			  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+			  \   exe "normal g`\"" |
+			  \ endif
 
 endif " has("autocmd")set number
 syntax on
 colorscheme elflord
 set tabstop=4
+
+
+
+

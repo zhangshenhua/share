@@ -7,8 +7,14 @@ classdef(ListBox)
 
 	
 //public:
-	additem( ListBox* this, 
+	additem( ListBox* p_this, VideoItem* p_vitem);
+			
 };
+
+extern ListBox* ListBox_new(ListBox  );
+
+
+
 
 
 
