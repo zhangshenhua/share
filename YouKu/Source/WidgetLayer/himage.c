@@ -220,6 +220,7 @@ void himage_delete( HImage *p_this )
 		vm_graphic_release_canvas( p_this->i_canvas );
 		p_this->i_canvas = VM_GDI_FAILED;
 	}
+	vm_free(p_this);
 }
 
 

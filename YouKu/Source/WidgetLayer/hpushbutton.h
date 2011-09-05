@@ -28,6 +28,14 @@ typedef struct{
 	void			(*set_text)(struct _hPushButton *p_Me, const char *pc_str);
 
 	/*********************** function declaration ***************************
+	* Name : set_text_point
+	* Description : set pushbutton text point
+	* Parameters@ : 
+	* Return : 
+	************************************************************************/
+	void			(*set_text_point)(struct _hPushButton *p_Me, short s_x, short s_y);
+
+	/*********************** function declaration ***************************
 	* Name : set_image_from_buffer
 	* Description : set pushbutton image form image's buffer
 	* Parameters@ : 0 is't center,1 is center

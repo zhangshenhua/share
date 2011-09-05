@@ -20,13 +20,13 @@
 
 HWindow *window;
 
-static void paint();
-static HPlane * get_default_plane();
+static void hwindow_paint();
+static HPlane * hwindow_get_default_plane();
 
 /*user define the enter function*/
 extern void app_enter();
 
-static void validate()
+static void hwindow_validate()
 {
 	int i_idx;
 	HWidget *pw;
@@ -44,7 +44,7 @@ static void sys_event_handle(VMINT message, VMINT param)
 		case VM_MSG_CREATE:
 			vm_log_debug("vm msg create");
 			// create default plane
-			get_default_plane();
+			hwindow_get_default_plane();
 			app_enter();
 			break;
 
@@ -54,7 +54,7 @@ static void sys_event_handle(VMINT message, VMINT param)
 
 		case VM_MSG_PAINT:
 			vm_log_debug("vm msg paint");
-			paint();
+			hwindow_paint();
 			break;
 
 		case VM_MSG_INACTIVE:
@@ -71,10 +71,10 @@ static void sys_event_handle(VMINT message, VMINT param)
 	}
 }
 
-/************************************************************************/
-/* Get topest plane
-/************************************************************************/
-static HPlane * get_topest_plane()
+/************************************************************************
+* Get topest plane
+************************************************************************/
+static HPlane * hwindow_get_topest_plane()
 {
 	int i_idx;
 	HWidget *pw;
@@ -92,7 +92,7 @@ static void key_event_handle(VMINT evt, VMINT keycode)
 
 static void pen_event_handle(VMINT evt, VMINT x, VMINT y)
 {
-	HWidget *p_top_plane = (HWidget *)get_topest_plane();
+	HWidget *p_top_plane = (HWidget *)hwindow_get_topest_plane();
 	switch (evt) {
 //		case VM_PEN_EVENT_DOUBLE_CLICK:
 //		case VM_PEN_EVENT_LONG_TAP :
@@ -110,71 +110,66 @@ static void pen_event_handle(VMINT evt, VMINT x, VMINT y)
 	}
 }
 
-static void paint()
+static void hwindow_paint()
 {
-	int i_idx;
+	int i_idx, i_count;
 	HWidget *pw;
 	HPlane *p_plane;
 	int p_handles[sizeof(window->p_planes)/sizeof(HPlane *)];
-	int i_handle_idx = 0;
-	for (i_idx = 0; i_idx < sizeof(window->p_planes)/sizeof(HPlane *); i_idx ++) {
+	for (i_idx = i_count = 0; i_idx < sizeof(window->p_planes)/sizeof(HPlane *); i_idx ++) {
 		p_plane = window->p_planes[i_idx];
 		pw = (HWidget *)p_plane;
 		if (pw && pw->p_widget_ops->is_visible(pw)) {
-			p_handles[i_handle_idx ++] = p_plane->i_handle;
+			p_handles[i_count ++] = p_plane->i_handle;
 			pw->p_widget_ops->paint(pw, p_plane->i_handle, 0, 0);
-			if (p_plane && p_plane->i_enable_transparent_bg && pw->p_widget_ops->is_visible(pw)) {
+			if (p_plane->i_enable_transparent_bg) {
 				//TODO: paint transparent pw->i_handle
 				look_draw_plane(p_plane);
 			}
 		}
 	}
 	//TODO: flush the three planes
-	vm_graphic_flush_layer(p_handles, i_handle_idx);
+	vm_graphic_flush_layer(p_handles, i_count);
 }
 
-static void repaint()
+static void hwindow_repaint()
 {
-	paint();
+	hwindow_paint();
 }
 
-static HPlane * get_default_plane()
+static HPlane * hwindow_get_default_plane()
 {
 	HPlane *p_plane;
 	if (window->p_planes[0] == NULL) {
 		p_plane = hplane_new();
-		//default is visible
-		//((HWidget *)p_plane)->p_widget_ops->set_visible((HWidget *)p_plane, 1);
 		((HWidget *)p_plane)->p_widget_ops->set_enable_bgcolor((HWidget *)p_plane, 1);
 		((HWidget *)p_plane)->p_widget_ops->set_bgcolor((HWidget *)p_plane, VM_COLOR_WHITE);
+		p_plane->i_handle = vm_graphic_create_layer(0, 0, vm_graphic_get_screen_width(),vm_graphic_get_screen_height(),-1);
+		p_plane->s_plane_index = 0;
 		window->p_planes[0] = p_plane;
 	}
 	return window->p_planes[0];
 }
 
-static HPlane * get_popupmenu_plane()
+static HPlane * hwindow_get_popupmenu_plane()
 {
 	HPlane *p_plane;
 	if (window->p_planes[1] == NULL) {
 		p_plane = hplane_new();
-		//default is enable transparent background
-		p_plane->p_plane_ops->set_enable_transparent_bg(p_plane, 1);
+		p_plane->s_transparent_color = 0xabcd;
+		p_plane->i_handle = vm_graphic_create_layer(0, 0, vm_graphic_get_screen_width(),vm_graphic_get_screen_height(),p_plane->s_transparent_color);
+		p_plane->s_plane_index = 1;
 		window->p_planes[1] = p_plane;
-	} else {
-		p_plane = window->p_planes[1];
 	}
-	//visible the popup menu plane
-	((HWidget *)p_plane)->p_widget_ops->set_visible((HWidget *)p_plane, 1);
-	return p_plane;
+	return window->p_planes[1];
 }
 
-static HPlane * get_glass_plane()
+static HPlane * hwindow_get_glass_plane()
 {
 	HPlane *p_plane;
 	if (window->p_planes[2] == NULL) {
 		p_plane = hplane_new();
-		//default is enable transparent background
-		p_plane->p_plane_ops->set_enable_transparent_bg(p_plane, 1);
+		p_plane->s_plane_index = 2;
 		window->p_planes[2] = p_plane;
 	} else {
 		p_plane = window->p_planes[2];
@@ -184,7 +179,7 @@ static HPlane * get_glass_plane()
 	return p_plane;
 }
 
-static PageSwitchController * get_page_switch_contrller()
+static PageSwitchController * hwindow_get_page_switch_contrller()
 {
 	if (window->p_page_switch_contrller == NULL) {
 		window->p_page_switch_contrller = page_switch_controller_new();
@@ -192,12 +187,6 @@ static PageSwitchController * get_page_switch_contrller()
 	return window->p_page_switch_contrller;
 }
 
-static void update_new_page(Page *p_page)
-{
-	PageSwitchController *p_ctrl = window->get_page_switch_contrller();
-	p_ctrl->append_page(p_ctrl, p_page);
-	p_ctrl->show_cur_page(p_ctrl);
-}
 
 void hwindow_init()
 {
@@ -206,11 +195,10 @@ void hwindow_init()
   	window->sys_event_handle = sys_event_handle;
   	window->key_event_handle = key_event_handle;
   	window->pen_event_handle = pen_event_handle;
-	window->get_default_plane = get_default_plane;
-	window->get_popupmenu_plane = get_popupmenu_plane;
-	window->get_glass_plane = get_glass_plane;
-	window->get_page_switch_contrller = get_page_switch_contrller;
-	window->update_new_page = update_new_page;
-	window->validate = validate;
-	window->repaint = repaint;
+	window->get_default_plane = hwindow_get_default_plane;
+	window->get_popupmenu_plane = hwindow_get_popupmenu_plane;
+	window->get_glass_plane = hwindow_get_glass_plane;
+	window->get_page_switch_contrller = hwindow_get_page_switch_contrller;
+	window->validate = hwindow_validate;
+	window->repaint = hwindow_repaint;
 }

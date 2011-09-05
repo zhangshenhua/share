@@ -8,9 +8,31 @@
 #define _HTEXTAREA_H
 
 #include "hwidget.h"
+#include "vmsys.h"
 
 typedef struct _HTextAreaOperation HTextAreaOperation;
 typedef struct _HTextArea HTextArea;
+typedef struct _LineNode LineNode;
+typedef struct _HTextGlobal HTextGlobal;
+
+struct _HTextGlobal {
+	char c_timer_id;
+	char c_cursor_flag;
+
+	short s_move_from_x;
+	short s_move_from_y;
+
+	VMWSTR w_str;
+
+	HTextArea *p_textarea;
+};
+
+struct _LineNode {
+	VMWSTR w_line_head;
+	short s_line_len;
+
+	LineNode *p_next;
+};
 
 /* HEditor Operations */
 struct _HTextAreaOperation {
@@ -38,6 +60,8 @@ struct _HTextAreaOperation {
 	*/
 	void (*insert_text)(HTextArea *p_textarea, char *pc_text);
 
+
+	void (*delete_text)(HTextArea *p_textarea);
 	/*
 	Function Name: get_text_len
 	Description: Get length of HTextArea's text.
@@ -99,6 +123,8 @@ struct _HTextArea {
 	/* HEditor text */
 	char *pc_text;
 
+	char c_text_change_flag;
+
 	/* Number of showing HEditor's text line, default line number is 4*/
 	char c_line_num;
 
@@ -111,11 +137,19 @@ struct _HTextArea {
 	/* Set default input method for MRE input method*/
 	char c_input_method;
 
+	/* Offset for pen move event */
+	short s_move_offset;
+
 	/* Current position of cursor */
 	int i_current_position;
 
 	/* Max length of text in HEditor */
 	int i_max_len;
+
+
+	LineNode *p_line_list;
+
+	LineNode *p_line_list_tail;
 
 };
 

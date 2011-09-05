@@ -233,6 +233,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\hlistbox.c"
+				>
+			</File>
+			<File
 				RelativePath=".\mainpage.c"
 				>
 			</File>
@@ -411,6 +415,10 @@
 			</File>
 			<File
 				RelativePath=".\defines.h"
+				>
+			</File>
+			<File
+				RelativePath=".\hlistbox.h"
 				>
 			</File>
 			<File

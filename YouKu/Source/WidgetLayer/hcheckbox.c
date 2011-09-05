@@ -38,8 +38,9 @@ static void set_label(HCheckBox *p_checkbox, const char *pc_label)
 
 	i_len = strlen(pc_label);
 	p_checkbox->pc_label = (char *)vm_malloc(i_len + 1);
-	memcpy(p_checkbox->pc_label, pc_label, i_len);
-	p_checkbox->pc_label[i_len + 1] = '\0';
+	memset(p_checkbox->pc_label, 0, i_len + 1);
+	strncpy(p_checkbox->pc_label, pc_label, i_len);
+	p_checkbox->pc_label[i_len] = '\0';
 
 	p_checkbox->base.p_widget_ops->repaint((HWidget *)p_checkbox);
 }
@@ -173,7 +174,10 @@ static short get_prefered_width(HWidget *p_widget)
 	vm_graphic_set_font(c_font);
 	p_checkbox->base.s_prefered_width = vm_graphic_get_string_width(w_str) + 
 		vm_graphic_get_string_height(w_str)
-		+ p_checkbox->base.uc_padding_left + p_checkbox->base.uc_padding_right + 4;
+		+ p_checkbox->base.s_padding_left + p_checkbox->base.s_padding_right + 4;
+
+	if (p_checkbox->base.s_prefered_width > p_checkbox->base.p_widget_ops->get_max_width(p_widget))
+		p_checkbox->base.p_widget_ops->set_width(p_widget, p_checkbox->base.p_widget_ops->get_max_width(p_widget));
 
 	vm_free(w_str);
 
@@ -196,7 +200,7 @@ static short get_prefered_height(HWidget *p_widget)
 	vm_graphic_set_font(c_font);
 	i_font_height = vm_graphic_get_character_height();
 
-	i_prefered_height = i_font_height + p_checkbox->base.uc_padding_top + p_checkbox->base.uc_padding_bottom;
+	i_prefered_height = i_font_height + p_checkbox->base.s_padding_top + p_checkbox->base.s_padding_bottom;
 
 	p_checkbox->base.s_prefered_height = i_prefered_height;
 
@@ -240,22 +244,22 @@ static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_scr
 	w_str = (VMWSTR)vm_malloc((i_len + 1) * sizeof(VMWCHAR));
 	vm_gb2312_to_ucs2(w_str, (i_len + 1)* sizeof(VMWCHAR), p_checkbox->pc_label);
 
-	s_rect_x = s_screen_x + p_checkbox->base.uc_padding_left;
-	s_rect_y = s_screen_y + (p_checkbox->base.s_height - vm_graphic_get_string_height(w_str)) / 2;
+	s_rect_x = s_screen_x + p_checkbox->base.s_padding_left;
+	s_rect_y = s_screen_y + (p_checkbox->base.p_widget_ops->get_height(p_widget) - vm_graphic_get_string_height(w_str)) / 2;
 	s_rect_height = vm_graphic_get_string_height(w_str);
 	s_rect_width = s_rect_height;
 
 #ifdef H_DEBUG	
-	vm_graphic_rect(p_handle_buf, s_screen_x, s_screen_y, p_checkbox->base.s_width, p_checkbox->base.s_height, VM_COLOR_BLUE);
+	vm_graphic_fill_rect(p_handle_buf, s_screen_x, s_screen_y, p_checkbox->base.p_widget_ops->get_width(p_widget), p_checkbox->base.s_height, VM_COLOR_BLACK, VM_COLOR_GREEN);
 #endif
 
 	if (p_checkbox->base.p_widget_ops->is_enable_bgcolor(p_widget))
 		vm_graphic_fill_roundrect(p_handle_buf, s_screen_x, s_screen_y, p_checkbox->base.s_width, p_checkbox->base.s_height, 
-		p_checkbox->base.uc_padding_top/2, p_checkbox->base.p_widget_ops->get_bgcolor(p_widget));
+		p_checkbox->base.s_padding_top/2, p_checkbox->base.p_widget_ops->get_bgcolor(p_widget));
 /*
 	vm_graphic_set_clip(s_screen_x, s_screen_y, 
-		p_checkbox->base.s_width - p_checkbox->base.uc_padding_left - p_checkbox->base.uc_padding_right,
-		p_checkbox->base.s_height- p_checkbox->base.uc_padding_top - p_checkbox->base.uc_padding_bottom);
+		p_checkbox->base.s_width - p_checkbox->base.s_padding_left - p_checkbox->base.s_padding_right,
+		p_checkbox->base.s_height- p_checkbox->base.s_padding_top - p_checkbox->base.s_padding_bottom);
 */
 
 	if (p_checkbox->base.p_widget_ops->has_focus(p_widget))
@@ -280,12 +284,13 @@ static void hwidget_delete(HWidget *p_widget)
 {
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
 
+#if 0
 	--i_checkbox_ops;
 	if (0 == i_checkbox_ops) {
 		vm_free(p_base_ops);
 		vm_free(p_checkbox_ops);
 	}
-
+#endif
 	if (NULL != p_checkbox->pc_label)
 		vm_free(p_checkbox->pc_label);
 
@@ -346,12 +351,13 @@ extern HCheckBox* hcheckbox_new(const char* label)
 
 	p_checkbox->p_checkbox_ops = p_checkbox_ops;
 	p_checkbox->base.p_widget_ops = p_base_ops;
+	p_checkbox->base.action_performed = NULL;
 
 	/* init HWiget attr */
-	p_checkbox->base.uc_padding_left = 8;
-	p_checkbox->base.uc_padding_right = 8;
-	p_checkbox->base.uc_padding_top = 8;
-	p_checkbox->base.uc_padding_bottom = 8;
+	p_checkbox->base.s_padding_left = 8;
+	p_checkbox->base.s_padding_right = 8;
+	p_checkbox->base.s_padding_top = 8;
+	p_checkbox->base.s_padding_bottom = 8;
 	p_checkbox->base.c_font = FONT_SMALL;
 
 	return p_checkbox;
@@ -360,13 +366,16 @@ extern HCheckBox* hcheckbox_new(const char* label)
 /* Destroy a HCheckBox */
 extern void hcheckbox_delete(HCheckBox *p_checkbox)
 {
+#if 0
 	--i_checkbox_ops;
 	if (0 == i_checkbox_ops) {
 		vm_free(p_base_ops);
+		p_base_ops = NULL;
 		vm_free(p_checkbox_ops);
+		p_checkbox_ops = NULL;
 	}
-
-	if (NULL != p_checkbox->pc_label)
+#endif
+	if (p_checkbox->pc_label)
 		vm_free(p_checkbox->pc_label);
 
 	vm_free(p_checkbox);

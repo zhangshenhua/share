@@ -17,7 +17,7 @@ typedef struct _HPlaneOperation HPlaneOperation;
 /*new a HPlane*/
 HPlane * hplane_new();
 
-void hplane_delete(HWidget *p_plane);
+void hplane_delete(HPlane *p_plane);
 
 
 struct _HPlane {
@@ -40,7 +40,13 @@ struct _HPlane {
 	int i_handle;
 
 	/*enable/disable transparent the plane's background*/
-	int i_enable_transparent_bg;
+	short i_enable_transparent_bg;
+
+	/*the plane's layer trans color*/
+	short s_transparent_color;
+
+	/*the index in  window*/
+	short s_plane_index;
 
 	/*the cur own focus widget*/
 	HWidget *p_own_focus_widget;
@@ -59,6 +65,16 @@ struct _HPlaneOperation {
 	void (*add_widget)(HPlane *p_plane, HWidget *p_widget);
 
 	/************************************************************************
+	* remove widget from plane's content container
+	************************************************************************/
+	void (*remove_widget)(HPlane *p_plane, HWidget *p_widget);
+
+	/************************************************************************
+	* remove all widget from plane's content container, and free there's memory
+	************************************************************************/
+	void (*remove_all)(HPlane *p_plane);
+
+	/************************************************************************
 	* Function: set_top_widget
 	* Description: set the top widget of the plane
 	************************************************************************/
@@ -70,12 +86,6 @@ struct _HPlaneOperation {
 	************************************************************************/
 	void (*set_bottom_widget)(HPlane *p_plane, HWidget *p_widget);
 	
-	/************************************************************************
-	* Function: set_enable_transparent_bg
-	* Description: enable/disable transparent the plane's background
-	* Para(in) i_enable: it is 0 or 1
-	************************************************************************/
-	void (*set_enable_transparent_bg)(HPlane *p_plane, int i_enable);
 };
 
 #endif

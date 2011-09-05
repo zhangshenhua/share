@@ -41,6 +41,8 @@ SOURCE_FILES= \
 
 	./business.c \
 
+	./hlistbox.c \
+
 	./mainpage.c \
 
 	./new.c \
@@ -130,6 +132,8 @@ INCLUDE_FILES= \
 	./connectpage.h \
 
 	./defines.h \
+
+	./hlistbox.h \
 
 	./mainpage.h \
 

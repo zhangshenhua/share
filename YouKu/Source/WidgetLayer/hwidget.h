@@ -7,7 +7,12 @@
 #ifndef _HWIDGET_H_
 #define _HWIDGET_H_
 
-#define H_DEBUG 1
+#define H_DEBUG
+
+/* disable deprecation */
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define  _CRT_SECURE_NO_WARNINGS
+#endif
 
 typedef struct _HWidget HWidget;
 typedef struct _HWidgetOperation HWidgetOperation;
@@ -75,16 +80,16 @@ struct _HWidget {
 	int i_bgcolor;
 
 	/*padding left*/
-	unsigned char uc_padding_left;
+	short s_padding_left;
 
 	/*padding right*/
-	unsigned char uc_padding_right;
+	short s_padding_right;
 
 	/*padding top*/
-	unsigned char uc_padding_top;
+	short s_padding_top;
 
 	/*padding bottom*/
-	unsigned char uc_padding_bottom;
+	short s_padding_bottom;
 
 	/* The x coordinates relative to the parent container */
 	short s_top_x;
@@ -185,6 +190,12 @@ struct _HWidgetOperation {
 
 	/*set the widget font*/
 	void (*set_font)(HWidget *p_widget, HFont font);
+
+	/* get top x/ top y */
+	HPoint (*get_position)(HWidget *p_widget);
+
+	/*set top x/ top y*/
+	void (*set_position)(HWidget *p_widget, short s_top_x, short s_top_y);
 
 	/*get the widget width*/
 	short (*get_width)(HWidget *p_widget);
@@ -296,6 +307,20 @@ struct _HWidgetOperation {
 
 	/*[abstract function] destroy a widget*/
 	void (*destroy)(HWidget *p_widget);
+};
+
+enum {
+	ATTR_VISIBLE,
+	ATTR_ENABLE_FOCUS,
+	ATTR_HAS_FOCUS,
+	ATTR_ENABLE,
+	ATTR_BGCOLOR_ENABLE,
+	ATTR_ENABLE_DRAG,
+
+	ATTR_WIDTH_FLAG,
+	ATTR_HEIGHT_FLAG,
+	ATTR_MAX_WIDTH_FLAG,
+	ATTR_MAX_HEIGHT_FLAG,
 };
 
 

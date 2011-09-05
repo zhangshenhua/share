@@ -1,5 +1,3 @@
-#if 0
-
 /************************************************************************
 * Name : hlabel.c
 * Copyright : Hisoft
@@ -86,7 +84,7 @@ static void set_label_row_width_count(HLabel *p_Me){
 			i_ret++;
 		}
 	}
-	i_wh = p_par->p_widget_ops->get_max_width(p_par) - p_par->uc_padding_left - p_par->uc_padding_right;
+	i_wh = p_par->p_widget_ops->get_max_width(p_par) - p_par->s_padding_left - p_par->s_padding_right;
 	if (!i_ret){
 		i_len = vm_graphic_get_string_width(ac_wstr);
 		if (i_len > i_wh){
@@ -182,17 +180,16 @@ static void text_set(HLabel *p_Me, const char *pc_str){
 /*** end text_text ***/
 
 /*** loading image for the label ***/
-static void image_set_resouce(HLabel *p_Me, const char *pc_image_name){
+static void image_set_resouce(HLabel *p_Me, char *pc_image_name){
 	if (p_Me->bg_image){
-		vm_free(p_Me->bg_image);
+		himage_delete(p_Me->bg_image);
 		p_Me->bg_image = NULL;
 	}
-	p_Me->bg_image = (HImage *)vm_malloc(sizeof(HImage));
+	p_Me->bg_image = himage_new();
 	if (NULL == p_Me->bg_image){
 		p_Me->bg_image = NULL;
 		return;
 	}
-	himage_init(p_Me->bg_image);
 	p_Me->bg_image->p_oper->load_image(p_Me->bg_image, pc_image_name);
 }
 /*** end image_set_resource ***/
@@ -200,15 +197,14 @@ static void image_set_resouce(HLabel *p_Me, const char *pc_image_name){
 /*** loading image for the label ***/
 static void image_set_buffer(HLabel *p_Me, VMUINT8 *pi_buf, VMINT i_size){
 	if (p_Me->bg_image){
-		vm_free(p_Me->bg_image);
+		himage_delete(p_Me->bg_image);
 		p_Me->bg_image = NULL;
 	}
-	p_Me->bg_image = (HImage *)vm_malloc(sizeof(HImage));
+	p_Me->bg_image = himage_new();
 	if (NULL == p_Me->bg_image){
 		p_Me->bg_image = NULL;
 		return;
 	}
-	himage_init(p_Me->bg_image);
 	p_Me->bg_image->p_oper->load_image_2(p_Me->bg_image, pi_buf, i_size);
 }
 /*** end image_set_buffer ***/
@@ -224,9 +220,9 @@ static short preferred_width(HWidget *p_Me){
 			if ((unsigned char)1 != p_this->uc_ps){
 				set_label_row_width_count(p_this);
 			}
-			return (p_Me->s_prefered_width = p_this->text_row_width + p_Me->uc_padding_left + p_Me->uc_padding_right);
+			return (p_Me->s_prefered_width = p_this->text_row_width + p_Me->s_padding_left + p_Me->s_padding_right);
 		}else{
-			return (p_Me->s_prefered_width = p_Me->uc_padding_right + p_Me->uc_padding_left);
+			return (p_Me->s_prefered_width = p_Me->s_padding_right + p_Me->s_padding_left);
 		}
 	}
 }
@@ -244,9 +240,9 @@ static short preferred_height(HWidget *p_Me){
 				set_label_row_width_count(p_this);
 			}
 			return (p_Me->s_prefered_height = p_this->text_row_spacing * (p_this->text_row_count - 1) + \
-				p_this->text_row_count * vm_graphic_get_character_height() + p_Me->uc_padding_top + p_Me->uc_padding_bottom);
+				p_this->text_row_count * vm_graphic_get_character_height() + p_Me->s_padding_top + p_Me->s_padding_bottom);
 		}else{
-			return (p_Me->s_prefered_height = vm_graphic_get_character_height() + p_Me->uc_padding_bottom + p_Me->uc_padding_top);
+			return (p_Me->s_prefered_height = vm_graphic_get_character_height() + p_Me->s_padding_bottom + p_Me->s_padding_top);
 		}
 	}
 }
@@ -261,6 +257,7 @@ static void draw_output(HLabel *p_Me, int i_layer, short s_x, short s_y, int *i_
 
 	if (vm_graphic_get_string_width(pc_str) <= p_Me->text_row_width){
 		/*ToDo:(i_layer, s_x, s_y, pc_str, p_par->i_color)*/
+/*		output_text(i_layer, pc_str, s_x, s_y, VM_COLOR_GREEN);*/
 	}else{
 		i_ch = vm_graphic_get_character_height();
 		i_spa = p_Me->text_row_spacing;
@@ -272,11 +269,13 @@ static void draw_output(HLabel *p_Me, int i_layer, short s_x, short s_y, int *i_
 			ac_wstr[i_tp] = *pc_tp;
 			if ('\0' == *pc_tp){
 				/*ToDo:(i_layer, s_x, s_y + (*i_row - 1) * (i_ch + i_spa), ac_wstr, p_par->i_color)*/
+			/*	output_text(i_layer, s_x, s_y + (*i_row - 1) * (i_ch + i_spa), ac_wstr, VM_COLOR_GREEN);*/
 				break;
 			}
 			if (vm_graphic_get_string_width(ac_wstr) > p_Me->text_row_width){
 				ac_wstr[i_tp] = '\0';
 				/*ToDo:(i_layer, s_x, s_y + (*i_row - 1) * (i_ch + i_spa), ac_wstr, p_par->i_color)*/
+			/*	output_text(i_layer, s_x, s_y + (*i_row - 1) * (i_ch + i_spa), ac_wstr, VM_COLOR_GREEN);*/
 				*i_row++;
 				i_tp = 0;
 				pc_tp--;
@@ -305,11 +304,11 @@ static void draw_text(HLabel *p_Me, int i_layer, short s_x, short s_y){
 
 	while (1){
 		if ('\0' == *pc_tp){
-			draw_output(p_Me, i_layer, s_x + p_par->uc_padding_left, s_y, &i_row, pc_str);
+			draw_output(p_Me, i_layer, s_x + p_par->s_padding_left, s_y, &i_row, pc_str);
 			break;
 		}else if ('\n' == *pc_tp){
 			*pc_tp = '\0';
-			draw_output(p_Me, i_layer, s_x + p_par->uc_padding_left, s_y, &i_row, pc_str);
+			draw_output(p_Me, i_layer, s_x + p_par->s_padding_left, s_y, &i_row, pc_str);
 			pc_str = pc_tp + 1;
 		}
 		i_row++;
@@ -329,6 +328,7 @@ static void draw(HWidget *p_widget, int i_layer, short s_x, short s_y){
 	s_tp.s_height = p_widget->s_height;
 
 	/*ToDo: draw label(int i_layer, s_tp, p_widget->i_color, p_widget->i_bgcolor)	*/
+/*	draw_button(i_layer, s_x, s_y, VM_COLOR_BLUE);	*/
 	if (p_Me->bg_image){
 		p_Me->bg_image->p_oper->paint(p_Me->bg_image, i_layer, s_x, s_y);
 	}
@@ -336,7 +336,7 @@ static void draw(HWidget *p_widget, int i_layer, short s_x, short s_y){
 		if ((unsigned char)1 != p_Me->uc_ps){
 			set_label_row_width_count(p_Me);
 		}
-		draw_text(p_Me, i_layer, s_x, s_y);
+		/*draw_text(p_Me, i_layer, s_x, s_y);	*/
 	}
 }
 /*** end draw ***/
@@ -421,6 +421,3 @@ void hlabel_delete(HLabel *p_Me){
 
 
 /******************************* EOF ***********************************/
-
-#endif
-

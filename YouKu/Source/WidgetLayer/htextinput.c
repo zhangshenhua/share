@@ -45,8 +45,8 @@ static void set_text(HTextInput *p_textinput, char *pc_text)
 		vm_free(p_textinput->pc_text);
 
 	p_textinput->pc_text = (char *)vm_malloc(i_len + 1);
-	memcpy(p_textinput->pc_text, pc_text, i_len);
-	p_textinput->pc_text[i_len + 1] = '\0';
+	strncpy(p_textinput->pc_text, pc_text, i_len);
+	p_textinput->pc_text[i_len] = '\0';
 }
 
 /* Get text from HTextInput */
@@ -105,9 +105,11 @@ static void input_method_callback(VMINT state, VMWSTR str)
 	i_len = strlen(p_buf);
 	p_textinput_buf->pc_text = (char *)vm_malloc(i_len + 1);
 	memcpy(p_textinput_buf->pc_text, p_buf, i_len);
-	p_textinput_buf->pc_text[i_len + 1] = '\0';
+	p_textinput_buf->pc_text[i_len] = '\0';
 
 	vm_free(p_buf);
+
+	p_textinput_buf = NULL;
 }
 
 /* Call input method by HTextInput */
@@ -120,7 +122,6 @@ static void call_input_method(HTextInput *p_textinput)
 	p_textinput_buf = p_textinput;
 	vm_input_text3(str, TEXT_MAX_SIZE, p_textinput->c_input_method, input_method_callback);
 
-	p_textinput_buf = NULL;
 	p_textinput->base.p_widget_ops->repaint((HWidget *)p_textinput);
 
 	vm_free(str);
@@ -236,7 +237,7 @@ static short get_prefered_height(HWidget *p_widget)
 	vm_graphic_set_font(c_font);
 
 	i_prefered_height = vm_graphic_get_character_height() + 
-		p_textinput->base.uc_padding_top + p_textinput->base.uc_padding_bottom;
+		p_textinput->base.s_padding_top + p_textinput->base.s_padding_bottom;
 
 	p_textinput->base.s_prefered_width = i_prefered_height;
 	
@@ -256,13 +257,14 @@ static void hwidget_delete(HWidget *p_widget)
 
 	--i_ops;
 
+#if 0
 	if (0 == i_ops) {
 		if (p_textinput_ops)
 			vm_free(p_textinput_ops);
 		if (p_base_ops)
 			vm_free(p_base_ops);
 	}
-
+#endif
 	if (p_textinput->pc_text)
 		vm_free(p_textinput->pc_text);
 
@@ -314,21 +316,23 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 
 	p_textinput->p_textinput_ops = p_textinput_ops;
 	p_textinput->base.p_widget_ops = p_base_ops;
+	p_textinput->base.action_performed = NULL;
 
 	/* init HWiget attr */
-	p_textinput->base.uc_padding_left = 8;
-	p_textinput->base.uc_padding_right = 8;
-	p_textinput->base.uc_padding_top = 8;
-	p_textinput->base.uc_padding_bottom = 8;
+	p_textinput->base.s_padding_left = 8;
+	p_textinput->base.s_padding_right = 8;
+	p_textinput->base.s_padding_top = 8;
+	p_textinput->base.s_padding_bottom = 8;
 	p_textinput->base.c_font = FONT_SMALL;
 
 	return p_textinput;
 }
 
 /* Destroy a HTextInput */
-extern void textinput_destroy(HTextInput *p_textinput)
+extern void textinput_delete(HTextInput *p_textinput)
 {
 	--i_ops;
+#if 0
 
 	if (0 == i_ops) {
 		if (p_textinput_ops)
@@ -336,6 +340,7 @@ extern void textinput_destroy(HTextInput *p_textinput)
 		if (p_base_ops)
 			vm_free(p_base_ops);
 	}
+#endif
 
 	if (p_textinput->pc_text)
 		vm_free(p_textinput->pc_text);

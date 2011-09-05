@@ -13,6 +13,7 @@
 #include "hwidget.h"
 #include "hcontainer.h"
 #include "hplane.h"
+#include "../WindowLayer/hwindow.h"
 
 static HWidgetOperation *gp_widget_ops;
 
@@ -39,19 +40,6 @@ void hwidget_operation_init(HWidgetOperation *p_widget_ops)
 	}
 }
 
-enum {
-	ATTR_VISIBLE,
-	ATTR_ENABLE_FOCUS,
-	ATTR_HAS_FOCUS,
-	ATTR_ENABLE,
-	ATTR_BGCOLOR_ENABLE,
-	ATTR_ENABLE_DRAG,
-
-	ATTR_WIDTH_FLAG,
-	ATTR_HEIGHT_FLAG,
-	ATTR_MAX_WIDTH_FLAG,
-	ATTR_MAX_HEIGHT_FLAG,
-};
 
 /*whether the widget visible, return 0 or 1*/
 static int is_visible(HWidget *p_widget)
@@ -171,9 +159,19 @@ static void set_bgcolor(HWidget *p_widget, int i_rgb)
 static int get_default_bgcolor(HWidget *p_widget)
 {
 	HWidget *p;
+	HPlane *p_plane;
+	int i_idx;
 	for (p = (HWidget *)p_widget->p_parent; p; p = (HWidget *)p->p_parent) {
 		if (p->p_widget_ops->is_enable_bgcolor(p))
 			return p->i_bgcolor;
+	}
+	p_plane = p_widget->p_widget_ops->get_root(p_widget);
+	if (p_plane && p_plane->s_plane_index > 0) {
+		for (i_idx = p_plane->s_plane_index -1; i_idx >= 0; i_idx --) {
+			p = (HWidget *)window->p_planes[i_idx];
+			if (p && p->p_widget_ops->is_enable_bgcolor(p))
+				return p->i_bgcolor;
+		}
 	}
 	return p_widget->i_bgcolor;
 }
@@ -188,6 +186,22 @@ static HFont get_font(HWidget *p_widget)
 static void set_font(HWidget *p_widget, HFont font)
 {
 	p_widget->c_font = font;
+}
+
+/* get top x/ top y */
+static HPoint get_position(HWidget *p_widget)
+{
+	HPoint p;
+	p.s_x = p_widget->s_top_x;
+	p.s_y = p_widget->s_top_y;
+	return p;
+}
+
+/*set top x/ top y*/
+static void set_position(HWidget *p_widget, short s_top_x, short s_top_y)
+{
+	p_widget->s_top_x = s_top_x;
+	p_widget->s_top_y = s_top_y;
 }
 
 /*get the widget width*/
@@ -244,7 +258,7 @@ static short get_max_width(HWidget *p_widget)
 		if (p_widget->p_parent) {
 			p = (HWidget *)p_widget->p_parent;
 			p_widget->s_max_width = p->p_widget_ops->get_max_width(p) - 
-				p->uc_padding_left - p->uc_padding_right - p_widget->s_top_x;
+				p->s_padding_left - p->s_padding_right - p_widget->s_top_x;
 		}
 	}
 	return p_widget->s_max_width;
@@ -269,7 +283,7 @@ static short get_max_height(HWidget *p_widget)
 		if (p_widget->p_parent) {
 			p = (HWidget *)p_widget->p_parent;
 			p_widget->s_max_height = p->p_widget_ops->get_max_height(p) - 
-				p->uc_padding_top - p->uc_padding_bottom - p_widget->s_top_y;
+				p->s_padding_top - p->s_padding_bottom - p_widget->s_top_y;
 		}
 	}
 	return p_widget->s_max_height;
@@ -289,25 +303,25 @@ static void set_max_height(HWidget *p_widget, short s_max_height)
 /*set the widget padding left*/
 static void set_padding_left(HWidget *p_widget, unsigned char s_padding_left)
 {
-	p_widget->uc_padding_left = s_padding_left;
+	p_widget->s_padding_left = s_padding_left;
 }
 
 /*set the widget padding right*/
 static void set_padding_right(HWidget *p_widget, unsigned char s_padding_right)
 {
-	p_widget->uc_padding_right = s_padding_right;
+	p_widget->s_padding_right = s_padding_right;
 }
 
 /*set the widget padding top*/
 static void set_padding_top(HWidget *p_widget, unsigned char s_padding_top)
 {
-	p_widget->uc_padding_top = s_padding_top;
+	p_widget->s_padding_top = s_padding_top;
 }
 
 /*set the widget padding bottom*/
 static void set_padding_bottom(HWidget *p_widget, unsigned char s_padding_bottom)
 {
-	p_widget->uc_padding_bottom = s_padding_bottom;
+	p_widget->s_padding_bottom = s_padding_bottom;
 }
 
 /*paint the widget*/
@@ -317,20 +331,27 @@ static void set_padding_bottom(HWidget *p_widget, unsigned char s_padding_bottom
 static void repaint(HWidget *p_widget)
 {
 	HPoint p;
-	int i_handle;
+	int i_handles[sizeof(window->p_planes)/sizeof(HPlane *)];
 	int i_bgcolor_enable;
 	int i_bgcolor;
+	short  i_idx, i_count;
 	p = p_widget->p_widget_ops->get_screen_point(p_widget, 0, 0);
-	i_handle = p_widget->p_widget_ops->get_paint_handle(p_widget);
+	i_handles[0] = p_widget->p_widget_ops->get_paint_handle(p_widget);
 	i_bgcolor_enable = p_widget->p_widget_ops->is_enable_bgcolor(p_widget);
-	if (!i_bgcolor_enable) {
+	if (!i_bgcolor_enable /*&& !p_widget->p_widget_ops->is_container(p_widget)*/) {
 		i_bgcolor = p_widget->p_widget_ops->get_default_bgcolor(p_widget);
 		//TODO: use i_bgcolor to fill a rect(p_widget->s_width,p_widget->s_height) at position p
-		vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handle), p.s_x, p.s_y, p_widget->s_width, p_widget->s_height, i_bgcolor, i_bgcolor);
+		vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handles[0]), p.s_x, p.s_y, p_widget->s_width, p_widget->s_height, i_bgcolor, i_bgcolor);
 	}
-	p_widget->p_widget_ops->paint(p_widget, i_handle, p.s_x, p.s_y);
+	p_widget->p_widget_ops->paint(p_widget, i_handles[0], p.s_x, p.s_y);
 	//TODO: flush the screen
-	vm_graphic_flush_layer(&i_handle, 1);
+	for (i_idx = i_count = 0; i_idx < sizeof(i_handles)/sizeof(int); i_idx ++) {
+		p_widget = (HWidget *)window->p_planes[i_idx];
+		if (p_widget && p_widget->p_widget_ops->is_visible(p_widget)) {
+			i_handles[i_count ++] = window->p_planes[i_idx]->i_handle;
+		}
+	}
+	vm_graphic_flush_layer(i_handles, i_count);
 }
 
 /*validate the widget preferred size, size , and max size*/
@@ -367,8 +388,8 @@ static HPoint get_screen_point(HWidget *p_widget, short s_x, short s_y)
 		return point;
 	}
 	for (p_widget = (HWidget *)p_widget->p_parent; p_widget && p_widget->p_parent; p_widget = (HWidget *)p_widget->p_parent) {
-		point.s_x += p_widget->s_top_x + ((HContainer *)p_widget)->s_translate_x + p_widget->uc_padding_left;
-		point.s_y += p_widget->s_top_y + ((HContainer *)p_widget)->s_translate_y + p_widget->uc_padding_top;
+		point.s_x += p_widget->s_top_x + ((HContainer *)p_widget)->s_translate_x + p_widget->s_padding_left;
+		point.s_y += p_widget->s_top_y + ((HContainer *)p_widget)->s_translate_y + p_widget->s_padding_top;
 	}
 	if (p_widget->p_widget_ops->is_plane(p_widget)) {
 		return point;
@@ -520,6 +541,8 @@ static void create_widget_ops()
 	gp_widget_ops->get_default_bgcolor = get_default_bgcolor;
 	gp_widget_ops->get_font = get_font;
 	gp_widget_ops->set_font = set_font;
+	gp_widget_ops->get_position = get_position;
+	gp_widget_ops->set_position = set_position;
 	gp_widget_ops->get_width = get_width;
 	gp_widget_ops->set_width = set_width;
 	gp_widget_ops->get_height = get_height;

@@ -62,13 +62,6 @@ struct _HWindow {
 	PageSwitchController * (*get_page_switch_contrller)();
 
 	/************************************************************************
-	* Function:   show_new_page
-	* Description: show the new page
-	* Para(in) p_page: a new page that will be update and show
-	************************************************************************/
-	void (*update_new_page)(Page *p_page);
-
-	/************************************************************************
 	* validate the window's all planes
 	************************************************************************/
 	void (*validate)();
@@ -76,6 +69,9 @@ struct _HWindow {
 	/*repaint all planes*/
 	void (*repaint)();
 };
+
+
+
 
 
 #endif

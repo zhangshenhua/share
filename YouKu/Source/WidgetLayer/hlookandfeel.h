@@ -16,20 +16,101 @@
 #include "vmchset.h"
 #include "vmstdlib.h"
 
+#include "hplane.h"
 #include "hwidget.h"
 #include "hpushbutton.h"
-#include "hplane.h"
 #include "htextinput.h"
 #include "htextarea.h"
 #include "hlabel.h"
+#include "hcheckbox.h"
+#include "himage.h"
 
+#define MAX_RESOURCE_SIZE 1024*1024
+
+
+typedef struct _HResourceImageProperty HResourceImageProperty;
+typedef struct _HResource HResource;
+
+struct _HResourceImageProperty {
+	int		i_image_byte_size;
+	char		*p_image_strparth;
+	HImage *p_image;
+};
+
+struct _HResource {
+/********************** public member ***********************************/
+
+	HImage* (*load_local_image)(HResource *p_resource, char *p_strParth);
+
+//	HImage* (*load_remote_image)(HResource *p_resource, char *p_strParth);
+
+//	HImage* (*load_face_image)(HResource *p_resource, char *p_code);
+
+	void (*free_image_by_hresource)(HResource *p_resource, HImage* p_image); 
+
+/********************* end public member ********************************/
+
+/********************** private member *********************************/
+	int i_resource_byte_size;
+
+	HImage *p_max_image;
+
+	hlist_node_t* p_property_list_head;
+
+	void (*append_property_and_strparth)(HResource *p_resource, HImage *p_image, char *p_strparth);
+
+	int (*remove_property_and_strparth)(HResource *p_resource, HImage *p_image);
+
+	void (*release_maximun_image)(HResource *p_resource);
+
+	int (*get_image_size)(HImage* p_image);
+
+/********************* end private member ********************************/
+};
+
+HResource *hresource_new();
+
+void hresource_delete(HResource *p_resource);
 
 /*
 * name : look_draw_plane
 * description : draw plane
 * @para(in) p_plane : a plane
 */
-extern void look_draw_plane(HPlane *p_plane);
+void look_draw_plane(HPlane* p_plane);
+
+/*
+* name : look_draw_trans_color
+* description : draw gray screen into a layer by hrect struction
+* @para(in) i_layer_handle : a layer handle
+* @para(in) p_rect : the transparent hrect struction
+* @para(in) trans_color : the transparent color
+* @para(in) i_transparency : the transparency of color
+* @para(in) i_transparency : value range [0,255], 0 means completely transparent 
+*/
+void look_draw_trans_color(VMINT i_layer_handle, HRect p_rect, VMUINT16 trans_color, VMINT i_transparency);
+
+/*
+* name : look_draw_highlight_in_trans
+* description : draw hight light rect in a trans rect
+* @para(in) i_layer_handle : a layer handle
+* @para(in) p_hightlight_rect : the hight light hrect struction
+* @para(in) p_trans_rect : the transparent hrect struction
+* @para(in) trans_color : the transparent color
+* @para(in) i_transparency : the transparency of color
+* @para(in) i_transparency : value range [0,255], 0 means completely transparent 
+*/
+void look_draw_highlight_in_trans(VMINT i_layer_handle, HRect p_hightlight_rect, HRect p_trans_rect, VMUINT16 trans_color, VMINT i_transparency);
+
+/*
+* name : look_draw_highlight_by_change_saturation
+* description : draw hight light rect by change the saturation of each pixel color
+* @para(in) i_layer_handle : a layer handle
+* @para(in) p_rect : the hight light hrect struction
+* @para(in) i_saturation_change : the change value of staturation
+* @para(in) i_saturation_change : the staturation value range [0,255]
+*/
+void look_draw_highlight_by_change_saturation(VMINT i_layer_handle, HRect p_rect, int i_saturation_change);
 
 /*
  * name : look_panit_pushbutton
@@ -65,12 +146,22 @@ extern void look_paint_textarea(HTextArea *p_textarea, VMINT i_layer_handle, int
 /*
 * name : look_paint_label
 * description : draw label into a layer
-* @para(in) p_label : a text input structure
+* @para(in) p_label : a label structure
 * @para(in) i_layer_handle : a plane handle by creating layer
 * @para(in) i_screen_x : the screen x coordinate
 * @para(in) i_screen_y : the screen y coordinate
 */
-extern void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int i_screen_y);
+ void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int i_screen_y);
+
+ /*
+ * name : look_paint_label
+ * description : draw check box into a layer
+ * @para(in) p_checkbox : a check box structure
+ * @para(in) i_layer_handle : a plane handle by creating layer
+ * @para(in) i_screen_x : the screen x coordinate
+ * @para(in) i_screen_y : the screen y coordinate
+ */
+ void look_paint_checkbox(HCheckBox* p_checkbox, int i_handle, short s_screen_x, short s_screen_y);
 
 /*
 * name : draw_rect_by_widget

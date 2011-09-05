@@ -7,14 +7,19 @@
 #ifndef _PAGE_H_
 #define _PAGE_H_
 
-#include "../Common/herrorcode.h"
-#include "../Common/hlist.h"
-
 typedef struct _Page Page;
 typedef struct _PageSwitchController PageSwitchController;
+typedef struct _PageNode PageNode;
 
 /*new a PageSwitchController instance*/
 PageSwitchController * page_switch_controller_new();
+void page_switch_controller_delete(PageSwitchController *p_this);
+
+struct _PageNode {
+	Page *p_page;
+	PageNode *p_prev;
+	PageNode *p_next;
+};
 
 struct _Page {
 	/*user defined a unique id*/
@@ -23,14 +28,11 @@ struct _Page {
 	/*the page type. user should define it*/
 	int i_page_type;
 
-	/* Init page view, create widgets after page creating or resuming complete */
-	void (*init)(Page *p_page);
-
 	/*show this page */
 	void (*fire_visible)(Page *p_this);
 
 	/* hide this page */
-	void (*fire_hide)(Page *);
+	void (*fire_hiden)(Page *);
 
 	/*destroy the page , free its memory*/
 	void (*destroy)(Page *p_this);
@@ -41,17 +43,23 @@ struct _PageSwitchController {
 	/************************  private member *****************************/
 
 	/*a root page , does not belong to a specific page*/
-	hlist_node_t root_page_node;
+	PageNode root_page_node;
 
 	/*current page*/
-	hlist_node_t *p_cur_page_node;
+	PageNode *p_cur_page_node;
+
+	/* prev page node */
+	PageNode *p_prev_page_node;
 
 	/************************  public member *****************************/
 
-	/*append a page after the current page*/
-	void (*append_page)(PageSwitchController *p_this, Page *p_page);
+	/* load a new page */
+	void (*load_new_page)(PageSwitchController *p_this, Page *p_new_page);
 
-	/*delete a page from the pages, and will free its memory*/
+	/*show page find from switch controller*/
+	void (*load_exists_page)(PageSwitchController *p_this, Page *p_exist_page);
+
+	/*load a page from the pages, and will free its memory*/
 	void (*delete_page)(PageSwitchController *p_this, Page *p_page);
 
 	/*find a page by  page type*/
@@ -60,20 +68,11 @@ struct _PageSwitchController {
 	/*find a page by  page id*/
 	Page * (*find_page_by_page_id)(PageSwitchController *p_this, int i_page_id);
 
-	/*show the current page*/
-	void (*show_cur_page)(PageSwitchController *p_this);
-
-	/*set current page*/
-	void (*set_cur_page)(PageSwitchController *p_this, Page *p_page);
-
 	/* get current page */
 	Page * (*get_cur_page)(PageSwitchController *p_this);
 
 	/*show back page*/
 	void (*go_back)(PageSwitchController *p_this);
-	
-	/*destroy the page switch controller, free its memory*/
-	void (*destroy)(PageSwitchController *p_this);
 
 };
 

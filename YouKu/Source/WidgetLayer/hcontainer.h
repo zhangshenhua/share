@@ -25,7 +25,7 @@ HContainer * hcontainer_new();
 * Description: destroy a  HContainer
 * Para(in) p_container : it is a HContainer
 ************************************************************************/
-void hcontainer_delete(HWidget *p_container);
+void hcontainer_delete(HContainer *p_container);
 
 /************************************************************************
 * Function: hcontainer_init                                                            

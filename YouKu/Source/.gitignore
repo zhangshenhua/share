@@ -1,6 +1,6 @@
-Common/  
-Makefile  
-PageLayer/
-WidgetLayer/  
-WindowLayer/
+./Common/  
+./Makefile  
+./PageLayer/
+./WidgetLayer/  
+./WindowLayer/
 

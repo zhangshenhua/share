@@ -44,7 +44,7 @@ typedef struct _hLabel{
 * Parameters@ : 
 * Return : 
 ************************************************************************/
-	void			(*set_image_from_resource)(struct _hLabel *p_Me, const char *pc_image_name);
+	void			(*set_image_from_resource)(struct _hLabel *p_Me, char *pc_image_name);
 
 /*********************** function declaration ***************************
 * Name : set_image_from_buffer
