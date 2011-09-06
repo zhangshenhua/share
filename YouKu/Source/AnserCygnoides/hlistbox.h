@@ -19,8 +19,8 @@
 
 typedef HWidget		Item;
 typedef HContainer  VideoItem;
-typedef VideoItem  VideoItem1;
-typedef VideoItem  VideoItem2;
+typedef VideoItem   VideoItem1;
+typedef VideoItem   VideoItem2;
 
 typedef HContainer  ListBox;
 
@@ -44,8 +44,8 @@ classdef(VideoItem) {
 #endif
 
 extern VideoItem* VideoItem_new(Rect rect, char* cstr_image_path, char* cstr_title, int i_starlevel); 
-extern VideoItem* VideoItem1_new( VideoItem* p_vitem, int i_starlevel); // make vitem of copyright
-extern VideoItem* VideoItem2_new( VideoItem* p_vitem, int i_starlevel); // make vitem of none copyright
+extern VideoItem* VideoItem1_new( VideoItem* p_vitem, char* csrt_playedtimes); // make vitem of copyright
+extern VideoItem* VideoItem2_new( VideoItem* p_vitem, char* cstr_timelong); // make vitem of none copyright
 
 extern VideoItem_delete( VideoItem* p_it );
 
@@ -70,7 +70,7 @@ classdef(ListBox) {
 extern ListBox* ListBox_new( Rect rect );
 extern void ListBox_delete( ListBox* p_it );
 
-extern add_item_to_ListBox();
+extern void add_item_to_ListBox(ListBox* p_listbox, Item* p_item);
 
 
 
