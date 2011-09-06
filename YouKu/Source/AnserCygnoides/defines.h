@@ -13,13 +13,14 @@
 #define DEFINES_H_
 #include <vmsys.h>
 #include <assert.h>
+#include "hwidget.h"
 
+typedef char* cstr;
+typedef HRect	Rect;
 
-typedef char * cstr;
 #define classdef(typename) typedef struct typename typename; \
 						   struct typename
-#define private
-#define public
+
 
 
 #endif

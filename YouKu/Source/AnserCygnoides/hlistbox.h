@@ -16,14 +16,23 @@
 #include "hwidget.h"
 #include "hcontainer.h"
 
-typedef HRect Rect;
-typedef HWidget Item;
 
+typedef HWidget		Item;
+typedef HContainer  VideoItem;
+typedef VideoItem  VideoItem1;
+typedef VideoItem  VideoItem2;
+
+typedef HContainer  ListBox;
+
+
+enum VideoType {NONE_TYPE,COPYRIGHT,NO_COPYRIGHT};
+
+#if 0
 classdef(VideoItem) {
 	//base
 	HContainer* p_HContainer_base;
 	
-	Rect rect_image ;
+	//HImage 
 
 	struct  
 	{
@@ -32,11 +41,16 @@ classdef(VideoItem) {
 	}public_ops;
 
 };
+#endif
 
-extern VideoItem_new();
+extern VideoItem* VideoItem_new(Rect rect, char* cstr_image_path, char* cstr_title, int i_starlevel); 
+extern VideoItem* VideoItem1_new( VideoItem* p_vitem, int i_starlevel); // make vitem of copyright
+extern VideoItem* VideoItem2_new( VideoItem* p_vitem, int i_starlevel); // make vitem of none copyright
+
 extern VideoItem_delete( VideoItem* p_it );
 
 
+#if 0
 classdef(ListBox) {
 	//base
 	HContainer* p_HContainer_base;
@@ -51,10 +65,12 @@ classdef(ListBox) {
 	
 	
 };
+#endif
 
 extern ListBox* ListBox_new( Rect rect );
 extern void ListBox_delete( ListBox* p_it );
 
+extern add_item_to_ListBox();
 
 
 

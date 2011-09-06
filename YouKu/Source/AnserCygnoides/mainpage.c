@@ -63,11 +63,18 @@ static void init(MainPage* p_mainpage)
 	p_mainpage->p_container_total->base.s_width  = screen_width;
 	p_mainpage->p_container_total->base.s_height = screen_height;
 	
+#if 1
 	p_mainpage->p_container_buttongroup->base.s_top_x = 0;	
 	p_mainpage->p_container_buttongroup->base.s_top_y = screen_height - screen_width / 5 ;
 	p_mainpage->p_container_buttongroup->base.s_width  = p_mainpage->p_container_total->base.s_width;
 	p_mainpage->p_container_buttongroup->base.s_height = p_mainpage->p_container_total->base.s_height;
+#else
 
+	p_mainpage->p_container_buttongroup->base.p_widget_ops = 0;	
+	p_mainpage->p_container_buttongroup->base.s_top_y = screen_height - screen_width / 5 ;
+	p_mainpage->p_container_buttongroup->base.s_width  = p_mainpage->p_container_total->base.s_width;
+	p_mainpage->p_container_buttongroup->base.s_height = p_mainpage->p_container_total->base.s_height;
+#endif
 
 	p_mainpage->pbutton1->base.s_top_x = 64*0; 
 	p_mainpage->pbutton1->base.s_top_y = 0;
@@ -95,7 +102,7 @@ static void init(MainPage* p_mainpage)
 	p_mainpage->pbutton5->base.s_height = 64;
 
 
-	p_mainpage->p_container_boby = hcontainer_new();			//plane contains video list, etc
+//p_mainpage->p_container_boby = hcontainer_new();			//plane contains video list, etc
 
 #if 0 
 	p_mainpage->p_container_buttongroup->p_plane_ops->set_top_widget(p_mainpage->p_plane_buttongroup, )
