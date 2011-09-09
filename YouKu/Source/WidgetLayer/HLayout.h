@@ -15,9 +15,11 @@
 /**************Global Variables*************************/
 /*****************INCLUDE FILES*************************/
 #include "hwidget.h"
+
 #include "../Common/hlist.h"
 
-typedef struct _hlayout HLayout;
+typedef struct _HLayout HLayout;
+typedef struct _HLayoutOperation HLayoutOperation;
 typedef struct _Layout_Gap LayoutGap;
 
 /*---------------------------------
@@ -49,7 +51,7 @@ struct _Layout_Gap
 };
 
 /* HLayout type declaration */
-struct _hlayout
+struct _HLayout
 {
 	/* max width and height for putting widget area */
 	short s_max_width;
@@ -61,6 +63,11 @@ struct _hlayout
 	/* list to save all the added widgets */
 	hlist_node_t* p_widget_list;
 
+	HLayoutOperation* p_ops;
+};
+
+struct _HLayoutOperation
+{
 	/*---------------------------------
 	* Function Name:	
 	*
@@ -93,7 +100,7 @@ struct _hlayout
 	* Return:			
 	*---------------------------------------------------------------------*/
 	void (*clear_layout)(HLayout* p_layout);
-	
+
 	/*---------------------------------
 	* Function Name:	
 	*
@@ -104,7 +111,7 @@ struct _hlayout
 	* Return:			
 	*---------------------------------------------------------------------*/
 	void (*set_max_width)(HLayout* p_layout, short s_width);
-	
+
 	/*---------------------------------
 	* Function Name:	
 	*
@@ -126,7 +133,7 @@ struct _hlayout
 	* Return:			
 	*---------------------------------------------------------------------*/
 	void (*set_max_height)(HLayout* p_layout, short s_height);
-	
+
 	/*---------------------------------
 	* Function Name:	
 	*
@@ -172,15 +179,15 @@ struct _hlayout
 	hlist_node_t* (*get_widget_list)(HLayout* p_layout);
 
 	/*---------------------------------
-	 * Function Name:	layout_validate
-     *
-	 * Description:		make layout to be valid
-	 *
-	 * Parameters:		
-	 *
-	 * Return:			void
-	 *---------------------------------------------------------------------*/
-	void (*validate_layout)(HLayout* p_layout);
+	* Function Name:	layout_validate
+	*
+	* Description:		make layout to be valid
+	*
+	* Parameters:		
+	*
+	* Return:			void
+	*---------------------------------------------------------------------*/
+	void (*validate_layout)(HLayout* p_layout, HRect* ret_p_rect);
 };
 
 #endif

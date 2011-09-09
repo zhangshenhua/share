@@ -14,6 +14,7 @@
 #include "hcontainer.h"
 #include "hplane.h"
 #include "../WindowLayer/hwindow.h"
+#include "vmio.h"
 
 static HWidgetOperation *gp_widget_ops;
 
@@ -425,19 +426,34 @@ static void notify_coordinate_changed(HWidget *p_widget)
 /*pen press event callback*/
 static void pen_press(HWidget *p_widget, short s_x, short s_y)
 {
-	//nothing
+	HPenEvent evt;
+	evt.base.i_event_type = VM_PEN_EVENT_TAP;
+	evt.s_x = s_x;
+	evt.s_y = s_y;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
 }
 
 /*pen release event callback*/
 static void pen_release(HWidget *p_widget, short s_x, short s_y)
 {
-	//nothing
+	HPenEvent evt;
+	evt.base.i_event_type = VM_PEN_EVENT_RELEASE;
+	evt.s_x = s_x;
+	evt.s_y = s_y;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
 }
 
 /*pen move event callback*/
 static void pen_move(HWidget *p_widget, short s_x, short s_y)
 {
-	//nothing
+	HPenEvent evt;
+	evt.base.i_event_type = VM_PEN_EVENT_MOVE;
+	evt.s_x = s_x;
+	evt.s_y = s_y;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
 }
 
 static void pen_enter(HWidget *p_widget, short s_x, short s_y)
@@ -450,10 +466,58 @@ static void pen_leave(HWidget *p_widget, short s_x, short s_y)
 	//nothing
 }
 
+void pen_long_tap(HWidget *p_widget, short s_x, short s_y)
+{
+	HPenEvent evt;
+	evt.base.i_event_type = VM_PEN_EVENT_LONG_TAP;
+	evt.s_x = s_x;
+	evt.s_y = s_y;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
+}
+
+/*[abstract function] pen double click callback*/
+void pen_double_click(HWidget *p_widget, short s_x, short s_y)
+{
+	HPenEvent evt;
+	evt.base.i_event_type = VM_PEN_EVENT_DOUBLE_CLICK;
+	evt.s_x = s_x;
+	evt.s_y = s_y;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
+}
+
 /*keyboard press event callback*/
 static void key_press(HWidget *p_widget, int keycode)
 {
+	HKeyEvent evt;
+	evt.base.i_event_type = VM_KEY_EVENT_DOWN;
+	evt.i_keycode = keycode;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
+}
+
+static void key_release(HWidget *p_widget, int keycode)
+{
+	HKeyEvent evt;
+	evt.base.i_event_type = VM_KEY_EVENT_UP;
+	evt.i_keycode = keycode;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
+}
+
+static void key_repeat(HWidget *p_widget, int keycode)
+{
 	//nothing
+}
+
+static void key_long_press(HWidget *p_widget, int keycode)
+{
+	HKeyEvent evt;
+	evt.base.i_event_type = VM_KEY_EVENT_LONG_PRESS;
+	evt.i_keycode = keycode;
+	if (p_widget->action_performed)
+		p_widget->action_performed(p_widget, (HEvent *)&evt, NULL);
 }
 
 /*whether the widget is a container*/
@@ -473,13 +537,6 @@ static int can_travel(HWidget *p_widget, int keycode)
 	return 0;
 }
 
-#if 0
-static void focus_changed(HWidget *p_widget, int i_gained_focus)
-{
-	p_widget->p_widget_ops->set_focus(p_widget, i_gained_focus);
-	p_widget->p_widget_ops->repaint(p_widget);
-}
-#endif
 
 /*get the widget root widget(its a HPlane), if the widget not in a plane, NULL will be returned*/
 static HPlane* get_root(HWidget *p_widget)
@@ -567,14 +624,25 @@ static void create_widget_ops()
  	gp_widget_ops->pen_move = pen_move;
 	gp_widget_ops->pen_enter = pen_enter;
 	gp_widget_ops->pen_leave = pen_leave;
+	gp_widget_ops->pen_double_click = pen_double_click;
+	gp_widget_ops->pen_long_tap = pen_long_tap;
 
  	gp_widget_ops->key_press = key_press;
+	gp_widget_ops->key_release = key_release;
+	gp_widget_ops->key_repeat = key_repeat;
+	gp_widget_ops->key_long_press = key_long_press;
+
 	gp_widget_ops->is_container = is_container;
 	gp_widget_ops->is_plane = is_plane;
 	gp_widget_ops->can_travel = can_travel;
-//	gp_widget_ops->focus_changed = focus_changed;
 	gp_widget_ops->get_root = get_root;
 	gp_widget_ops->get_paint_handle = get_paint_handle;
 	gp_widget_ops->clone = clone;
 	gp_widget_ops->destroy = destroy;
+}
+
+void hwidget_ops_delete()
+{
+	if (gp_widget_ops)
+		vm_free(gp_widget_ops);
 }

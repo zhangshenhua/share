@@ -73,6 +73,9 @@ struct _HTextInput {
 
 	/* Default input method */
 	char c_input_method;
+
+	/* x axis move offset */
+	short s_move_offset;
 };
 
 /*-----------------------------
@@ -88,6 +91,12 @@ extern HTextInput * htextinput_new();
  Para(in) p_htextinput: Pointer of HTextInput self
 -----------------------------*/
 extern void htextinput_delete(HTextInput *p_textinput);
+
+/*------------------------------
+ Function: htextinput_ops_delete
+ Description: delete HTextInput global operations
+--------------------------------*/
+extern void htextinput_ops_delete();
 
 
 #endif

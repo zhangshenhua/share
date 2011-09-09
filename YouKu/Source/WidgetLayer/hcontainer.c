@@ -9,6 +9,7 @@
 #include "vmsys.h"
 #include "string.h"
 #include "vmgraph.h"
+#include "../WindowLayer/hwindow.h"
 
 /*global instance*/
 static HWidgetOperation *gp_hwidget_ops;
@@ -67,6 +68,10 @@ static void hcontainer_add_widget(HContainer *p_container, HWidget *p_widget)
 	p_widget->p_parent = p_container;
 }
 
+#define pw_get_attr(pw, name) (pw->s_attr & (1 << name))
+#define pw_set_attr(pw, name) (pw->s_attr |= 1 << name)
+#define pw_clear_attr(pw, name) (pw->s_attr &= ~(1 << name))
+
 static void hcontainer_remove_widget(HContainer *p_container, HWidget *p_widget)
 {
 	hlist_node_t *pn;
@@ -75,11 +80,12 @@ static void hcontainer_remove_widget(HContainer *p_container, HWidget *p_widget)
 		pw = (HWidget *)pn->pv_data;
 		if (pw == p_widget) {
 			p_widget->p_widget_ops->destroy(p_widget);
-			pn->pv_data = NULL;
+			pn->p_prev->p_next = pn->p_next;
+			pn->p_next->p_prev = pn->p_prev;
+			vm_free(pn);
 			break;
 		}
 	}
-	hlist_remove(p_container->p_children, p_widget);
 }
 
 // static void delete_widget(HContainer *p_container, HWidget *p_widget)
@@ -111,6 +117,8 @@ static void hcontainer_remove_all(HContainer *p_container)
 		pn->pv_data = NULL;
 	}
 	hlist_clear(p_container->p_children);
+	pw = (HWidget *)p_container;
+	pw_clear_attr(pw, ATTR_CONTAINER_CALC_FLAG);
 }
 
 #define _min_(a, b) ((a) < (b) ? (a) : (b))
@@ -146,26 +154,38 @@ static void hcontainer_scroll(HContainer *p_container, short s_dx, short s_dy)
 	}
 }
 
-
-
-static void calc_preffered_size(HContainer *pc)
+static HRect calc_children_preffered_size(HContainer *pc)
 {
 	HWidget *pw;
 	hlist_node_t *pn;
-	short s_w = 0;
-	short s_h = 0;
-	hlist_for_each(pn, pc->p_children) {
-		pw = (HWidget *)pn->pv_data;
-		if (pw->p_widget_ops->is_visible(pw)) {
-			s_w = (s_w > pw->p_widget_ops->get_width(pw) + pw->s_top_x) ? s_w : pw->s_width + pw->s_top_x;
-			s_h = (s_h > pw->p_widget_ops->get_height(pw) + pw->s_top_y) ? s_h : pw->s_height + pw->s_top_y;
+	HRect rect = {0};
+	if (pc->p_layout) {
+		pw = (HWidget *)pc;
+		pc->p_layout->s_max_width = pw->p_widget_ops->get_max_width(pw);
+		pc->p_layout->s_max_height = pw->p_widget_ops->get_max_height(pw);
+		pc->p_layout->p_ops->validate_layout(pc->p_layout, &rect);
+	} else {
+		hlist_for_each(pn, pc->p_children) {
+			pw = (HWidget *)pn->pv_data;
+			pw->p_widget_ops->get_width(pw);
+			pw->p_widget_ops->get_height(pw);
+			if (pw->p_widget_ops->is_visible(pw)) {
+				rect.s_width = (rect.s_width > pw->s_width + pw->s_top_x) ? rect.s_width : pw->s_width + pw->s_top_x;
+				rect.s_height = (rect.s_height > pw->s_height + pw->s_top_y) ? rect.s_height : pw->s_height + pw->s_top_y;
+			}
 		}
 	}
-	pw = (HWidget *)pc;
-	s_w += pw->s_padding_left + pw->s_padding_right;
-	s_h += pw->s_padding_top + pw->s_padding_bottom;
-	pw->s_prefered_width = s_w;
-	pw->s_prefered_height = s_h;
+	return rect;
+}
+
+static void calc_preffered_size(HContainer *pc)
+{
+	HWidget *pw = (HWidget *)pc;
+	HRect rect = calc_children_preffered_size(pc);
+	rect.s_width += pw->s_padding_left + pw->s_padding_right;
+	rect.s_height += pw->s_padding_top + pw->s_padding_bottom;
+	pw->s_prefered_width = rect.s_width;
+	pw->s_prefered_height = rect.s_height;
 }
 
 static short hcontainer_get_prefered_width(HWidget *p_widget)
@@ -184,6 +204,38 @@ static short hcontainer_get_prefered_height(HWidget *p_widget)
 	return p_widget->s_prefered_height;
 }
 
+static short hcontainer_get_width(HWidget *p_widget)
+{
+	if (p_widget->s_width == 0) {
+		p_widget->s_width = p_widget->p_widget_ops->get_prefered_width(p_widget);
+	} else if (pw_get_attr(p_widget, ATTR_WIDTH_FLAG) && !pw_get_attr(p_widget, ATTR_CONTAINER_CALC_FLAG)) {
+		pw_set_attr(p_widget, ATTR_CONTAINER_CALC_FLAG);
+		calc_children_preffered_size((HContainer *)p_widget);
+	}
+	return p_widget->s_width;
+}
+
+static short hcontainer_get_height(HWidget *p_widget)
+{
+	if (p_widget->s_height == 0) {
+		p_widget->s_height = p_widget->p_widget_ops->get_prefered_height(p_widget);
+	} else if (pw_get_attr(p_widget, ATTR_HEIGHT_FLAG) && !pw_get_attr(p_widget, ATTR_CONTAINER_CALC_FLAG)) {
+		pw_set_attr(p_widget, ATTR_CONTAINER_CALC_FLAG);
+		calc_children_preffered_size((HContainer *)p_widget);
+	}
+	return p_widget->s_height;
+}
+
+static void hcontainer_set_bgimg(HContainer *p_container, HImage *p_img)
+{
+	p_container->p_bgimg = p_img;
+}
+
+static void hcontainer_set_layout(HContainer *p_container, HLayout *p_layout)
+{
+	p_container->p_layout = p_layout;
+}
+
 static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)
 {
 	HWidget *pw;
@@ -191,7 +243,10 @@ static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, 
 	hlist_node_t *pn;
 	short s_w;
 	short s_h;
+	short s_tmp_x;
+	short s_tmp_y;
 	pc = (HContainer *)p_widget;
+
 	//paint container self
 	s_w = p_widget->p_widget_ops->get_max_width(p_widget) > p_widget->p_widget_ops->get_width(p_widget) ?
 		p_widget->s_width : p_widget->s_max_width;
@@ -203,58 +258,24 @@ static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, 
 		//TODO: fill the container rect(s_screen_x, s_screen_y, s_w, s_h) with bgcolor
 		vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handle), s_screen_x, s_screen_y, s_w, s_h, (VMINT16)p_widget->i_bgcolor, (VMINT16)p_widget->i_bgcolor);
 	}
+	//paint the background image
+	if (pc->p_bgimg)
+		pc->p_bgimg->p_oper->paint(pc->p_bgimg, i_handle, s_screen_x, s_screen_y);
 	//paint children
 	hlist_for_each(pn, pc->p_children) {
 		pw = (HWidget *)pn->pv_data;
-		pw->p_widget_ops->paint(pw,
-			i_handle,
-			s_screen_x + p_widget->s_padding_left + pw->s_top_x + pc->s_translate_x,
-			s_screen_y + p_widget->s_padding_top + pw->s_top_y + pc->s_translate_y);
+		if (!pw->p_widget_ops->is_visible(pw))
+			continue;
+		s_tmp_x = s_screen_x + p_widget->s_padding_left + pw->s_top_x + pc->s_translate_x;
+		s_tmp_y = s_screen_y + p_widget->s_padding_top + pw->s_top_y + pc->s_translate_y;
+		if (s_tmp_y + pw->s_height >= _max_(s_screen_y, 0) && s_tmp_y <= _min_(s_screen_y + s_h, window->s_screen_height)) {
+			pw->p_widget_ops->paint(pw, i_handle, s_tmp_x, s_tmp_y);
+		}
 	}
 }
 
 static void hcontainer_notify_size_changed(HWidget *p_widget)
 {
-	
-}
-
-/************************************************************************
-* 
-************************************************************************/
-
-static void hcontainer_pen_press(HWidget *p_widget, short s_x, short s_y)
-{
-}
-
-
-static void hcontainer_pen_release(HWidget *p_widget, short s_x, short s_y)
-{
-	if (p_widget->action_performed)
-		p_widget->action_performed(p_widget, NULL);
-}
-
-
-static void hcontainer_pen_move(HWidget *p_widget, short s_x, short s_y)
-{
-	//nothing
-}
-
-
-static void hcontainer_pen_enter(HWidget *p_widget, short s_x, short s_y)
-{
-	//nothing
-}
-
-
-void hcontainer_pen_leave(HWidget *p_widget, short s_x, short s_y)
-{
-	//nothing
-}
-
-
-static void hcontainer_key_press(HWidget *p_widget, int keycode)
-{
-	
 }
 
 static HClass hcontainer_get_class(HWidget *p_widget)
@@ -287,14 +308,10 @@ static void hcontainer_create_hwidget_ops()
 	hwidget_operation_init(gp_hwidget_ops);
 	gp_hwidget_ops->get_prefered_width = hcontainer_get_prefered_width;
 	gp_hwidget_ops->get_prefered_height = hcontainer_get_prefered_height;
+	gp_hwidget_ops->get_width = hcontainer_get_width;
+	gp_hwidget_ops->get_height = hcontainer_get_height;
 	gp_hwidget_ops->paint = hcontainer_paint;
 	gp_hwidget_ops->notify_size_changed = hcontainer_notify_size_changed;
-	gp_hwidget_ops->pen_press = hcontainer_pen_press;
-	gp_hwidget_ops->pen_release = hcontainer_pen_release;
-	gp_hwidget_ops->pen_move = hcontainer_pen_move;
-	gp_hwidget_ops->pen_enter = hcontainer_pen_enter;
-	gp_hwidget_ops->pen_leave = hcontainer_pen_leave;
-	gp_hwidget_ops->key_press = hcontainer_key_press;
 	gp_hwidget_ops->is_container = hcontainer_is_container;
 	gp_hwidget_ops->destroy = (void (*)(HWidget *))hcontainer_delete;
 	gp_hwidget_ops->get_class = hcontainer_get_class;
@@ -310,4 +327,14 @@ static void hcontainer_create_hcontainer_ops()
 	gp_container_ops->remove_all = hcontainer_remove_all;
 	gp_container_ops->scroll = hcontainer_scroll;
 	gp_container_ops->can_scroll = hcontainer_can_scroll;
+	gp_container_ops->set_bgimg = hcontainer_set_bgimg;
+	gp_container_ops->set_layout = hcontainer_set_layout;
+}
+
+void hcontainer_ops_delete()
+{
+	if (gp_hwidget_ops)
+		vm_free(gp_hwidget_ops);
+	if (gp_container_ops)
+		vm_free(gp_container_ops);
 }

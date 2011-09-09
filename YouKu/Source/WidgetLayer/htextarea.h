@@ -15,18 +15,6 @@ typedef struct _HTextArea HTextArea;
 typedef struct _LineNode LineNode;
 typedef struct _HTextGlobal HTextGlobal;
 
-struct _HTextGlobal {
-	char c_timer_id;
-	char c_cursor_flag;
-
-	short s_move_from_x;
-	short s_move_from_y;
-
-	VMWSTR w_str;
-
-	HTextArea *p_textarea;
-};
-
 struct _LineNode {
 	VMWSTR w_line_head;
 	short s_line_len;
@@ -61,11 +49,16 @@ struct _HTextAreaOperation {
 	void (*insert_text)(HTextArea *p_textarea, char *pc_text);
 
 
-	void (*delete_text)(HTextArea *p_textarea);
+	/*
+	 Function Name: delete_character
+	 Description: delete character of current position
+	 Para(in) p_textarea: Pointer of HTextArea self.
+	*/
+	void (*delete_character)(HTextArea *p_textarea);
 	/*
 	Function Name: get_text_len
 	Description: Get length of HTextArea's text.
-	Para(in) p_htextarea: Pointer of HTextArea self.
+	Para(in) p_textarea: Pointer of HTextArea self.
 	Return: length of HTextArea's text (word).
 	*/
 	int (*get_text_len)(HTextArea *p_textarea);
@@ -159,7 +152,8 @@ struct _HTextArea {
 	i_method: Default input method for MRE input method
 	VM_INPUT_METHOD_TEXT,		 Input text and the default input method is PINYIN 
 	VM_INPUT_METHOD_NUMERIC,	 Input number and the default input method is phone number
-	VM_INPUT_METHOD_ALPHABETIC, Input English and the default input method is multitap abc
+	VM_INPUT_METHOD_ALPHABETIC,  Input English and the default input method is multitap abc
+	VM_INPUT_METHOD_PASSWORD,    Output * install characters
 	If i_method = -1, the default method is PINYIN (VM_INPUT_METHOD_TEXT) 
 	i_max_len: Set max length of HEditor's text (word)
 	If i_max_len = -2, the default length is 140
@@ -173,6 +167,12 @@ extern HTextArea* htextarea_new();
  Para(in) p_editor: A pointer of HEditor 
 */
 extern void htextarea_delete(HTextArea *p_textarea);
+
+/*
+ Function Name: htextarea_delete
+ Description: delete HTextArea global operations
+*/
+extern void htextarea_ops_delete();
 
 #endif
 /********************************EOF***********************************/

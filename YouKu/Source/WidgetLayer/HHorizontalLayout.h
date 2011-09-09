@@ -17,7 +17,6 @@
 /*****************INCLUDE FILES*************************/
 #include "HLayout.h"
 
-
 /* HHorizontalLayout type declaration */
 typedef struct _HHorizontalLayout
 {

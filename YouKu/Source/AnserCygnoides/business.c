@@ -9,30 +9,27 @@
 *
 * Modified by zsh on $(date)
 *---------------------------------------------------------------------*/
-#if(0)
+#if(1)
+
+#include "http.h"
 #include "MainPage.h"
 #include "connectpage.h"
 #include "Prompt.h"
+#include "video_detail.h"
 #include "business.h"
-
+#include "hwindow.h"
 
 ConnectPage* p_connectpage;
 PromptPage*  p_promptpage;
 MainPage*    p_MainPage;
 
+
 void businss()
 {
-
+	
 	p_connectpage = ConnectPage_new();
-
-	if(p_connectpage->connect( /* some string abort connect context */  )) {
-		ConnectPage_delete(p_connectpage);
-		p_MainPage = MainPage_new();
-	}
-	else
-	{
-		p_promptpage = PromptPage_new();
-	}
+	OpenPage( p_connectpage );
+	
 
 }
 #endif

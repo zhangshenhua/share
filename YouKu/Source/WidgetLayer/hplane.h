@@ -13,11 +13,14 @@
 
 typedef struct _HPlane HPlane;
 typedef struct _HPlaneOperation HPlaneOperation;
+typedef struct _KeyFocusNode KeyFocusNode;
 
 /*new a HPlane*/
 HPlane * hplane_new();
 
 void hplane_delete(HPlane *p_plane);
+
+void hplane_ops_delete();
 
 
 struct _HPlane {
@@ -50,6 +53,10 @@ struct _HPlane {
 
 	/*the cur own focus widget*/
 	HWidget *p_own_focus_widget;
+
+	KeyFocusNode *p_key_down_head;
+
+	KeyFocusNode *p_key_right_head;
 
 	/********************** public member **************************/
 
@@ -85,7 +92,24 @@ struct _HPlaneOperation {
 	* Description: set the bottom widget of the plane
 	************************************************************************/
 	void (*set_bottom_widget)(HPlane *p_plane, HWidget *p_widget);
+
+	/************************************************************************
+	* when user press down key, figure the focus how to change
+	************************************************************************/
+	void (*add_key_down)(HPlane *p_plane, HWidget *p_from_widget, HWidget *p_to_widget);
+
+	/************************************************************************
+	* when user press right key, figure the focus how to change
+	************************************************************************/
+	void (*add_key_right)(HPlane *p_plane, HWidget *p_from_widget, HWidget *p_to_widget);
 	
 };
+
+struct _KeyFocusNode {
+	HWidget *p_from_widget;
+	HWidget *p_to_widget;
+	KeyFocusNode *p_next;
+};
+
 
 #endif

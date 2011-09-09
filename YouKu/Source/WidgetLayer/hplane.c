@@ -10,6 +10,7 @@
 #include "string.h"
 #include "vmsys.h"
 #include "vmgraph.h"
+#include "vmio.h"
 
 #include "../WindowLayer/hwindow.h"
 #include "vmlog.h"
@@ -190,6 +191,34 @@ static void hplane_validate(HWidget *p_widget)
 	((HWidget *)p_plane->p_content)->p_widget_ops->validate((HWidget *)p_plane->p_content);
 }
 
+static void hplane_add_key_down(HPlane *p_plane, HWidget *p_from_widget, HWidget *p_to_widget)
+{
+	KeyFocusNode *pn = (KeyFocusNode *)vm_malloc(sizeof(KeyFocusNode));;
+	pn->p_from_widget = p_from_widget;
+	pn->p_to_widget = p_to_widget;
+	if (p_plane->p_key_down_head == NULL) {
+		pn->p_next = NULL;
+		p_plane->p_key_down_head = pn;
+	} else {
+		pn->p_next = p_plane->p_key_down_head->p_next;
+		p_plane->p_key_down_head->p_next = pn;
+	}
+}
+
+static void hplane_add_key_right(HPlane *p_plane, HWidget *p_from_widget, HWidget *p_to_widget)
+{
+	KeyFocusNode *pn = (KeyFocusNode *)vm_malloc(sizeof(KeyFocusNode));;
+	pn->p_from_widget = p_from_widget;
+	pn->p_to_widget = p_to_widget;
+	pn->p_next = NULL;
+	if (p_plane->p_key_right_head == NULL) {
+		p_plane->p_key_right_head = pn;
+	} else {
+		pn->p_next = p_plane->p_key_right_head->p_next;
+		p_plane->p_key_right_head->p_next = pn;
+	}
+}
+
 
 /************************************************************************
 * 
@@ -265,6 +294,32 @@ static void hplane_pen_press(HWidget *p_widget, short s_x, short s_y)
 	p_cur_press_widget->p_widget_ops->pen_press(p_cur_press_widget, old_widget_pos.s_x, old_widget_pos.s_y);
 }
 
+static void hplane_pen_double_click(HWidget *p_widget, short s_x, short s_y)
+{
+	HWidget *pw;
+	HPoint pos;
+	pw = child_at_recursive((HContainer *)p_widget, s_x, s_y);
+	if (pw->p_widget_ops->is_plane(pw)) {
+		pw = NULL;
+		return;
+	}
+	pos = point_at_widget(pw, s_x, s_y);
+	pw->p_widget_ops->pen_double_click(pw, pos.s_x, pos.s_y);
+}
+
+static void hplane_pen_long_tap(HWidget *p_widget, short s_x, short s_y)
+{
+	HWidget *pw;
+	HPoint pos;
+	pw = child_at_recursive((HContainer *)p_widget, s_x, s_y);
+	if (pw->p_widget_ops->is_plane(pw)) {
+		pw = NULL;
+		return;
+	}
+	pos = point_at_widget(pw, s_x, s_y);
+	pw->p_widget_ops->pen_long_tap(pw, pos.s_x, pos.s_y);
+}
+
 static void hplane_pen_release(HWidget *p_widget, short s_x, short s_y)
 {
 	HWidget *p_wid;
@@ -280,11 +335,17 @@ static void hplane_pen_release(HWidget *p_widget, short s_x, short s_y)
 			) {
 			//lost focus, and repaint it
 			p_old_focus_widget->p_widget_ops->set_focus(p_old_focus_widget, 0);
+			if (p_old_focus_widget->p_widget_ops->focus_changed)
+				p_old_focus_widget->p_widget_ops->focus_changed(p_old_focus_widget, 0);
 			p_old_focus_widget->p_widget_ops->repaint(p_old_focus_widget);
 		}
 		old_widget_pos = point_at_widget(p_cur_press_widget, s_x, s_y);
 		if (p_cur_press_widget->p_widget_ops->is_enable_focus(p_cur_press_widget)) {
 			((HPlane *)p_widget)->p_own_focus_widget = p_cur_press_widget;
+			//gain focus
+			p_cur_press_widget->p_widget_ops->set_focus(p_cur_press_widget, 1);
+			if (p_cur_press_widget->p_widget_ops->focus_changed)
+				p_cur_press_widget->p_widget_ops->focus_changed(p_cur_press_widget, 1);
 		}
 		p_cur_press_widget->p_widget_ops->pen_release(p_cur_press_widget, old_widget_pos.s_x, old_widget_pos.s_y);
 		p_cur_press_widget = NULL;
@@ -297,7 +358,7 @@ static void hplane_pen_move(HWidget *p_widget, short s_x, short s_y)
 	short s_dy = s_y - old_screen_pos.s_y;
 	old_screen_pos.s_x = s_x;
 	old_screen_pos.s_y = s_y;
-	vm_log_debug("move(%d, %d)", s_x, s_y);
+
 	if (p_cur_press_widget == NULL)
 		return;
 	old_widget_pos = point_at_widget(p_cur_press_widget, s_x, s_y);
@@ -328,6 +389,205 @@ static void hplane_pen_move(HWidget *p_widget, short s_x, short s_y)
 	}
 }
 
+static HWidget * find_next(HContainer *p_con)
+{
+}
+
+static HWidget * find_next_enable_focus_widget(HPlane *p_plane, int i_dir)
+{
+	KeyFocusNode *p_node = NULL;
+	HWidget *pw = NULL, *pw2;
+	HContainer *pc;
+	hlist_node_t *pn;
+	short s_dx1, s_dy1, s_dx2, s_dy2;
+	if (i_dir == VM_KEY_DOWN || i_dir == VM_KEY_UP)
+		p_node = p_plane->p_key_down_head;
+	else 
+		p_node = p_plane->p_key_right_head;
+	for (; p_node; p_node = p_node->p_next) {
+		if (i_dir == VM_KEY_DOWN || i_dir == VM_KEY_RIGHT) {
+			if (p_plane->p_own_focus_widget == p_node->p_from_widget) {
+				pw = p_node->p_from_widget;
+				break;
+			}
+		} else {
+			if (p_plane->p_own_focus_widget == p_node->p_to_widget) {
+				pw = p_node->p_to_widget;
+				break;
+			}
+		}
+	}
+	//find it
+	if (pw)
+		return pw;
+#define _abs_(a) (a>0? a : -a)
+	//not find then ,find by relative position int the same container
+	pc = p_plane->p_own_focus_widget->p_parent;
+	hlist_for_each(pn, pc->p_children) {
+		pw2 = (HWidget *)pn->pv_data;
+		if (!pw2->p_widget_ops->is_visible(pw2) || !pw2->p_widget_ops->is_enable_focus(pw2))
+			continue;
+		switch (i_dir) {
+			case VM_KEY_DOWN:
+				if (pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y > 0) {
+					if (pw) {
+						s_dx1 = _abs_(pw->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy1 = _abs_(pw->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						s_dx2 = _abs_(pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy2 = _abs_(pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						if (s_dx1 + s_dy1 > s_dx2 + s_dy2)
+							pw = pw2;
+					} else {
+						pw = pw2;
+					}
+				}
+				break;
+
+			case VM_KEY_RIGHT:
+				if (pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x > 0) {
+					if (pw) {
+						s_dx1 = _abs_(pw->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy1 = _abs_(pw->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						s_dx2 = _abs_(pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy2 = _abs_(pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						if (s_dy1 >= s_dy2 && s_dx1 > s_dx2)
+							pw = pw2;
+					} else {
+						pw = pw2;
+					}
+				}
+				break;
+
+			case VM_KEY_EVENT_UP:
+				if (pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y < 0) {
+					if (pw) {
+						s_dx1 = _abs_(pw->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy1 = _abs_(pw->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						s_dx2 = _abs_(pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy2 = _abs_(pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						if (s_dx1 + s_dy1 < s_dx2 + s_dy2)
+							pw = pw2;
+					} else {
+						pw = pw2;
+					}
+				}
+				break;
+
+			case VM_KEY_LEFT:
+				if (pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x < 0) {
+					if (pw) {
+						s_dx1 = _abs_(pw->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy1 = _abs_(pw->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						s_dx2 = _abs_(pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x);
+						s_dy2 = _abs_(pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y);
+						if (s_dy1 <= s_dy2 && s_dx1 < s_dx2)
+							pw = pw2;
+					} else {
+						pw = pw2;
+					}
+				}
+				break;
+		}
+	}
+	return pw;
+}
+
+static void hplane_key_press(HWidget *p_widget, int i_keycode)
+{
+	HWidget *pw;
+	HPlane *p_plane = (HPlane *)p_widget;
+	switch (i_keycode) {
+		case VM_KEY_RIGHT:
+		case VM_KEY_DOWN:
+		case VM_KEY_LEFT:
+		case VM_KEY_UP:
+			if (p_plane->p_own_focus_widget->p_widget_ops->can_travel(p_plane->p_own_focus_widget, i_keycode)) {
+				p_plane->p_own_focus_widget->p_widget_ops->key_press(p_plane->p_own_focus_widget, i_keycode);
+			} else {
+				pw = find_next_enable_focus_widget(p_plane, i_keycode);
+				if (pw) {
+					p_plane->p_own_focus_widget->p_widget_ops->set_focus(p_plane->p_own_focus_widget, 0);
+					p_plane->p_own_focus_widget->p_widget_ops->focus_changed(p_plane->p_own_focus_widget, 0);
+					p_plane->p_own_focus_widget->p_widget_ops->repaint(p_plane->p_own_focus_widget);
+					p_plane->p_own_focus_widget = pw;
+					pw->p_widget_ops->set_focus(pw, 1);
+					pw->p_widget_ops->focus_changed(pw, 1);
+					pw->p_widget_ops->repaint(pw);
+				}
+			}
+			break;
+
+		case VM_KEY_LEFT_SOFTKEY:
+		case VM_KEY_RIGHT_SOFTKEY:
+			if (p_plane->p_bottom_widget)
+				p_plane->p_bottom_widget->p_widget_ops->key_press(p_plane->p_bottom_widget, i_keycode);
+			break;
+
+		default:
+			p_plane->p_own_focus_widget->p_widget_ops->key_press(p_plane->p_own_focus_widget, i_keycode);
+			break;
+	}
+}
+
+static void hplane_key_release(HWidget *p_widget, int i_keycode)
+{
+	HPlane *p_plane = (HPlane *)p_widget;
+	switch (i_keycode) {
+		case VM_KEY_LEFT_SOFTKEY:
+		case VM_KEY_RIGHT_SOFTKEY:
+			if (p_plane->p_bottom_widget)
+				p_plane->p_bottom_widget->p_widget_ops->key_release(p_plane->p_bottom_widget, i_keycode);
+			break;
+
+		default:
+			p_plane->p_own_focus_widget->p_widget_ops->key_release(p_plane->p_own_focus_widget, i_keycode);
+			break;
+	}
+}
+
+static void hplane_key_long_press(HWidget *p_widget, int i_keycode)
+{
+	HPlane *p_plane = (HPlane *)p_widget;
+	switch (i_keycode) {
+		case VM_KEY_LEFT_SOFTKEY:
+		case VM_KEY_RIGHT_SOFTKEY:
+			if (p_plane->p_bottom_widget)
+				p_plane->p_bottom_widget->p_widget_ops->key_long_press(p_plane->p_bottom_widget, i_keycode);
+			break;
+
+		default:
+			p_plane->p_own_focus_widget->p_widget_ops->key_long_press(p_plane->p_own_focus_widget, i_keycode);
+			break;
+	}
+}
+
+
+static void hplane_key_repeat(HWidget *p_widget, int i_keycode)
+{
+	HPlane *p_plane = (HPlane *)p_widget;
+	switch (i_keycode) {
+		case VM_KEY_DOWN:
+		case VM_KEY_UP:
+		case VM_KEY_LEFT:
+		case VM_KEY_RIGHT:
+			if (p_plane->p_own_focus_widget->p_widget_ops->can_travel(p_plane->p_own_focus_widget, i_keycode)) {
+				p_plane->p_own_focus_widget->p_widget_ops->key_repeat(p_plane->p_own_focus_widget, i_keycode);
+			} else {
+				hplane_key_press(p_widget, i_keycode);
+			}
+			break;
+
+		case VM_KEY_LEFT_SOFTKEY:
+		case VM_KEY_RIGHT_SOFTKEY:
+			//ignore
+			break;
+
+		default:
+			p_plane->p_own_focus_widget->p_widget_ops->key_repeat(p_plane->p_own_focus_widget, i_keycode);
+			break;
+	}
+}
+
 static void hplane_paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)
 {
 	HPlane *p_plane = (HPlane *)p_widget;
@@ -346,6 +606,7 @@ static void hplane_paint(HWidget *p_widget, int i_handle, short s_screen_x, shor
 	}
 	hcontainer_paint_PF(p_widget, i_handle, s_screen_x, s_screen_y);
 }
+
 
 static void hplane_set_visible(HWidget *p_widget, int i_visible)
 {
@@ -376,6 +637,12 @@ static void hplane_create_hwidget_ops(HWidgetOperation *p_widget_ops_prototype)
 	gp_hwidget_ops->pen_press = hplane_pen_press;
 	gp_hwidget_ops->pen_move = hplane_pen_move;
 	gp_hwidget_ops->pen_release = hplane_pen_release;
+	gp_hwidget_ops->pen_double_click = hplane_pen_double_click;
+	gp_hwidget_ops->pen_long_tap = hplane_pen_long_tap;
+	gp_hwidget_ops->key_press = hplane_key_press;
+	gp_hwidget_ops->key_release = hplane_key_release;
+	gp_hwidget_ops->key_long_press = hplane_key_long_press;
+	gp_hwidget_ops->key_repeat = hplane_key_repeat;
 	gp_hwidget_ops->set_visible = hplane_set_visible;
 	hcontainer_paint_PF = p_widget_ops_prototype->paint;
 	gp_hwidget_ops->paint = hplane_paint;
@@ -395,4 +662,16 @@ static void hplane_create_plane_ops()
 	gp_plane_ops->add_widget = hplane_add_widget;
 	gp_plane_ops->remove_widget = hplane_remove_widget;
 	gp_plane_ops->remove_all = hplane_remove_all;
+	gp_plane_ops->add_key_down = hplane_add_key_down;
+	gp_plane_ops->add_key_right = hplane_add_key_right;
+}
+
+void hplane_ops_delete()
+{
+	if (gp_hwidget_ops)
+		vm_free(gp_hwidget_ops);
+	if (gp_container_ops)
+		vm_free(gp_container_ops);
+	if (gp_plane_ops)
+		vm_free(gp_plane_ops);
 }

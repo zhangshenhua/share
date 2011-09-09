@@ -7,6 +7,9 @@
 
 #include "hwindow.h"
 #include "../WidgetLayer/hwidget.h"
+#include "../WidgetLayer/htextinput.h"
+#include "../WidgetLayer/htextarea.h"
+#include "../WidgetLayer/hcheckbox.h"
 #include "../WidgetLayer/hlookandfeel.h"
 
 #include "string.h"
@@ -22,9 +25,10 @@ HWindow *window;
 
 static void hwindow_paint();
 static HPlane * hwindow_get_default_plane();
+static void hwindow_destroy();
 
 /*user define the enter function*/
-extern void app_enter();
+extern void app_main();
 
 static void hwindow_validate()
 {
@@ -39,34 +43,31 @@ static void hwindow_validate()
 
 static void sys_event_handle(VMINT message, VMINT param)
 {
-	int i_idx;
 	switch (message) {
 		case VM_MSG_CREATE:
-			vm_log_debug("vm msg create");
 			// create default plane
+			vm_log_debug("msg create");
 			hwindow_get_default_plane();
-			app_enter();
+			app_main();
 			break;
 
 		case VM_MSG_ACTIVE:
-			vm_log_debug("vm msg active");
+			vm_log_debug("msg active");
+			hwindow_paint();
 			break;
 
 		case VM_MSG_PAINT:
-			vm_log_debug("vm msg paint");
+			vm_log_debug("msg paint");
 			hwindow_paint();
 			break;
 
 		case VM_MSG_INACTIVE:
-			vm_log_debug("vm msg inactive");
-			//delete all layer handle
-			for (i_idx = sizeof(window->p_planes)/sizeof(HPlane *) -1; i_idx >= 0; i_idx --) {
-				if (window->p_planes[i_idx] && window->p_planes[i_idx]->i_handle != -1)
-					vm_graphic_delete_layer(window->p_planes[i_idx] ->i_handle);
-			}
+			vm_log_debug("msg inactive");
 			break;
 
 		case VM_MSG_QUIT:
+			vm_log_debug("msg quit");
+			hwindow_destroy();
 			break;
 	}
 }
@@ -88,14 +89,33 @@ static HPlane * hwindow_get_topest_plane()
 
 static void key_event_handle(VMINT evt, VMINT keycode)
 {
+	HWidget *p_top_plane = (HWidget *)hwindow_get_topest_plane();
+	switch (evt) {
+		case VM_KEY_EVENT_DOWN:
+			p_top_plane->p_widget_ops->key_press(p_top_plane, keycode);
+			break;
+		case VM_KEY_EVENT_UP:
+			p_top_plane->p_widget_ops->key_release(p_top_plane, keycode);
+			break;
+		case VM_KEY_EVENT_LONG_PRESS:
+			p_top_plane->p_widget_ops->key_long_press(p_top_plane, keycode);
+			break;
+		case VM_KEY_EVENT_REPEAT:
+			p_top_plane->p_widget_ops->key_repeat(p_top_plane, keycode);
+			break;
+	}
 }
 
 static void pen_event_handle(VMINT evt, VMINT x, VMINT y)
 {
 	HWidget *p_top_plane = (HWidget *)hwindow_get_topest_plane();
 	switch (evt) {
-//		case VM_PEN_EVENT_DOUBLE_CLICK:
-//		case VM_PEN_EVENT_LONG_TAP :
+		case VM_PEN_EVENT_DOUBLE_CLICK:
+			p_top_plane->p_widget_ops->pen_double_click(p_top_plane, x, y);
+			break;
+		case VM_PEN_EVENT_LONG_TAP :
+			p_top_plane->p_widget_ops->pen_long_tap(p_top_plane, x, y);
+			break;
 //		case VM_PEN_EVENT_REPEAT:
 
 		case VM_PEN_EVENT_TAP :
@@ -187,6 +207,26 @@ static PageSwitchController * hwindow_get_page_switch_contrller()
 	return window->p_page_switch_contrller;
 }
 
+static void hwindow_destroy()
+{
+	int i_idx;
+	HPlane *p_plane;
+	//delete all layer handle
+	for (i_idx = sizeof(window->p_planes)/sizeof(HPlane *) -1; i_idx >= 0; i_idx --) {
+		p_plane = window->p_planes[i_idx];
+		if (p_plane) {
+			hplane_delete(p_plane);
+		}
+	}
+	//here delete all ops
+	hwidget_ops_delete();
+	hcontainer_ops_delete();
+	hplane_ops_delete();
+	hcheckbox_ops_delete();
+	htextinput_ops_delete();
+	htextarea_ops_delete();
+}
+
 
 void hwindow_init()
 {
@@ -201,4 +241,7 @@ void hwindow_init()
 	window->get_page_switch_contrller = hwindow_get_page_switch_contrller;
 	window->validate = hwindow_validate;
 	window->repaint = hwindow_repaint;
+	window->s_screen_width = vm_graphic_get_screen_width();
+	window->s_screen_height = vm_graphic_get_screen_height();
+	window->s_is_support_touch_screen = vm_is_support_pen_touch();
 }

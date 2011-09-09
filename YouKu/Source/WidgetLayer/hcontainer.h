@@ -9,7 +9,9 @@
 #define _HCONTAINER_H_
 
 #include "hwidget.h"
+#include "himage.h"
 #include "../Common/hlist.h"
+#include "HLayout.h"
 
 typedef struct _HContainer HContainer;
 typedef struct _HContainerOperation HContainerOperation;
@@ -40,6 +42,8 @@ void hcontainer_init(HContainer *p_container);
 ************************************************************************/
 void hcontainer_operation_init(HContainerOperation *p_container_ops);
 
+void hcontainer_ops_delete();
+
 
 struct _HContainer {
 
@@ -53,11 +57,14 @@ struct _HContainer {
 	/*a translate coordinate of y*/
 	short s_translate_y;
 
-	/*the current has focus widget in the container*/
-	hlist_node_t *p_has_focus_widget_node;
-
 	/* children nodes */
 	hlist_node_t *p_children;
+
+	/*background image*/
+	HImage *p_bgimg;
+
+	/*the container's layout*/
+	HLayout *p_layout;
 
 	/********************** public member *************************/
 	
@@ -115,6 +122,16 @@ struct _HContainerOperation {
 	* whether the container can be scroll, return yes(1), or no(0)
 	************************************************************************/
 	int (*can_scroll)(HContainer *p_container);
+
+	/************************************************************************
+	* set the container's background image
+	************************************************************************/
+	void (*set_bgimg)(HContainer *p_container, HImage *p_img);
+
+	/************************************************************************
+	* set the container's layout
+	************************************************************************/
+	void (*set_layout)(HContainer *p_container, HLayout *p_layout);
 };
 
 

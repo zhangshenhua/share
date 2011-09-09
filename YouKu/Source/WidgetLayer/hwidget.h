@@ -7,6 +7,8 @@
 #ifndef _HWIDGET_H_
 #define _HWIDGET_H_
 
+#include "hplatform.h"
+
 #define H_DEBUG
 
 /* disable deprecation */
@@ -24,6 +26,7 @@ void hwidget_init(HWidget *p_widget);
 /*init HWidget Operation*/
 void hwidget_operation_init(HWidgetOperation *p_ops);
 
+void hwidget_ops_delete();
 
 /* Font class*/
 typedef enum _HFont{
@@ -34,6 +37,22 @@ typedef enum _HFont{
 	FONT_ITALIC = 16,
 	FONT_UNDERLINE = 32
 } HFont;
+
+/*All event supper class */
+typedef struct _HEvent{
+	int i_event_type; // same as MRE event type. ex: VM_PEN_EVENT_TAP
+} HEvent;
+
+typedef struct _HPenEvent{
+	HEvent base;
+	short s_x;
+	short s_y;
+} HPenEvent;
+
+typedef struct _HKeyEvent{
+	HEvent base;
+	int i_keycode;
+} HKeyEvent;
 
 /* Point class*/
 typedef struct _HPoint {
@@ -57,7 +76,7 @@ typedef enum _HClass {
 	CLASS_POPUPMENU,		/*pop up menu class*/
 	CLASS_PLANE,			/*plane class*/
 	CLASS_TEXTINPUT,		/*text input class*/
-	CLASS_TEXTAREA,				/*text area class*/
+	CLASS_TEXTAREA,			/*text area class*/
 	CLASS_STATUS_BAR,		/*status bar class*/
 } HClass;
 
@@ -128,7 +147,7 @@ struct _HWidget {
 	HWidgetOperation *p_widget_ops;
 
 	/*event action performed callback*/
-	void (*action_performed)(HWidget *p_source, void *p_param);
+	void (*action_performed)(HWidget *p_source, HEvent *p_evt, void *p_param);
 };
 
 /* Base widget operation*/
@@ -272,14 +291,29 @@ struct _HWidgetOperation {
 	/*[abstract function] pen move event callback*/
 	void (*pen_move)(HWidget *p_widget, short s_x, short s_y);
 
-	/*[abstract function] pen move enter callback*/
+	/*[abstract function] pen  enter callback*/
 	void (*pen_enter)(HWidget *p_widget, short s_x, short s_y);
 
-	/*[abstract function] pen move leave callback*/
+	/*[abstract function] pen  leave callback*/
 	void (*pen_leave)(HWidget *p_widget, short s_x, short s_y);
 
-	/*[abstract function] keyboard press event callback*/
+	/*[abstract function] pen double click callback*/
+	void (*pen_double_click)(HWidget *p_widget, short s_x, short s_y);
+
+	/*[abstract function] pen long tap callback*/
+	void (*pen_long_tap)(HWidget *p_widget, short s_x, short s_y);
+
+	/*[abstract function] keyboard press event callback.*/
 	void (*key_press)(HWidget *p_widget, int keycode);
+
+	/*[abstract function] keyboard release event callback.*/
+	void (*key_release)(HWidget *p_widget, int keycode);
+
+	/*[abstract function] keyboard repeat event callback.*/
+	void (*key_repeat)(HWidget *p_widget, int keycode);
+
+	/*[abstract function] keyboard long press event callback.*/
+	void (*key_long_press)(HWidget *p_widget, int keycode);
 
 	/*[abstract function]  whether the widget is a container*/
 	int (*is_container)(HWidget *p_widget);
@@ -293,8 +327,8 @@ struct _HWidgetOperation {
 	/*[abstract function] whether the direction key can travel in the widget. if not , focus will goto next widget*/
 	int (*can_travel)(HWidget *p_widget, int keycode);
 
-	/*[abstract function] i_gained_focus is 0 means focus lost, 1 means gain focus*/
-//	void (*focus_changed)(HWidget *p_widget, int i_gained_focus);
+	/*[pure abstract function,optional] the focus has changed to another widget or this widget. i_gain_focus is 0 means the widget lost focus, 1 means gain focus*/
+	void (*focus_changed)(HWidget *p_widget, int i_gain_focus);
 
 	/*get the widget root widget(its a HPlane), if the widget not in a plane, NULL will be returned*/
 	struct _HPlane* (*get_root)(HWidget *p_widget);
@@ -321,6 +355,7 @@ enum {
 	ATTR_HEIGHT_FLAG,
 	ATTR_MAX_WIDTH_FLAG,
 	ATTR_MAX_HEIGHT_FLAG,
+	ATTR_CONTAINER_CALC_FLAG,
 };
 
 

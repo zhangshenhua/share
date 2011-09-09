@@ -233,15 +233,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\hlistbox.c"
+				RelativePath=".\connectpage.c"
+				>
+			</File>
+			<File
+				RelativePath=".\http.c"
 				>
 			</File>
 			<File
 				RelativePath=".\mainpage.c"
-				>
-			</File>
-			<File
-				RelativePath=".\new.c"
 				>
 			</File>
 			<File
@@ -252,10 +252,18 @@
 				RelativePath=".\user.c"
 				>
 			</File>
+			<File
+				RelativePath=".\videoitem.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Common"
 			>
+			<File
+				RelativePath="..\Common\defines.h"
+				>
+			</File>
 			<File
 				RelativePath="..\Common\herrorcode.c"
 				>
@@ -270,6 +278,30 @@
 			</File>
 			<File
 				RelativePath="..\Common\hlist.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\hlistbox.c"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\hlistbox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\new.c"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\new.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\tools.c"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\tools.h"
 				>
 			</File>
 		</Filter>
@@ -414,11 +446,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\defines.h"
-				>
-			</File>
-			<File
-				RelativePath=".\hlistbox.h"
+				RelativePath=".\http.h"
 				>
 			</File>
 			<File
@@ -426,23 +454,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\new.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Prompt.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Tools"
-			>
 			<File
-				RelativePath=".\tools.c"
-				>
-			</File>
-			<File
-				RelativePath=".\tools.h"
+				RelativePath=".\videoitem.h"
 				>
 			</File>
 		</Filter>

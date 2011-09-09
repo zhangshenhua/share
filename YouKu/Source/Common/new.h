@@ -13,7 +13,7 @@
 #define _NEW_H_
 #include <vmlog.h>
 #include <vmsys.h>
-extern void* vm_check_malloc(int);
+extern void* checked_malloc(int);
 
 #define VM_CHECK_MALLOC(p,n)									\
 	do{																\

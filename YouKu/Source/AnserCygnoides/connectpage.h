@@ -1,11 +1,11 @@
 /*---------------------------------
-* FILE Name:
+* FILE Name: connectpage.h
 *
 * Description:
 *
 * COPYRIGHT
 *
-* Created on: $(date) Author: Name
+* Created on: $(date) Author: shenhua.zhang
 *
 * Modified by name on $(date)
 *---------------------------------------------------------------------*/
@@ -22,15 +22,12 @@ classdef(ConnectPage)
 {
 	Page    base;        //
 	
-	HImage   logoimage;
-	int x;
-	
-	int (*connect) (  /* some string abort connect context */ );
+	HImage*	p_logoimage;
 
 };
 
 ConnectPage* ConnectPage_new();		 //construct function
-void ConnectPage_delete();				 //destruct function
+extern ConnectPage* g_p_connectpage;
 
  
 #endif

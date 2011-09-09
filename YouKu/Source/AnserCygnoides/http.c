@@ -1,15 +1,16 @@
 /*---------------------------------
-* FILE Name: new.c
+* FILE Name: http.c
 *
-* Description: malloc with check
+* Description: sth about http
 *
 * COPYRIGHT
 *
-* Created on: $(date) Author: zhang.shenhua
+* Created on: $(2011.9.7) Author: zhang.shenhua
 *
 * Modified by zsh on $(date)
 *---------------------------------------------------------------------*/
-#include "new.h"
-#include <vmsys.h>
+#include "http.h"
 
-
+bool test_connection() {
+	return 1;
+}

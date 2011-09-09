@@ -20,6 +20,10 @@
 /*****************Macro Definition*************************/
 #define HLAYOUT_GAP 5
 
+
+static HLayoutOperation* gp_layout_ops;
+static void create_layout_ops();
+
 static void add_widget(HLayout* p_layout, HWidget* p_widget)
 {
 	hlist_append(p_layout->p_widget_list, p_widget, NULL);
@@ -87,17 +91,9 @@ void hlayout_init(HLayout* p_layout)
 		p_layout->p_widget_list = hlist_new();
 	}
 
-	p_layout->add_widget = add_widget;
-	p_layout->remove_widget = remove_widget;
-	p_layout->clear_layout = clear_layout;
-	p_layout->set_max_width = set_max_width;
-	p_layout->get_max_width = get_max_width;
-	p_layout->set_max_height = set_max_height;
-	p_layout->get_max_height = get_max_height;
-	p_layout->set_gap = set_gap;
-	p_layout->get_gap = get_gap;
-	p_layout->get_widget_list = get_widget_list;
-	p_layout->validate_layout = NULL;
+	create_layout_ops();
+
+	p_layout->p_ops = gp_layout_ops;
 }
 
 void hlayout_delete(HLayout* p_layout)
@@ -107,5 +103,25 @@ void hlayout_delete(HLayout* p_layout)
 		hlist_destroy(&p_layout->p_widget_list);
 	}
 
+}
+
+void create_layout_ops()
+{
+	if (NULL == gp_layout_ops)
+	{
+		gp_layout_ops = (HLayoutOperation*)vm_malloc(sizeof(HLayoutOperation));
+
+		gp_layout_ops->add_widget = add_widget;
+		gp_layout_ops->remove_widget = remove_widget;
+		gp_layout_ops->clear_layout = clear_layout;
+		gp_layout_ops->set_max_width = set_max_width;
+		gp_layout_ops->get_max_width = get_max_width;
+		gp_layout_ops->set_max_height = set_max_height;
+		gp_layout_ops->get_max_height = get_max_height;
+		gp_layout_ops->set_gap = set_gap;
+		gp_layout_ops->get_gap = get_gap;
+		gp_layout_ops->get_widget_list = get_widget_list;
+		gp_layout_ops->validate_layout = NULL;
+	}
 }
 /*********************EOF******************************/

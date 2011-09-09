@@ -86,5 +86,11 @@ extern HCheckBox* hcheckbox_new(const char* pc_label);
 */
 extern void hcheckbox_delete(HCheckBox *p_checkbox);
 
+/*
+ Function Name: hcheckbox_ops_delete
+ Description: delete HCheckBox global operatons 
+*/
+extern void hcheckbox_ops_delete();
+
 #endif
 /********************************EOF***********************************/

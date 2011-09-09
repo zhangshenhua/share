@@ -16,52 +16,62 @@
 #include "vmgraph.h"
 #include "vmchset.h"
 #include "vmstdlib.h"
+#include "vmlog.h"
 
 #include "hlookandfeel.h"
 
-#define TEXT_MAX_SIZE 70
+#define TEXT_MAX_SIZE 140
 
 static HTextInputOperation *p_textinput_ops;	/* Single instance of HTextInput Operations  */
 static HWidgetOperation *p_base_ops;			/* Single instance of HWidget Operations */
-static int i_ops;							/* Number of HTextInput instances */
+static short s_move_from_x;      /* x axis of pointer HTextInput's text move from */
 
 static HTextInput *p_textinput_buf;			/* Template pointer of HTextInput for input method callback */
-
-static void hwidget_destroy(HWidget *p_hwidget);
 
 /* HTextInput Operations */
 
 /* Set text to HTextInput */
-static void set_text(HTextInput *p_textinput, char *pc_text)
+static void htextinput_set_text(HTextInput *p_textinput, char *pc_text)
 {
 	int i_len;
+
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_set_text");
+#endif // H_DEBU
 
 	if (!pc_text)
 		return;
 
-	i_len = strlen(pc_text);
-
 	if (p_textinput)
 		vm_free(p_textinput->pc_text);
 
+	i_len = strlen(pc_text);
 	p_textinput->pc_text = (char *)vm_malloc(i_len + 1);
 	strncpy(p_textinput->pc_text, pc_text, i_len);
 	p_textinput->pc_text[i_len] = '\0';
 }
 
 /* Get text from HTextInput */
-static char* get_text(HTextInput *p_textinput)
+static char* htextinput_get_text(HTextInput *p_textinput)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_get_text");
+#endif // H_DEBU
+
 	return p_textinput->pc_text;
 }
 
 /* Get length of HTextInput's text */
-static int get_len(HTextInput *p_textinput)
+static int htextinput_get_len(HTextInput *p_textinput)
 {
-	VMWSTR w_str;
 	int i_len;
-	i_len = strlen(p_textinput->pc_text);
+	VMWSTR w_str;
 
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_get_len");
+#endif // H_DEBU
+	/* convert gb2312 text to ucs2 */
+	i_len = strlen(p_textinput->pc_text);
 	w_str = (VMWSTR)vm_malloc((i_len + 1) * sizeof(VMWCHAR));
 	vm_gb2312_to_ucs2(w_str, (i_len + 1)* sizeof(VMWCHAR) , p_textinput->pc_text);
 	i_len = vm_wstrlen(w_str);
@@ -72,42 +82,58 @@ static int get_len(HTextInput *p_textinput)
 }
 
 /* Set input method of HTextInput */
-static void set_input_method(HTextInput *p_textinput, int i_input_method)
+static void htextinput_set_input_method(HTextInput *p_textinput, int i_input_method)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_set_input_method");
+#endif // H_DEBU
+
 	p_textinput->c_input_method = i_input_method;
 }
 
 /* Set password flag of HTextInput */
-static void set_is_password(HTextInput *p_textinput, int i_password)
+static void htextinput_set_is_password(HTextInput *p_textinput, int i_password)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_set_is_password");
+#endif // H_DEBU
+
 	p_textinput->c_is_password = i_password;
 
-	if (1 == i_password)
-		p_textinput->c_input_method |= VM_INPUT_METHOD_PASSWORD;
-
-	if (0 == i_password) 
-		p_textinput->c_input_method &= (~VM_INPUT_METHOD_PASSWORD);
+	/* reset HTextInput's input method */
+	p_textinput->c_input_method = (1 == i_password ? VM_INPUT_METHOD_PASSWORD : VM_INPUT_METHOD_ALPHABETIC);
 }
 
 /* Internal functions */
 /* Input method callback function */
-static void input_method_callback(VMINT state, VMWSTR str)
+void htextinput_input_method_callback(VMINT state, VMWSTR str)
 {
 	int i_len;
 	char *p_buf;
 
+#ifdef H_DEBUG
+	vm_log_debug("HTextInput input_method_callback");
+#endif // H_DEBU
+
 	if (VM_INPUT_OK != state)
 		return;
 
+	/* convert input method return text from ucs2 to gb2312 */
 	p_buf = (char *)vm_malloc((vm_wstrlen(str) + 1) * sizeof(VMWCHAR));
 	vm_ucs2_to_gb2312(p_buf, (vm_wstrlen(str) + 1) * sizeof(VMWCHAR), str);
 
+	/* stored text into HTextInput */
 	i_len = strlen(p_buf);
 	p_textinput_buf->pc_text = (char *)vm_malloc(i_len + 1);
-	memcpy(p_textinput_buf->pc_text, p_buf, i_len);
+	strncpy(p_textinput_buf->pc_text, p_buf, i_len);
 	p_textinput_buf->pc_text[i_len] = '\0';
-
 	vm_free(p_buf);
+
+	p_textinput_buf->base.p_widget_ops->repaint((HWidget *)p_textinput_buf);
+
+	/* call user's action */
+	if (p_textinput_buf->base.action_performed)
+		p_textinput_buf->base.action_performed((HWidget *)p_textinput_buf, NULL);
 
 	p_textinput_buf = NULL;
 }
@@ -116,104 +142,135 @@ static void input_method_callback(VMINT state, VMWSTR str)
 static void call_input_method(HTextInput *p_textinput)
 {
 	VMWSTR str;
+
+#ifdef H_DEBUG
+	vm_log_debug("HTextInput call_input_method");
+#endif // H_DEBU
+
+	/* convert gb2312 text to ucs2 for input method default text */
 	str = (VMWSTR)vm_malloc((strlen(p_textinput->pc_text) + 1) * sizeof(VMWCHAR));
 	vm_gb2312_to_ucs2(str, (strlen(p_textinput->pc_text) + 1) * sizeof(VMWCHAR), p_textinput->pc_text);
 
+	/* pass HTextInput pointer to input method callback function */
 	p_textinput_buf = p_textinput;
-	vm_input_text3(str, TEXT_MAX_SIZE, p_textinput->c_input_method, input_method_callback);
-
-	p_textinput->base.p_widget_ops->repaint((HWidget *)p_textinput);
+	vm_input_text3(str, TEXT_MAX_SIZE, p_textinput->c_input_method, htextinput_input_method_callback);
 
 	vm_free(str);
-
-	if (p_textinput->base.action_performed)
-		p_textinput->base.action_performed((HWidget *)p_textinput, NULL);
 }
 
 /* Base class Operations */
 
 /* Pen press event callback */
-static void pen_press(HWidget *p_widget, short s_x, short s_y)
+static void htextinput_pen_press(HWidget *p_widget, short s_x, short s_y)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
 
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_pen_press");
+#endif // H_DEBU
+
+	/* check enable state */
 	if (!p_textinput->base.p_widget_ops->is_enable(p_widget))
 		return;
 
+	/* check focus and set focus */
 	if (p_textinput->base.p_widget_ops->is_enable_focus(p_widget))
 		p_textinput->base.p_widget_ops->set_focus(p_widget, 1);
+
+	/* record x axis of tap pointer as moving start */
+	s_move_from_x = s_x;
 
 	p_textinput->base.p_widget_ops->repaint(p_widget);
 }
 
 /* Pen release event callback */
-static void pen_release(HWidget *p_widget, short s_x, short s_y)
+static void htextinput_pen_release(HWidget *p_widget, short s_x, short s_y)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
 
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_pen_release");
+#endif // H_DEBU
+
 	if (!p_textinput->base.p_widget_ops->is_enable(p_widget))
 		return;
-
-	if (p_textinput->base.p_widget_ops->has_focus(p_widget))
-		call_input_method(p_textinput);
 }
 
 /* Pen move event callback */
-static void pen_move(HWidget *p_widget, short s_x, short s_y)
+static void htextinput_pen_move(HWidget *p_widget, short s_x, short s_y)
 {
-	/*****************************************
-	Nothing to do for now
-	******************************************/
-}
+	HTextInput *p_textinput = (HTextInput *)p_widget;
 
-/* pen move enter callback*/
-static void pen_enter(HWidget *p_widget, short s_x, short s_y)
-{
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_pen_move");
+#endif // H_DEBU
 
-}
+	/* get HTextInput's text x axis moving offset */
+	if ((s_x - s_move_from_x) > 2)
+		p_textinput->s_move_offset += 2;
 
-/* pen move leave callback*/
-static void pen_leave(HWidget *p_widget, short s_x, short s_y)
-{
+	if ((s_x - s_move_from_x) < -2)
+		p_textinput->s_move_offset -= 2;
 
+	s_move_from_x = s_x;
+	p_widget->p_widget_ops->repaint(p_widget);
 }
 
 /* Keyboard press event callback */
-static void key_press(HWidget *p_widget, int keycode)
+static void htextinput_key_press(HWidget *p_widget, int keycode)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_key_press");
+#endif // H_DEBU
 
 	if (!p_textinput->base.p_widget_ops->is_enable(p_widget))
 		return;
 
+	/* if keycode is ok , call input method */
 	if (VM_KEY_OK == keycode)
 		call_input_method(p_textinput);
-
-	p_textinput->base.p_widget_ops->repaint(p_widget);
 }
 
 /* Whether the HCheckBox is a container */
-static int is_container(HWidget *p_widget)
+static int htextinput_is_container(HWidget *p_widget)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_is_container");
+#endif // H_DEBU
+
 	return 0;
 }
 
 /* Whether the HCheckBox is a plane */
-static int is_plane(HWidget *p_widget)
+static int htextinput_is_plane(HWidget *p_widget)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_is_plane");
+#endif // H_DEBUG
+
 	return 0;
 }
 
 /* Get HTextInput type */
-static HClass get_class(HWidget *p_widget)
+static HClass htextinput_get_class(HWidget *p_widget)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_get_class");
+#endif // H_DEBUG
+
 	return CLASS_TEXTINPUT;
 }
 
 /* Get the widget preferred width */
-static short get_prefered_width(HWidget *p_widget)
+static short htextinput_get_prefered_width(HWidget *p_widget)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_get_prefered_width");
+#endif // H_DEBUG
 
 	if (p_textinput->base.s_prefered_width)
 		return p_textinput->base.s_prefered_width;
@@ -224,17 +281,19 @@ static short get_prefered_width(HWidget *p_widget)
 }
 
 /* Get the widget preferred height */
-static short get_prefered_height(HWidget *p_widget)
+static short htextinput_get_prefered_height(HWidget *p_widget)
 {
 	int i_prefered_height;
-	char c_font;
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_get_prefered_height");
+#endif // H_DEBUG
 
 	if (p_textinput->base.s_prefered_height)
 		return p_textinput->base.s_prefered_height;
 
-	c_font = (p_textinput->base.c_font & 7) >> 1;
-	vm_graphic_set_font(c_font);
+	vm_graphic_set_font((p_textinput->base.c_font & 7) >> 1);
 
 	i_prefered_height = vm_graphic_get_character_height() + 
 		p_textinput->base.s_padding_top + p_textinput->base.s_padding_bottom;
@@ -245,8 +304,12 @@ static short get_prefered_height(HWidget *p_widget)
 }
 
 /* Paint the HCheckBox */
-static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)
+static void htextinput_paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_paint");
+#endif // H_DEBUG
+
 	look_paint_textinput((HTextInput *)p_widget, i_handle, s_screen_x, s_screen_y);
 }
 
@@ -255,16 +318,11 @@ static void hwidget_delete(HWidget *p_widget)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
 
-	--i_ops;
+#ifdef H_DEBUG
+	vm_log_debug("HTextInput hwidget_delete");
+#endif // H_DEBUG
 
-#if 0
-	if (0 == i_ops) {
-		if (p_textinput_ops)
-			vm_free(p_textinput_ops);
-		if (p_base_ops)
-			vm_free(p_base_ops);
-	}
-#endif
+	/* free HTextInput memery */
 	if (p_textinput->pc_text)
 		vm_free(p_textinput->pc_text);
 
@@ -276,40 +334,43 @@ static void hwidget_delete(HWidget *p_widget)
 extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 {
 	HTextInput *p_textinput = (HTextInput *)vm_malloc(sizeof(HTextInput));
-	++i_ops;
+
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_new");
+#endif // H_DEBUG
 
 	hwidget_init(&(p_textinput->base));
 
-	/* Init operations */
+	/* Init HTextInput global operations */
 	if (!p_textinput_ops) {
 		p_textinput_ops = (HTextInputOperation *)vm_malloc(sizeof(HTextInputOperation));
 
-		p_textinput_ops->get_text = get_text;
-		p_textinput_ops->set_text = set_text;
-		p_textinput_ops->set_input_method = set_input_method;
-		p_textinput_ops->get_len = get_len;
-		p_textinput_ops->set_is_password = set_is_password;
+		p_textinput_ops->get_text = htextinput_get_text;
+		p_textinput_ops->set_text = htextinput_set_text;
+		p_textinput_ops->set_input_method = htextinput_set_input_method;
+		p_textinput_ops->get_len = htextinput_get_len;
+		p_textinput_ops->set_is_password = htextinput_set_is_password;
 	}
 
+	/* Init HTextInput base class global operations */
 	if (!p_base_ops) {
 		p_base_ops = (HWidgetOperation *)vm_malloc(sizeof(HWidgetOperation));
 		hwidget_operation_init(p_base_ops);
 
-		p_base_ops->pen_press = pen_press;
-		p_base_ops->pen_release = pen_release;
-		p_base_ops->pen_move = pen_move;
-		p_base_ops->pen_enter = pen_enter;
-		p_base_ops->pen_leave = pen_leave;
-		p_base_ops->key_press = key_press;
-		p_base_ops->is_container = is_container;
-		p_base_ops->is_plane = is_plane;
-		p_base_ops->get_class = get_class;
-		p_base_ops->get_prefered_width = get_prefered_width;
-		p_base_ops->get_prefered_height = get_prefered_height;
-		p_base_ops->paint = paint;
+		p_base_ops->pen_press = htextinput_pen_press;
+		p_base_ops->pen_release = htextinput_pen_release;
+		p_base_ops->pen_move = htextinput_pen_move;
+		p_base_ops->key_press = htextinput_key_press;
+		p_base_ops->is_container = htextinput_is_container;
+		p_base_ops->is_plane = htextinput_is_plane;
+		p_base_ops->get_class = htextinput_get_class;
+		p_base_ops->get_prefered_width = htextinput_get_prefered_width;
+		p_base_ops->get_prefered_height = htextinput_get_prefered_height;
+		p_base_ops->paint = htextinput_paint;
 		p_base_ops->destroy = hwidget_delete;
 	}
 
+	/* init HTextInput attr */
 	p_textinput->c_is_password = 0;
 
 	p_textinput->c_input_method = VM_INPUT_METHOD_TEXT;
@@ -319,10 +380,10 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 	p_textinput->base.action_performed = NULL;
 
 	/* init HWiget attr */
-	p_textinput->base.s_padding_left = 8;
-	p_textinput->base.s_padding_right = 8;
-	p_textinput->base.s_padding_top = 8;
-	p_textinput->base.s_padding_bottom = 8;
+	p_textinput->base.s_padding_left = 4;
+	p_textinput->base.s_padding_right = 4;
+	p_textinput->base.s_padding_top = 4;
+	p_textinput->base.s_padding_bottom = 4;
 	p_textinput->base.c_font = FONT_SMALL;
 
 	return p_textinput;
@@ -331,16 +392,9 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 /* Destroy a HTextInput */
 extern void textinput_delete(HTextInput *p_textinput)
 {
-	--i_ops;
-#if 0
-
-	if (0 == i_ops) {
-		if (p_textinput_ops)
-			vm_free(p_textinput_ops);
-		if (p_base_ops)
-			vm_free(p_base_ops);
-	}
-#endif
+#ifdef H_DEBUG
+	vm_log_debug("textinput_delete");
+#endif // H_DEBUG
 
 	if (p_textinput->pc_text)
 		vm_free(p_textinput->pc_text);
@@ -348,4 +402,14 @@ extern void textinput_delete(HTextInput *p_textinput)
 	if (p_textinput)
 		vm_free(p_textinput);
 }
+
+/* delete HTextInput global operations */
+extern void htextinput_ops_delete()
+{
+	if (p_textinput_ops)
+		vm_free(p_textinput_ops);
+	if (p_base_ops)
+		vm_free(p_base_ops);
+}
+
 /********************************EOF***********************************/

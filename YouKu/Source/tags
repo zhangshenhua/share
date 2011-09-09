@@ -1,0 +1,1083 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ATTR_BGCOLOR_ENABLE	WidgetLayer/hwidget.h	/^	ATTR_BGCOLOR_ENABLE,$/;"	e	enum:__anon2
+ATTR_ENABLE	WidgetLayer/hwidget.h	/^	ATTR_ENABLE,$/;"	e	enum:__anon2
+ATTR_ENABLE_DRAG	WidgetLayer/hwidget.h	/^	ATTR_ENABLE_DRAG,$/;"	e	enum:__anon2
+ATTR_ENABLE_FOCUS	WidgetLayer/hwidget.h	/^	ATTR_ENABLE_FOCUS,$/;"	e	enum:__anon2
+ATTR_HAS_FOCUS	WidgetLayer/hwidget.h	/^	ATTR_HAS_FOCUS,$/;"	e	enum:__anon2
+ATTR_HEIGHT_FLAG	WidgetLayer/hwidget.h	/^	ATTR_HEIGHT_FLAG,$/;"	e	enum:__anon2
+ATTR_MAX_HEIGHT_FLAG	WidgetLayer/hwidget.h	/^	ATTR_MAX_HEIGHT_FLAG,$/;"	e	enum:__anon2
+ATTR_MAX_WIDTH_FLAG	WidgetLayer/hwidget.h	/^	ATTR_MAX_WIDTH_FLAG,$/;"	e	enum:__anon2
+ATTR_VISIBLE	WidgetLayer/hwidget.h	/^	ATTR_VISIBLE,$/;"	e	enum:__anon2
+ATTR_WIDTH_FLAG	WidgetLayer/hwidget.h	/^	ATTR_WIDTH_FLAG,$/;"	e	enum:__anon2
+Baes_init	AnserCygnoides/prompt.c	/^static void Baes_init(Page *p_page) $/;"	f	file:
+Base	AnserCygnoides/Prompt.h	/^	Page Base;$/;"	m	struct:_Prompt_Page
+Base	AnserCygnoides/prompt.h	/^	Page *Base;$/;"	m	struct:_Prompt_Page
+Base_FireVisible	AnserCygnoides/prompt.c	/^static void Base_FireVisible(Page *p_page) $/;"	f	file:
+CC	AnserCygnoides/AnserCygnoides.mak	/^CC=armcc$/;"	m
+CHARACTER_HEIGHT	WidgetLayer/hstatusbar.c	21;"	d	file:
+CLASS_BUTTON	WidgetLayer/hwidget.h	/^	CLASS_BUTTON,			\/*button class*\/$/;"	e	enum:_HClass
+CLASS_CHECKBOX	WidgetLayer/hwidget.h	/^	CLASS_CHECKBOX,			\/*check box class*\/$/;"	e	enum:_HClass
+CLASS_CONTAINER	WidgetLayer/hwidget.h	/^	CLASS_CONTAINER,		\/*container class*\/$/;"	e	enum:_HClass
+CLASS_LABEL	WidgetLayer/hwidget.h	/^	CLASS_LABEL,			\/*label class*\/$/;"	e	enum:_HClass
+CLASS_PLANE	WidgetLayer/hwidget.h	/^	CLASS_PLANE,			\/*plane class*\/$/;"	e	enum:_HClass
+CLASS_POPUPMENU	WidgetLayer/hwidget.h	/^	CLASS_POPUPMENU,		\/*pop up menu class*\/$/;"	e	enum:_HClass
+CLASS_STATUS_BAR	WidgetLayer/hwidget.h	/^	CLASS_STATUS_BAR,		\/*status bar class*\/$/;"	e	enum:_HClass
+CLASS_TEXTAREA	WidgetLayer/hwidget.h	/^	CLASS_TEXTAREA,				\/*text area class*\/$/;"	e	enum:_HClass
+CLASS_TEXTINPUT	WidgetLayer/hwidget.h	/^	CLASS_TEXTINPUT,		\/*text input class*\/$/;"	e	enum:_HClass
+CLASS_WIDGET	WidgetLayer/hwidget.h	/^	CLASS_WIDGET,			\/*widget class*\/$/;"	e	enum:_HClass
+COMMON	AnserCygnoides/AnserCygnoides.mak	/^COMMON= \\$/;"	m
+COPYRIGHT	AnserCygnoides/hlistbox.h	/^enum VideoType {NONE_TYPE,COPYRIGHT,NO_COPYRIGHT};$/;"	e	enum:VideoType
+CXX	AnserCygnoides/AnserCygnoides.mak	/^CXX=armcpp$/;"	m
+CXXFLAGS	AnserCygnoides/AnserCygnoides.mak	/^CXXFLAGS=$(CFLAGS)$/;"	m
+ChangeToMyPage	AnserCygnoides/video_detail.c	/^void ChangeToMyPage() $/;"	f
+ChangeToRecommandPage	AnserCygnoides/video_detail.c	/^void ChangeToRecommandPage() $/;"	f
+ChangeToSearchPage	AnserCygnoides/video_detail.c	/^void ChangeToSearchPage() $/;"	f
+ChangeToTopPage	AnserCygnoides/video_detail.c	/^void ChangeToTopPage() $/;"	f
+ChangeToTypePage	AnserCygnoides/video_detail.c	/^void ChangeToTypePage() $/;"	f
+ChangeToVideoDetailPage	AnserCygnoides/video_detail.c	/^void ChangeToVideoDetailPage() $/;"	f
+Collect_Button_Height	AnserCygnoides/video_detail.h	92;"	d
+Collect_Button_Width	AnserCygnoides/video_detail.h	93;"	d
+Collect_Button_X	AnserCygnoides/video_detail.h	90;"	d
+Collect_Button_Y	AnserCygnoides/video_detail.h	91;"	d
+DEFINES_H_	AnserCygnoides/defines.h	13;"	d
+Detail_Label_0_Height	AnserCygnoides/video_detail.h	105;"	d
+Detail_Label_0_Width	AnserCygnoides/video_detail.h	106;"	d
+Detail_Label_0_X	AnserCygnoides/video_detail.h	103;"	d
+Detail_Label_0_Y	AnserCygnoides/video_detail.h	104;"	d
+Detail_Label_1_Height	AnserCygnoides/video_detail.h	109;"	d
+Detail_Label_1_Width	AnserCygnoides/video_detail.h	110;"	d
+Detail_Label_1_X	AnserCygnoides/video_detail.h	107;"	d
+Detail_Label_1_Y	AnserCygnoides/video_detail.h	108;"	d
+Detail_Label_2_Height	AnserCygnoides/video_detail.h	113;"	d
+Detail_Label_2_Width	AnserCygnoides/video_detail.h	114;"	d
+Detail_Label_2_X	AnserCygnoides/video_detail.h	111;"	d
+Detail_Label_2_Y	AnserCygnoides/video_detail.h	112;"	d
+Detail_Label_3_Height	AnserCygnoides/video_detail.h	117;"	d
+Detail_Label_3_Width	AnserCygnoides/video_detail.h	118;"	d
+Detail_Label_3_X	AnserCygnoides/video_detail.h	115;"	d
+Detail_Label_3_Y	AnserCygnoides/video_detail.h	116;"	d
+Down_Button_Height	AnserCygnoides/video_detail.h	100;"	d
+Down_Button_Width	AnserCygnoides/video_detail.h	101;"	d
+Down_Button_X	AnserCygnoides/video_detail.h	102;"	d
+Down_Button_X	AnserCygnoides/video_detail.h	98;"	d
+Down_Button_Y	AnserCygnoides/video_detail.h	99;"	d
+Exit_BUtton_Y	AnserCygnoides/prompt.h	15;"	d
+Exit_Button_Height	AnserCygnoides/prompt.h	16;"	d
+Exit_Button_Width	AnserCygnoides/prompt.h	17;"	d
+Exit_Button_X	AnserCygnoides/prompt.h	14;"	d
+Exit_Txt_Height	AnserCygnoides/Prompt.h	23;"	d
+Exit_Txt_Width	AnserCygnoides/Prompt.h	24;"	d
+FONT_BOLD	WidgetLayer/hwidget.h	/^	FONT_BOLD = 8,$/;"	e	enum:_HFont
+FONT_ITALIC	WidgetLayer/hwidget.h	/^	FONT_ITALIC = 16,$/;"	e	enum:_HFont
+FONT_LAGER	WidgetLayer/hwidget.h	/^	FONT_LAGER = 4,$/;"	e	enum:_HFont
+FONT_MEDIUM	WidgetLayer/hwidget.h	/^	FONT_MEDIUM = 2,$/;"	e	enum:_HFont
+FONT_SMALL	WidgetLayer/hwidget.h	/^	FONT_SMALL = 1,$/;"	e	enum:_HFont
+FONT_UNDERLINE	WidgetLayer/hwidget.h	/^	FONT_UNDERLINE = 32$/;"	e	enum:_HFont
+FireVisible	AnserCygnoides/Prompt.c	/^static void FireVisible() $/;"	f	file:
+HCHECKBOX_SELECTED	WidgetLayer/hcheckbox.h	13;"	d
+HCHECKBOX_UNSELECTED	WidgetLayer/hcheckbox.h	14;"	d
+HCheckBox	WidgetLayer/hcheckbox.h	/^typedef struct HCheckBox_t HCheckBox;$/;"	t	typeref:struct:HCheckBox_t
+HCheckBox	WidgetLayer/hcheckbox.h	/^} HCheckBox;$/;"	t	typeref:struct:HCheckBox_t
+HCheckBoxOperation	WidgetLayer/hcheckbox.h	/^} HCheckBoxOperation;$/;"	t	typeref:struct:HCheckBoxOperation_t
+HCheckBoxOperation_t	WidgetLayer/hcheckbox.h	/^typedef struct HCheckBoxOperation_t {$/;"	s
+HCheckBox_t	WidgetLayer/hcheckbox.h	/^typedef struct HCheckBox_t {$/;"	s
+HClass	WidgetLayer/hwidget.h	/^} HClass;$/;"	t	typeref:enum:_HClass
+HContainer	WidgetLayer/hcontainer.h	/^typedef struct _HContainer HContainer;$/;"	t	typeref:struct:_HContainer
+HContainerOperation	WidgetLayer/hcontainer.h	/^typedef struct _HContainerOperation HContainerOperation;$/;"	t	typeref:struct:_HContainerOperation
+HD_Button	AnserCygnoides/video_detail.h	/^	HPushButton* HD_Button;$/;"	m	struct:_VideoDetail_Page
+HD_Button_Height	AnserCygnoides/video_detail.h	84;"	d
+HD_Button_Width	AnserCygnoides/video_detail.h	85;"	d
+HD_Button_X	AnserCygnoides/video_detail.h	82;"	d
+HD_Button_Y	AnserCygnoides/video_detail.h	83;"	d
+HD_play_video	AnserCygnoides/video_detail.c	/^void HD_play_video() $/;"	f
+HERRORCODE_FIND_DATA	Common/herrorcode.h	/^	HERRORCODE_FIND_DATA,			\/*in hlist_find function, the last parameter is null*\/$/;"	e	enum:__anon3
+HERRORCODE_FUNCTION	Common/herrorcode.h	/^	HERRORCODE_FUNCTION,			\/*function null*\/$/;"	e	enum:__anon3
+HERRORCODE_INVALID	Common/herrorcode.h	/^	HERRORCODE_INVALID,				\/*hlist null*\/$/;"	e	enum:__anon3
+HERRORCODE_IS_EMPTY	Common/herrorcode.h	/^	HERRORCODE_IS_EMPTY,			\/*in hlist_is_empty function, the last parameter is null*\/$/;"	e	enum:__anon3
+HERRORCODE_KEY_INVALID	Common/herrorcode.h	/^	HERRORCODE_KEY_INVALID,			\/*key null*\/$/;"	e	enum:__anon3
+HERRORCODE_LENGTH	Common/herrorcode.h	/^	HERRORCODE_LENGTH,				\/*in hlist_length function, the last parameter is null*\/$/;"	e	enum:__anon3
+HERRORCODE_MALLOC	Common/herrorcode.h	/^	HERRORCODE_MALLOC,				\/*malloc null*\/$/;"	e	enum:__anon3
+HERRORCODE_NODE_NOT_FOUND	Common/herrorcode.h	/^	HERRORCODE_NODE_NOT_FOUND,		\/*can not find the node specified by user in list*\/$/;"	e	enum:__anon3
+HERRORCODE_NODE_UNAVAILABLE	Common/herrorcode.h	/^	HERRORCODE_NODE_UNAVAILABLE,	\/*key->i_is_avaiable is false*\/$/;"	e	enum:__anon3
+HERRORCODE_POSITION	Common/herrorcode.h	/^	HERRORCODE_POSITION,			\/*position smaller than 0 or beyond the length of list*\/$/;"	e	enum:__anon3
+HERRORCODE_SUCCESS	Common/herrorcode.h	/^	HERRORCODE_SUCCESS = 0,			\/*no error*\/$/;"	e	enum:__anon3
+HFont	WidgetLayer/hwidget.h	/^} HFont;$/;"	t	typeref:enum:_HFont
+HHORIZONTAL_LAYOUT_H	WidgetLayer/HHorizontalLayout.h	13;"	d
+HHorizontalLayout	WidgetLayer/HHorizontalLayout.h	/^}HHorizontalLayout;$/;"	t	typeref:struct:_HHorizontalLayout
+HImage	WidgetLayer/himage.h	/^typedef struct _HImage_			 HImage;$/;"	t	typeref:struct:_HImage_
+HImageOperation	WidgetLayer/himage.h	/^typedef struct _HImageOperation_ HImageOperation;$/;"	t	typeref:struct:_HImageOperation_
+HLAYOUT_GAP	WidgetLayer/HLayout.c	21;"	d	file:
+HLAYOUT_H	WidgetLayer/HLayout.h	13;"	d
+HLabel	WidgetLayer/hlabel.h	/^}HLabel, *HLabel_P;$/;"	t	typeref:struct:_hLabel
+HLabel_P	WidgetLayer/hlabel.h	/^}HLabel, *HLabel_P;$/;"	t	typeref:struct:_hLabel
+HLayout	WidgetLayer/HLayout.h	/^typedef struct _hlayout HLayout;$/;"	t	typeref:struct:_hlayout
+HPUSHBUTTON_OPS	WidgetLayer/hpushbutton.h	/^}HPUSHBUTTON_OPS;$/;"	t	typeref:struct:__anon1
+HPlane	WidgetLayer/hplane.h	/^typedef struct _HPlane HPlane;$/;"	t	typeref:struct:_HPlane
+HPlaneOperation	WidgetLayer/hplane.h	/^typedef struct _HPlaneOperation HPlaneOperation;$/;"	t	typeref:struct:_HPlaneOperation
+HPoint	WidgetLayer/hwidget.h	/^} HPoint;$/;"	t	typeref:struct:_HPoint
+HPopupMenu	WidgetLayer/hpopupmenu.h	/^typedef struct _HPopupMenu_				HPopupMenu;$/;"	t	typeref:struct:_HPopupMenu_
+HPopupMenuOperation	WidgetLayer/hpopupmenu.h	/^typedef struct _HPopupMenuOperation_	HPopupMenuOperation;$/;"	t	typeref:struct:_HPopupMenuOperation_
+HPushButton	WidgetLayer/hpushbutton.h	/^}HPushButton, *HPushButton_P;$/;"	t	typeref:struct:_hPushButton
+HPushButton_P	WidgetLayer/hpushbutton.h	/^}HPushButton, *HPushButton_P;$/;"	t	typeref:struct:_hPushButton
+HRect	WidgetLayer/hwidget.h	/^} HRect;$/;"	t	typeref:struct:_HRect
+HResource	WidgetLayer/hlookandfeel.h	/^typedef struct _HResource HResource;$/;"	t	typeref:struct:_HResource
+HResourceImageProperty	WidgetLayer/hlookandfeel.h	/^typedef struct _HResourceImageProperty HResourceImageProperty;$/;"	t	typeref:struct:_HResourceImageProperty
+HSL_to_RGB	WidgetLayer/hlookandfeel.c	/^void HSL_to_RGB(double var_H, double var_S, double var_L, double *var_R, double *var_G, double *var_B)$/;"	f
+HStatusBar	WidgetLayer/hstatusbar.h	/^}HStatusBar;$/;"	t	typeref:struct:_HStatusBar
+HTextArea	WidgetLayer/htextarea.h	/^typedef struct _HTextArea HTextArea;$/;"	t	typeref:struct:_HTextArea
+HTextAreaOperation	WidgetLayer/htextarea.h	/^typedef struct _HTextAreaOperation HTextAreaOperation;$/;"	t	typeref:struct:_HTextAreaOperation
+HTextGlobal	WidgetLayer/htextarea.h	/^typedef struct _HTextGlobal HTextGlobal;$/;"	t	typeref:struct:_HTextGlobal
+HTextInput	WidgetLayer/htextinput.h	/^typedef struct _HTextInput HTextInput;$/;"	t	typeref:struct:_HTextInput
+HTextInputOperation	WidgetLayer/htextinput.h	/^typedef struct _HTextInputOperation HTextInputOperation;$/;"	t	typeref:struct:_HTextInputOperation
+HVERTICAL_LAYOUT_H	WidgetLayer/HVerticalLayout.h	13;"	d
+HVerticalLayout	WidgetLayer/HVerticalLayout.h	/^}HVerticalLayout;$/;"	t	typeref:struct:_HVerticalLayout
+HWidget	WidgetLayer/hwidget.h	/^typedef struct _HWidget HWidget;$/;"	t	typeref:struct:_HWidget
+HWidgetOperation	WidgetLayer/hwidget.h	/^typedef struct _HWidgetOperation HWidgetOperation;$/;"	t	typeref:struct:_HWidgetOperation
+HWindow	WindowLayer/hwindow.h	/^typedef struct _HWindow HWindow;$/;"	t	typeref:struct:_HWindow
+H_DEBUG	WidgetLayer/hwidget.h	10;"	d
+Hue_to_RGB	WidgetLayer/hlookandfeel.c	/^double Hue_to_RGB(double v1, double v2, double vH ) {$/;"	f
+INCLUDE_FILES	AnserCygnoides/AnserCygnoides.mak	/^INCLUDE_FILES= \\$/;"	m
+Item	AnserCygnoides/hlistbox.h	/^typedef HWidget		Item;$/;"	t
+LD	AnserCygnoides/AnserCygnoides.mak	/^LD=$(CXX) $(CXXFLAGS)$/;"	m
+LDFLAGS	AnserCygnoides/AnserCygnoides.mak	/^LDFLAGS=$/;"	m
+LIST_NODE_AVAILABLE	Common/hlist.h	19;"	d
+LIST_NODE_UNAVAILABLE	Common/hlist.h	20;"	d
+LayoutGap	WidgetLayer/HLayout.h	/^typedef struct _Layout_Gap LayoutGap;$/;"	t	typeref:struct:_Layout_Gap
+LineNode	WidgetLayer/htextarea.h	/^typedef struct _LineNode LineNode;$/;"	t	typeref:struct:_LineNode
+ListBox	AnserCygnoides/hlistbox.h	/^typedef HContainer  ListBox;$/;"	t
+MAIN_BUTTON1_S_TOP_X	AnserCygnoides/mainpage.h	21;"	d
+MAIN_BUTTON1_S_TOP_Y	AnserCygnoides/mainpage.h	22;"	d
+MAIN_BUTTON2_S_TOP_X	AnserCygnoides/mainpage.h	23;"	d
+MAIN_BUTTON2_S_TOP_Y	AnserCygnoides/mainpage.h	24;"	d
+MAX_LABLE_LEN	WidgetLayer/hcheckbox.c	19;"	d	file:
+MAX_RESOURCE_SIZE	WidgetLayer/hlookandfeel.h	28;"	d
+MainPage_delete	AnserCygnoides/mainpage.c	/^void MainPage_delete(MainPage* p_mainpage)$/;"	f
+MainPage_new	AnserCygnoides/mainpage.c	/^MainPage* MainPage_new()$/;"	f
+Menu_Container	AnserCygnoides/video_detail.h	/^	HContainer* Menu_Container;$/;"	m	struct:_VideoDetail_Page
+Menu_Container_Height	AnserCygnoides/video_detail.h	17;"	d
+Menu_Container_Top_X	AnserCygnoides/video_detail.h	15;"	d
+Menu_Container_Top_Y	AnserCygnoides/video_detail.h	16;"	d
+Menu_Container_Width	AnserCygnoides/video_detail.h	18;"	d
+My_Button_Height	AnserCygnoides/video_detail.h	42;"	d
+My_Button_Width	AnserCygnoides/video_detail.h	43;"	d
+My_Button_X	AnserCygnoides/video_detail.h	40;"	d
+My_Button_Y	AnserCygnoides/video_detail.h	41;"	d
+NONE_TYPE	AnserCygnoides/hlistbox.h	/^enum VideoType {NONE_TYPE,COPYRIGHT,NO_COPYRIGHT};$/;"	e	enum:VideoType
+NO_COPYRIGHT	AnserCygnoides/hlistbox.h	/^enum VideoType {NONE_TYPE,COPYRIGHT,NO_COPYRIGHT};$/;"	e	enum:VideoType
+OBJS	AnserCygnoides/AnserCygnoides.mak	/^OBJS=$(patsubst %.cxx,%.o,$(patsubst %.cpp,%.o,$(patsubst %.cc,%.o,$(patsubst %.c,%.o,$(filter %.c %.cc %.cpp %.cxx ,$(SRCS))))))$/;"	m
+PAGELAYER	AnserCygnoides/AnserCygnoides.mak	/^PAGELAYER= \\$/;"	m
+PF_Action	AnserCygnoides/type_and_macro.h	/^typedef void (*PF_Action)(void);	\/\/ by Xieliang$/;"	t
+Page	PageLayer/page.h	/^typedef struct _Page Page;$/;"	t	typeref:struct:_Page
+PageNode	PageLayer/page.h	/^typedef struct _PageNode PageNode;$/;"	t	typeref:struct:_PageNode
+PageSwitchController	PageLayer/page.h	/^typedef struct _PageSwitchController PageSwitchController;$/;"	t	typeref:struct:_PageSwitchController
+Play_Button_Height	AnserCygnoides/video_detail.h	80;"	d
+Play_Button_Width	AnserCygnoides/video_detail.h	81;"	d
+Play_Button_X	AnserCygnoides/video_detail.h	78;"	d
+Play_Button_Y	AnserCygnoides/video_detail.h	79;"	d
+PromptPage	AnserCygnoides/Prompt.h	/^}PromptPage;$/;"	t	typeref:struct:_Prompt_Page
+PromptPage	AnserCygnoides/prompt.h	/^}PromptPage;$/;"	t	typeref:struct:_Prompt_Page
+PromptPageInit	AnserCygnoides/Prompt.c	/^void PromptPageInit( PromptPage* pPromptPage ) $/;"	f
+PromptPageInit	AnserCygnoides/prompt.c	/^static void PromptPageInit( PromptPage* pPromptPage ) $/;"	f	file:
+PromptPage_delete	AnserCygnoides/Prompt.c	/^PromptPage* PromptPage_delete()$/;"	f
+PromptPage_delete	AnserCygnoides/prompt.c	/^PromptPage* PromptPage_delete()$/;"	f
+PromptPage_new	AnserCygnoides/Prompt.c	/^PromptPage* PromptPage_new() $/;"	f
+PromptPage_new	AnserCygnoides/prompt.c	/^PromptPage* PromptPage_new() $/;"	f
+Prompt_Container	AnserCygnoides/Prompt.h	/^	HContainer* Prompt_Container;$/;"	m	struct:_Prompt_Page
+Prompt_Container	AnserCygnoides/prompt.h	/^	HContainer* Prompt_Container;$/;"	m	struct:_Prompt_Page
+Prompt_Container_Height	AnserCygnoides/Prompt.h	27;"	d
+Prompt_Container_Height	AnserCygnoides/prompt.h	20;"	d
+Prompt_Container_Top_X	AnserCygnoides/Prompt.h	25;"	d
+Prompt_Container_Top_X	AnserCygnoides/prompt.h	18;"	d
+Prompt_Container_Top_Y	AnserCygnoides/Prompt.h	26;"	d
+Prompt_Container_Top_Y	AnserCygnoides/prompt.h	19;"	d
+Prompt_Container_Width	AnserCygnoides/Prompt.h	28;"	d
+Prompt_Container_Width	AnserCygnoides/prompt.h	21;"	d
+Prompt_Image	AnserCygnoides/Prompt.h	/^	HImage* Prompt_Image;$/;"	m	struct:_Prompt_Page
+Prompt_Image	AnserCygnoides/prompt.h	/^	HImage* Prompt_Image;$/;"	m	struct:_Prompt_Page
+RESOURCE_FILES	AnserCygnoides/AnserCygnoides.mak	/^RESOURCE_FILES= \\$/;"	m
+RGB_to_HSL	WidgetLayer/hlookandfeel.c	/^void RGB_to_HSL(double var_R, double var_G, double var_B, double *var_H, double *var_S, double *var_L)$/;"	f
+Recommand_Button_Height	AnserCygnoides/video_detail.h	30;"	d
+Recommand_Button_Width	AnserCygnoides/video_detail.h	31;"	d
+Recommand_Button_X	AnserCygnoides/video_detail.h	28;"	d
+Recommand_Button_Y	AnserCygnoides/video_detail.h	29;"	d
+Rect	AnserCygnoides/defines.h	/^typedef HRect	Rect;$/;"	t
+RelevanceVideo_Container	AnserCygnoides/video_detail.h	/^	HContainer* RelevanceVideo_Container;$/;"	m	struct:_VideoDetail_Page
+RelevanceVideo_Height	AnserCygnoides/video_detail.h	11;"	d
+RelevanceVideo_Height	AnserCygnoides/video_detail.h	13;"	d
+RelevanceVideo_Width	AnserCygnoides/video_detail.h	12;"	d
+RelevanceVideo_Width	AnserCygnoides/video_detail.h	14;"	d
+Relevance_Video_Container_Height	AnserCygnoides/video_detail.h	69;"	d
+Relevance_Video_Container_Width	AnserCygnoides/video_detail.h	70;"	d
+Relevance_Video_Container_X	AnserCygnoides/video_detail.h	67;"	d
+Relevance_Video_Container_Y	AnserCygnoides/video_detail.h	68;"	d
+RetryConnect	AnserCygnoides/Prompt.c	/^static void RetryConnect()$/;"	f	file:
+RetryConnect	AnserCygnoides/prompt.c	/^static void RetryConnect()$/;"	f	file:
+Retry_Button_Height	AnserCygnoides/prompt.h	12;"	d
+Retry_Button_Width	AnserCygnoides/prompt.h	13;"	d
+Retry_Button_X	AnserCygnoides/prompt.h	10;"	d
+Retry_Button_Y	AnserCygnoides/prompt.h	11;"	d
+Retry_Txt_Height	AnserCygnoides/Prompt.h	21;"	d
+Retry_Txt_Width	AnserCygnoides/Prompt.h	22;"	d
+SCREEN_HEIGHT	WidgetLayer/hstatusbar.c	24;"	d	file:
+SCREEN_WIDTH	WidgetLayer/hstatusbar.c	23;"	d	file:
+SOURCE_FILES	AnserCygnoides/AnserCygnoides.mak	/^SOURCE_FILES= \\$/;"	m
+SRCS	AnserCygnoides/AnserCygnoides.mak	/^SRCS=$(SOURCE_FILES) $(COMMON) $(RESOURCE_FILES) $(PAGELAYER) $(WIDGETLAYER) $(WINDOWLAYER) $(INCLUDE_FILES) $(TOOLS) $/;"	m
+STATUSBAR_BASE_HEIGHT	WidgetLayer/hstatusbar.c	18;"	d	file:
+STATUSBAR_HEIGHT	WidgetLayer/hstatusbar.c	22;"	d	file:
+STATUSBAR_LEFT	WidgetLayer/hstatusbar.h	19;"	d
+STATUSBAR_LEN_BORDER	WidgetLayer/hstatusbar.c	19;"	d	file:
+STATUSBAR_LEN_MAX	WidgetLayer/hstatusbar.c	20;"	d	file:
+STATUSBAR_RIGHT	WidgetLayer/hstatusbar.h	20;"	d
+Search_Button_Height	AnserCygnoides/video_detail.h	34;"	d
+Search_Button_Width	AnserCygnoides/video_detail.h	35;"	d
+Search_Button_X	AnserCygnoides/video_detail.h	32;"	d
+Search_Button_Y	AnserCygnoides/video_detail.h	33;"	d
+Share_Button_Height	AnserCygnoides/video_detail.h	88;"	d
+Share_Button_Width	AnserCygnoides/video_detail.h	89;"	d
+Share_Button_X	AnserCygnoides/video_detail.h	86;"	d
+Share_Button_Y	AnserCygnoides/video_detail.h	87;"	d
+TARGET	AnserCygnoides/AnserCygnoides.mak	/^TARGET=AnserCygnoides$/;"	m
+TEXT_MAX_SIZE	WidgetLayer/htextinput.c	22;"	d	file:
+TOOLS	AnserCygnoides/AnserCygnoides.mak	/^TOOLS= \\$/;"	m
+Top_Button_Height	AnserCygnoides/video_detail.h	38;"	d
+Top_Button_Width	AnserCygnoides/video_detail.h	39;"	d
+Top_Button_X	AnserCygnoides/video_detail.h	36;"	d
+Top_Button_Y	AnserCygnoides/video_detail.h	37;"	d
+Type_Button_Height	AnserCygnoides/video_detail.h	26;"	d
+Type_Button_Width	AnserCygnoides/video_detail.h	27;"	d
+Type_Button_X	AnserCygnoides/video_detail.h	24;"	d
+Type_Button_Y	AnserCygnoides/video_detail.h	25;"	d
+UI_Image_GetFrameNum	WidgetLayer/himage.c	/^static int UI_Image_GetFrameNum( HImage *p_this )$/;"	f	file:
+UI_Image_GetPosition	WidgetLayer/himage.c	/^static HPoint UI_Image_GetPosition( HImage *p_this )$/;"	f	file:
+UI_Image_Get_Oper	WidgetLayer/himage.c	/^static HImageOperation* UI_Image_Get_Oper()$/;"	f	file:
+UI_Image_LoadImage	WidgetLayer/himage.c	/^static void UI_Image_LoadImage(HImage* p_this, char *strPath)$/;"	f	file:
+UI_Image_LoadImage_2	WidgetLayer/himage.c	/^static void UI_Image_LoadImage_2( HImage *p_this, VMUINT8 *p_buf, VMINT i_size )$/;"	f	file:
+UI_Image_Paint	WidgetLayer/himage.c	/^static void UI_Image_Paint( HImage *p_this, VMINT i_LayerHandle, VMINT i_OffsetX, VMINT i_OffsetY )$/;"	f	file:
+UI_Image_PaintFrame	WidgetLayer/himage.c	/^static void UI_Image_PaintFrame( HImage *p_this, VMINT i_LayerHandle, VMINT i_OffsetX, VMINT i_OffsetY, int i_frame_index )$/;"	f	file:
+UI_Image_SetPosition	WidgetLayer/himage.c	/^static void UI_Image_SetPosition( HImage *p_this, short x, short y )$/;"	f	file:
+UI_Image_SetSize	WidgetLayer/himage.c	/^static void UI_Image_SetSize(HImage *p_this, short s_width, short s_height)$/;"	f	file:
+UI_PopupMenu_Get_Oper	WidgetLayer/hpopupmenu.c	/^static HPopupMenuOperation* UI_PopupMenu_Get_Oper()$/;"	f	file:
+UI_PopupMenu_Hide	WidgetLayer/hpopupmenu.c	/^static void UI_PopupMenu_Hide( HPopupMenu* p_Self )$/;"	f	file:
+UI_PopupMenu_Show	WidgetLayer/hpopupmenu.c	/^static void UI_PopupMenu_Show( HPopupMenu* p_Self, VMSHORT x, VMSHORT y )$/;"	f	file:
+UP_Button_Height	AnserCygnoides/video_detail.h	96;"	d
+UP_Button_Width	AnserCygnoides/video_detail.h	97;"	d
+UP_Button_X	AnserCygnoides/video_detail.h	94;"	d
+UP_Button_Y	AnserCygnoides/video_detail.h	95;"	d
+VM_CHECK_MALLOC	AnserCygnoides/new.h	18;"	d
+VM_NEW	AnserCygnoides/new.h	27;"	d
+Vedio_Container_Height	AnserCygnoides/video_detail.h	21;"	d
+Vedio_Container_Top_X	AnserCygnoides/video_detail.h	19;"	d
+Vedio_Container_Top_Y	AnserCygnoides/video_detail.h	20;"	d
+Vedio_Container_Width	AnserCygnoides/video_detail.h	22;"	d
+VideoDetailPage	AnserCygnoides/video_detail.h	/^}VideoDetailPage;$/;"	t	typeref:struct:_VideoDetail_Page
+VideoItem	AnserCygnoides/hlistbox.h	/^typedef HContainer  VideoItem;$/;"	t
+VideoItem1	AnserCygnoides/hlistbox.h	/^typedef VideoItem  VideoItem1;$/;"	t
+VideoItem2	AnserCygnoides/hlistbox.h	/^typedef VideoItem  VideoItem2;$/;"	t
+VideoType	AnserCygnoides/hlistbox.h	/^enum VideoType {NONE_TYPE,COPYRIGHT,NO_COPYRIGHT};$/;"	g
+Video_Detail_Container	AnserCygnoides/video_detail.h	/^	HContainer* Video_Detail_Container;$/;"	m	struct:_VideoDetail_Page
+Video_Detail_Container_Height	AnserCygnoides/video_detail.h	76;"	d
+Video_Detail_Container_Width	AnserCygnoides/video_detail.h	77;"	d
+Video_Detail_Container_X	AnserCygnoides/video_detail.h	74;"	d
+Video_Detail_Container_Y	AnserCygnoides/video_detail.h	75;"	d
+Video_Detail_Visible	AnserCygnoides/video_detail.c	/^void Video_Detail_Visible() $/;"	f
+Video_Height	AnserCygnoides/video_detail.h	51;"	d
+Video_List_Button_Height	AnserCygnoides/video_detail.h	61;"	d
+Video_List_Button_Width	AnserCygnoides/video_detail.h	62;"	d
+Video_List_Button_X	AnserCygnoides/video_detail.h	59;"	d
+Video_List_Button_Y	AnserCygnoides/video_detail.h	60;"	d
+Video_List_Label2_Height	AnserCygnoides/video_detail.h	55;"	d
+Video_List_Label2_Width	AnserCygnoides/video_detail.h	56;"	d
+Video_List_Label_Height	AnserCygnoides/video_detail.h	53;"	d
+Video_List_Label_Width	AnserCygnoides/video_detail.h	54;"	d
+Video_List_Star_Height	AnserCygnoides/video_detail.h	57;"	d
+Video_List_Star_Width	AnserCygnoides/video_detail.h	58;"	d
+Video_List_Title_Height	AnserCygnoides/video_detail.h	47;"	d
+Video_List_Title_Width	AnserCygnoides/video_detail.h	48;"	d
+Video_List_Title_X	AnserCygnoides/video_detail.h	45;"	d
+Video_List_Title_Y	AnserCygnoides/video_detail.h	46;"	d
+Video_List_Top_X	AnserCygnoides/video_detail.h	49;"	d
+Video_List_Top_Y	AnserCygnoides/video_detail.h	50;"	d
+Video_Width	AnserCygnoides/video_detail.h	52;"	d
+WIDGETLAYER	AnserCygnoides/AnserCygnoides.mak	/^WIDGETLAYER= \\$/;"	m
+WINDOWLAYER	AnserCygnoides/AnserCygnoides.mak	/^WINDOWLAYER= \\$/;"	m
+WSTR_LEN_MAX	WidgetLayer/hlabel.c	8;"	d	file:
+WSTR_LINE_MAX	WidgetLayer/hlabel.c	9;"	d	file:
+WSTR_LINE_MAX	WidgetLayer/hpushbutton.c	8;"	d	file:
+_BUSINESS_H_	AnserCygnoides/business.h	13;"	d
+_CONNECT_PAGE_H	AnserCygnoides/connectpage.h	13;"	d
+_CRT_SECURE_NO_WARNINGS	WidgetLayer/hwidget.h	14;"	d
+_HCHECKBOX_H	WidgetLayer/hcheckbox.h	9;"	d
+_HCONTAINER_H_	WidgetLayer/hcontainer.h	9;"	d
+_HClass	WidgetLayer/hwidget.h	/^typedef enum _HClass {$/;"	g
+_HContainer	WidgetLayer/hcontainer.h	/^struct _HContainer {$/;"	s
+_HContainerOperation	WidgetLayer/hcontainer.h	/^struct _HContainerOperation {$/;"	s
+_HDRAW_H_	WidgetLayer/hlookandfeel.h	10;"	d
+_HEFC_HLIST_HLIST_ERROR_CODE_H	Common/herrorcode.h	10;"	d
+_HEFC_HLIST_HLIST_H	Common/hlist.h	10;"	d
+_HFont	WidgetLayer/hwidget.h	/^typedef enum _HFont{$/;"	g
+_HHorizontalLayout	WidgetLayer/HHorizontalLayout.h	/^typedef struct _HHorizontalLayout$/;"	s
+_HIMAGE_H	WidgetLayer/himage.h	10;"	d
+_HImageOperation_	WidgetLayer/himage.h	/^struct _HImageOperation_$/;"	s
+_HImage_	WidgetLayer/himage.h	/^struct _HImage_$/;"	s
+_HLABEL_H	WidgetLayer/hlabel.h	9;"	d
+_HPLANE_H_	WidgetLayer/hplane.h	9;"	d
+_HPOPUPMENU_H	WidgetLayer/hpopupmenu.h	10;"	d
+_HPUSHBUTTON_H	WidgetLayer/hpushbutton.h	9;"	d
+_HPlane	WidgetLayer/hplane.h	/^struct _HPlane {$/;"	s
+_HPlaneOperation	WidgetLayer/hplane.h	/^struct _HPlaneOperation {$/;"	s
+_HPoint	WidgetLayer/hwidget.h	/^typedef struct _HPoint {$/;"	s
+_HPopupMenuOperation_	WidgetLayer/hpopupmenu.h	/^struct _HPopupMenuOperation_$/;"	s
+_HPopupMenu_	WidgetLayer/hpopupmenu.h	/^struct _HPopupMenu_$/;"	s
+_HRect	WidgetLayer/hwidget.h	/^typedef struct _HRect {$/;"	s
+_HResource	WidgetLayer/hlookandfeel.h	/^struct _HResource {$/;"	s
+_HResourceImageProperty	WidgetLayer/hlookandfeel.h	/^struct _HResourceImageProperty {$/;"	s
+_HSTATUSBAR_H	WidgetLayer/hstatusbar.h	9;"	d
+_HStatusBar	WidgetLayer/hstatusbar.h	/^typedef struct _HStatusBar{$/;"	s
+_HTEXTAREA_H	WidgetLayer/htextarea.h	8;"	d
+_HTEXTINPUT_H	WidgetLayer/htextinput.h	9;"	d
+_HTextArea	WidgetLayer/htextarea.h	/^struct _HTextArea {$/;"	s
+_HTextAreaOperation	WidgetLayer/htextarea.h	/^struct _HTextAreaOperation {$/;"	s
+_HTextGlobal	WidgetLayer/htextarea.h	/^struct _HTextGlobal {$/;"	s
+_HTextInput	WidgetLayer/htextinput.h	/^struct _HTextInput {$/;"	s
+_HTextInputOperation	WidgetLayer/htextinput.h	/^struct _HTextInputOperation {$/;"	s
+_HVerticalLayout	WidgetLayer/HVerticalLayout.h	/^typedef struct _HVerticalLayout$/;"	s
+_HWIDGET_H_	WidgetLayer/hwidget.h	8;"	d
+_HWINDOW_H_	WindowLayer/hwindow.h	9;"	d
+_HWidget	WidgetLayer/hwidget.h	/^struct _HWidget {$/;"	s
+_HWidgetOperation	WidgetLayer/hwidget.h	/^struct _HWidgetOperation {$/;"	s
+_HWindow	WindowLayer/hwindow.h	/^struct _HWindow {$/;"	s
+_LISTBOX_H_	AnserCygnoides/hlistbox.h	14;"	d
+_Layout_Gap	WidgetLayer/HLayout.h	/^struct _Layout_Gap$/;"	s
+_LineNode	WidgetLayer/htextarea.h	/^struct _LineNode {$/;"	s
+_MAINPAGE_H_	AnserCygnoides/mainpage.h	13;"	d
+_NEW_H_	AnserCygnoides/new.h	13;"	d
+_PAGE_H_	PageLayer/page.h	8;"	d
+_PROMPT_H_	AnserCygnoides/Prompt.h	13;"	d
+_Page	PageLayer/page.h	/^struct _Page {$/;"	s
+_PageNode	PageLayer/page.h	/^struct _PageNode {$/;"	s
+_PageSwitchController	PageLayer/page.h	/^struct _PageSwitchController {$/;"	s
+_Prompt_Page	AnserCygnoides/Prompt.h	/^typedef struct _Prompt_Page$/;"	s
+_Prompt_Page	AnserCygnoides/prompt.h	/^typedef struct _Prompt_Page$/;"	s
+_TOOLS_H_	AnserCygnoides/tools.h	13;"	d
+_TYPE_AND_MACRO_H	AnserCygnoides/type_and_macro.h	10;"	d
+_VRE_APP_WIZARDTEMPLATE_	AnserCygnoides/AnserCygnoides.h	2;"	d
+_VideoDetail_Page	AnserCygnoides/video_detail.h	/^typedef struct _VideoDetail_Page$/;"	s
+_hLabel	WidgetLayer/hlabel.h	/^typedef struct _hLabel{$/;"	s
+_hPushButton	WidgetLayer/hpushbutton.h	/^typedef struct _hPushButton{$/;"	s
+_hlayout	WidgetLayer/HLayout.h	/^struct _hlayout$/;"	s
+_hlist_key_t	Common/hlist.h	/^typedef struct _hlist_key_t{$/;"	s
+_hlist_node_t	Common/hlist.h	/^struct _hlist_node_t{$/;"	s
+_max_	WidgetLayer/hcontainer.c	117;"	d	file:
+_min_	WidgetLayer/hcontainer.c	116;"	d	file:
+ac_hlist_error_message	Common/herrorcode.c	/^const char *ac_hlist_error_message[] = {$/;"	v
+action_performed	AnserCygnoides/user.c	/^void action_performed(HWidget *p_source, void *p_param)$/;"	f
+action_performed	WidgetLayer/hwidget.h	/^	void (*action_performed)(HWidget *p_source, void *p_param);$/;"	m	struct:_HWidget
+add_widget	WidgetLayer/HLayout.c	/^static void add_widget(HLayout* p_layout, HWidget* p_widget)$/;"	f	file:
+add_widget	WidgetLayer/HLayout.h	/^	void (*add_widget)(HLayout* p_layout, HWidget* p_widget);$/;"	m	struct:_hlayout
+add_widget	WidgetLayer/hcontainer.h	/^	void (*add_widget)(HContainer *p_container, HWidget *p_widget);$/;"	m	struct:_HContainerOperation
+add_widget	WidgetLayer/hplane.h	/^	void (*add_widget)(HPlane *p_plane, HWidget *p_widget);$/;"	m	struct:_HPlaneOperation
+app_enter	AnserCygnoides/user.c	/^void app_enter()$/;"	f
+append_node	WidgetLayer/htextarea.c	/^static void append_node(HTextArea *p_textarea, VMWSTR w_str, int i_len)$/;"	f	file:
+append_property_and_strparth	WidgetLayer/hlookandfeel.c	/^void append_property_and_strparth(HResource *p_resource, HImage *p_image, char *p_strparth)$/;"	f
+append_property_and_strparth	WidgetLayer/hlookandfeel.h	/^	void (*append_property_and_strparth)(HResource *p_resource, HImage *p_image, char *p_strparth);$/;"	m	struct:_HResource
+base	WidgetLayer/hcheckbox.h	/^	HWidget base;$/;"	m	struct:HCheckBox_t
+base	WidgetLayer/hcontainer.h	/^	HWidget base;$/;"	m	struct:_HContainer
+base	WidgetLayer/hlabel.h	/^	HWidget			base;$/;"	m	struct:_hLabel
+base	WidgetLayer/hplane.h	/^	HContainer base;$/;"	m	struct:_HPlane
+base	WidgetLayer/hpopupmenu.h	/^	HContainer base;$/;"	m	struct:_HPopupMenu_
+base	WidgetLayer/hpushbutton.h	/^	HWidget					base;$/;"	m	struct:_hPushButton
+base	WidgetLayer/hstatusbar.h	/^	HWidget				base;$/;"	m	struct:_HStatusBar
+base	WidgetLayer/htextarea.h	/^	HWidget base;$/;"	m	struct:_HTextArea
+base	WidgetLayer/htextinput.h	/^	HWidget base;$/;"	m	struct:_HTextInput
+bg_image	WidgetLayer/hlabel.h	/^	HImage			*bg_image;$/;"	m	struct:_hLabel
+bg_image	WidgetLayer/hpushbutton.h	/^	HImage					*bg_image;$/;"	m	struct:_hPushButton
+bg_image	WidgetLayer/hstatusbar.h	/^	HImage					*bg_image;$/;"	m	struct:_HStatusBar
+businss	AnserCygnoides/business.c	/^void businss()$/;"	f
+button_autosize_image	WidgetLayer/hpushbutton.c	/^static void button_autosize_image(HPushButton *p_Me, int i_isautosize){$/;"	f	file:
+c_check_state	WidgetLayer/hcheckbox.h	/^	char c_check_state;$/;"	m	struct:HCheckBox_t
+c_cursor_flag	WidgetLayer/htextarea.h	/^	char c_cursor_flag;$/;"	m	struct:_HTextGlobal
+c_font	WidgetLayer/hwidget.h	/^	char c_font;$/;"	m	struct:_HWidget
+c_input_method	WidgetLayer/htextarea.h	/^	char c_input_method;$/;"	m	struct:_HTextArea
+c_input_method	WidgetLayer/htextinput.h	/^	char c_input_method;$/;"	m	struct:_HTextInput
+c_is_password	WidgetLayer/htextinput.h	/^	char c_is_password;$/;"	m	struct:_HTextInput
+c_is_split_line	WidgetLayer/htextarea.h	/^	char c_is_split_line;$/;"	m	struct:_HTextArea
+c_line_num	WidgetLayer/htextarea.h	/^	char c_line_num;$/;"	m	struct:_HTextArea
+c_line_space	WidgetLayer/htextarea.h	/^	char c_line_space;$/;"	m	struct:_HTextArea
+c_text_change_flag	WidgetLayer/htextarea.h	/^	char c_text_change_flag;$/;"	m	struct:_HTextArea
+c_timer_id	WidgetLayer/htextarea.h	/^	char c_timer_id;$/;"	m	struct:_HTextGlobal
+calc_preffered_size	WidgetLayer/hcontainer.c	/^static void calc_preffered_size(HContainer *pc)$/;"	f	file:
+call_input_method	WidgetLayer/htextarea.c	/^void call_input_method(HTextArea *p_textarea)$/;"	f
+call_input_method	WidgetLayer/htextinput.c	/^static void call_input_method(HTextInput *p_textinput)$/;"	f	file:
+can_scroll	WidgetLayer/hcontainer.h	/^	int (*can_scroll)(HContainer *p_container);$/;"	m	struct:_HContainerOperation
+can_travel	WidgetLayer/hwidget.c	/^static int can_travel(HWidget *p_widget, int keycode)$/;"	f	file:
+can_travel	WidgetLayer/hwidget.h	/^	int (*can_travel)(HWidget *p_widget, int keycode);$/;"	m	struct:_HWidgetOperation
+change_state	WidgetLayer/hcheckbox.c	/^static change_state(HCheckBox *p_checkbox)$/;"	f	file:
+child_at	WidgetLayer/hcontainer.h	/^	HWidget* (*child_at)(HContainer *p_container, short s_x, short s_y);$/;"	m	struct:_HContainerOperation
+child_at_recursive	WidgetLayer/hplane.c	/^static HWidget *child_at_recursive(HContainer *p_c, short s_x, short s_y)$/;"	f	file:
+classdef	AnserCygnoides/connectpage.h	/^classdef(ConnectPage)$/;"	f
+classdef	AnserCygnoides/defines.h	21;"	d
+classdef	AnserCygnoides/mainpage.h	/^classdef(MainPage) $/;"	f
+clean_bgimage	WidgetLayer/hpushbutton.h	/^	void			(*clean_bgimage)(struct _hPushButton *p_Me);$/;"	m	struct:__anon1
+clean_bgimage	WidgetLayer/hstatusbar.h	/^	void			(*clean_bgimage)(struct _HStatusBar *p_Me);$/;"	m	struct:_HStatusBar
+clear_layout	WidgetLayer/HLayout.c	/^static void clear_layout(HLayout* p_layout)$/;"	f	file:
+clear_layout	WidgetLayer/HLayout.h	/^	void (*clear_layout)(HLayout* p_layout);$/;"	m	struct:_hlayout
+clear_list	WidgetLayer/htextarea.c	/^static void clear_list(HTextArea *p_textarea) $/;"	f	file:
+clone	WidgetLayer/hwidget.c	/^static HWidgetOperation * clone(HWidget *p_widget)$/;"	f	file:
+clone	WidgetLayer/hwidget.h	/^	HWidgetOperation* (*clone)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+collect	AnserCygnoides/video_detail.c	/^void collect() $/;"	f
+collect_Button	AnserCygnoides/video_detail.h	/^	HPushButton* collect_Button;$/;"	m	struct:_VideoDetail_Page
+create_global	WidgetLayer/htextarea.c	/^static void create_global(HTextArea *p_textarea)$/;"	f	file:
+create_widget_ops	WidgetLayer/hwidget.c	/^static void create_widget_ops()$/;"	f	file:
+cstr	AnserCygnoides/defines.h	/^typedef char* cstr;$/;"	t
+delete_page	PageLayer/page.c	/^static void delete_page(PageSwitchController *p_this, Page *p_page)$/;"	f	file:
+delete_page	PageLayer/page.h	/^	void (*delete_page)(PageSwitchController *p_this, Page *p_page);$/;"	m	struct:_PageSwitchController
+delete_text	WidgetLayer/htextarea.c	/^static void delete_text(HTextArea *p_textarea)$/;"	f	file:
+delete_text	WidgetLayer/htextarea.h	/^	void (*delete_text)(HTextArea *p_textarea);$/;"	m	struct:_HTextAreaOperation
+destroy	PageLayer/page.h	/^	void (*destroy)(Page *p_this);$/;"	m	struct:_Page
+destroy	WidgetLayer/hwidget.c	/^static void destroy(HWidget *p_widget)$/;"	f	file:
+destroy	WidgetLayer/hwidget.h	/^	void (*destroy)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+destroy_global	WidgetLayer/htextarea.c	/^static void destroy_global(HTextArea *p_textarea)$/;"	f	file:
+detail_label	AnserCygnoides/video_detail.h	/^	HLabel* detail_label[4];$/;"	m	struct:_VideoDetail_Page
+down	AnserCygnoides/video_detail.c	/^static void down() $/;"	f	file:
+down_Button	AnserCygnoides/video_detail.h	/^	HPushButton*down_Button;$/;"	m	struct:_VideoDetail_Page
+draw	WidgetLayer/hlabel.c	/^static void draw(HWidget *p_widget, int i_layer, short s_x, short s_y){$/;"	f	file:
+draw	WidgetLayer/hpushbutton.c	/^static void draw(HWidget *p_widget, int i_layer, short s_x, short s_y){$/;"	f	file:
+draw	WidgetLayer/hstatusbar.c	/^static void draw(HWidget *p_widget, int i_layer, short s_x, short s_y){$/;"	f	file:
+draw_gb2312_text_by_hpoint	WidgetLayer/hlookandfeel.c	/^void draw_gb2312_text_by_hpoint(VMINT i_layer_handle, char *p_char_str, HPoint p_point, VMUINT16 ui_color)$/;"	f
+draw_gb2312_text_by_widget	WidgetLayer/hlookandfeel.c	/^void draw_gb2312_text_by_widget(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y)$/;"	f
+draw_gb2312_text_by_widget_center	WidgetLayer/hlookandfeel.c	/^void draw_gb2312_text_by_widget_center(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y)$/;"	f
+draw_gb2312_text_by_widget_oneline	WidgetLayer/hlookandfeel.c	/^void draw_gb2312_text_by_widget_oneline(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y)$/;"	f
+draw_line	WidgetLayer/htextarea.c	/^static draw_line(HTextArea *p_textarea, VMUINT8 *p_layer_buf, short s_screen_x, short s_screen_y)$/;"	f	file:
+draw_output	WidgetLayer/hlabel.c	/^static void draw_output(HLabel *p_Me, int i_layer, short s_x, short s_y, int *i_row, VMWCHAR *pc_str){$/;"	f	file:
+draw_rect_by_hrect	WidgetLayer/hlookandfeel.c	/^void draw_rect_by_hrect(VMINT i_layer_handle, HRect p_rect, VMUINT16 f_color, VMUINT16 bg_color)$/;"	f
+draw_rect_by_hrect_trans	WidgetLayer/hlookandfeel.c	/^void draw_rect_by_hrect_trans(VMINT i_layer_handle, HRect p_rect, VMUINT16 f_color)$/;"	f
+draw_rect_by_widget	WidgetLayer/hlookandfeel.c	/^void draw_rect_by_widget(VMINT i_layer_handle,HWidget* p_widget, int i_screen_x, int i_screen_y)$/;"	f
+draw_rect_by_widget_trans	WidgetLayer/hlookandfeel.c	/^void draw_rect_by_widget_trans(VMINT i_layer_handle,HWidget* p_widget, int i_screen_x, int i_screen_y, VMUINT16 f_color)$/;"	f
+draw_text	WidgetLayer/hlabel.c	/^static void draw_text(HLabel *p_Me, int i_layer, short s_x, short s_y){$/;"	f	file:
+draw_text	WidgetLayer/htextarea.c	/^static void draw_text(HTextArea *p_textarea, VMUINT8 *p_layer_buf, short s_screen_x, short s_screen_y)$/;"	f	file:
+draw_ucs2_text_by_hpoint	WidgetLayer/hlookandfeel.c	/^void draw_ucs2_text_by_hpoint(VMINT i_layer_handle, VMWCHAR *p_ucs2_string, HPoint p_point, VMUINT16 ui_color)$/;"	f
+draw_ucs2_text_by_widget	WidgetLayer/hlookandfeel.c	/^void draw_ucs2_text_by_widget(VMINT i_layer_handle, HWidget* p_widget, VMWCHAR* p_ucs2_string, int i_screen_x, int i_screen_y)$/;"	f
+draw_ucs2_text_by_widget_center	WidgetLayer/hlookandfeel.c	/^void draw_ucs2_text_by_widget_center(VMINT i_layer_handle, HWidget* p_widget, VMWCHAR* p_ucs2_string, int i_screen_x, int i_screen_y)$/;"	f
+draw_ucs2_text_by_widget_more_line	WidgetLayer/hlookandfeel.c	/^void draw_ucs2_text_by_widget_more_line(VMINT i_layer_handle, HWidget* p_widget, VMWCHAR* p_ucs2_string, int i_screen_x, int i_screen_y, int line_space)$/;"	f
+draw_ucs2_text_by_widget_oneline	WidgetLayer/hlookandfeel.c	/^void draw_ucs2_text_by_widget_oneline(VMINT i_layer_handle, HWidget* p_widget, VMWCHAR* p_ucs2_string, int i_screen_x, int i_screen_y)$/;"	f
+enter_pen	WidgetLayer/hlabel.c	/^static void enter_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+enter_pen	WidgetLayer/hpushbutton.c	/^static void enter_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+enter_pen	WidgetLayer/hstatusbar.c	/^static void enter_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+exit_App	AnserCygnoides/Prompt.c	/^static void exit_App()$/;"	f	file:
+exit_App	AnserCygnoides/prompt.c	/^static void exit_App()$/;"	f	file:
+exit_Button	AnserCygnoides/Prompt.h	/^	HPushButton* exit_Button;$/;"	m	struct:_Prompt_Page
+exit_Button	AnserCygnoides/prompt.h	/^	HPushButton* exit_Button;$/;"	m	struct:_Prompt_Page
+find_page_by_page_id	PageLayer/page.c	/^static Page * find_page_by_page_id(PageSwitchController *p_this, int i_page_id)$/;"	f	file:
+find_page_by_page_id	PageLayer/page.h	/^	Page * (*find_page_by_page_id)(PageSwitchController *p_this, int i_page_id);$/;"	m	struct:_PageSwitchController
+find_page_by_page_type	PageLayer/page.c	/^static Page * find_page_by_page_type(PageSwitchController *p_this, int i_page_type)$/;"	f	file:
+find_page_by_page_type	PageLayer/page.h	/^	Page * (*find_page_by_page_type)(PageSwitchController *p_this, int i_page_type);$/;"	m	struct:_PageSwitchController
+fire_hiden	PageLayer/page.h	/^	void (*fire_hiden)(Page *);$/;"	m	struct:_Page
+fire_visible	PageLayer/page.h	/^	void (*fire_visible)(Page *p_this);$/;"	m	struct:_Page
+free_image_by_hresource	WidgetLayer/hlookandfeel.c	/^void free_image_by_hresource(HResource *p_resource, HImage* p_image)$/;"	f
+free_image_by_hresource	WidgetLayer/hlookandfeel.h	/^	void (*free_image_by_hresource)(HResource *p_resource, HImage* p_image); $/;"	m	struct:_HResource
+get_bgcolor	WidgetLayer/hwidget.c	/^static int get_bgcolor(HWidget *p_widget)$/;"	f	file:
+get_bgcolor	WidgetLayer/hwidget.h	/^	int (*get_bgcolor)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_check_state	WidgetLayer/hcheckbox.c	/^static char get_check_state(HCheckBox *p_checkbox)$/;"	f	file:
+get_check_state	WidgetLayer/hcheckbox.h	/^	char (*get_check_state)(HCheckBox *p_checkbox);$/;"	m	struct:HCheckBoxOperation_t
+get_class	WidgetLayer/hcheckbox.c	/^static HClass get_class(HWidget *p_widget)$/;"	f	file:
+get_class	WidgetLayer/htextarea.c	/^static HClass get_class(HWidget *p_widget)$/;"	f	file:
+get_class	WidgetLayer/htextinput.c	/^static HClass get_class(HWidget *p_widget)$/;"	f	file:
+get_class	WidgetLayer/hwidget.h	/^	HClass (*get_class)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_color	WidgetLayer/hwidget.c	/^static int get_color(HWidget *p_widget)$/;"	f	file:
+get_color	WidgetLayer/hwidget.h	/^	int (*get_color)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_cur_page	PageLayer/page.c	/^static Page * get_cur_page(PageSwitchController *p_this)$/;"	f	file:
+get_cur_page	PageLayer/page.h	/^	Page * (*get_cur_page)(PageSwitchController *p_this);$/;"	m	struct:_PageSwitchController
+get_default_bgcolor	WidgetLayer/hwidget.c	/^static int get_default_bgcolor(HWidget *p_widget)$/;"	f	file:
+get_default_bgcolor	WidgetLayer/hwidget.h	/^	int (*get_default_bgcolor)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_default_plane	WindowLayer/hwindow.h	/^	struct _HPlane * (*get_default_plane)();$/;"	m	struct:_HWindow	typeref:struct:_HWindow::get_default_plane
+get_font	WidgetLayer/hwidget.c	/^static HFont get_font(HWidget *p_widget)$/;"	f	file:
+get_font	WidgetLayer/hwidget.h	/^	HFont (*get_font)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_frame_num	WidgetLayer/himage.h	/^	int (*get_frame_num)(HImage *p_this);$/;"	m	struct:_HImageOperation_
+get_gap	WidgetLayer/HLayout.c	/^static LayoutGap get_gap(HLayout* p_layout)$/;"	f	file:
+get_gap	WidgetLayer/HLayout.h	/^	LayoutGap (*get_gap)(HLayout* p_layout);$/;"	m	struct:_hlayout
+get_glass_plane	WindowLayer/hwindow.h	/^	struct _HPlane * (*get_glass_plane)();$/;"	m	struct:_HWindow	typeref:struct:_HWindow::get_glass_plane
+get_height	WidgetLayer/hwidget.c	/^static short get_height(HWidget *p_widget)$/;"	f	file:
+get_height	WidgetLayer/hwidget.h	/^	short (*get_height)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_height_image	WidgetLayer/himage.c	/^static short get_height_image(HImage *p_Me){$/;"	f	file:
+get_image_real_height	WidgetLayer/himage.h	/^	short (*get_image_real_height)(HImage *p_this);$/;"	m	struct:_HImageOperation_
+get_image_real_width	WidgetLayer/himage.h	/^	short (*get_image_real_width)(HImage *p_this);$/;"	m	struct:_HImageOperation_
+get_image_size	WidgetLayer/hlookandfeel.c	/^int get_image_size(HImage* p_image) $/;"	f
+get_image_size	WidgetLayer/hlookandfeel.h	/^	int (*get_image_size)(HImage* p_image);$/;"	m	struct:_HResource
+get_label	WidgetLayer/hcheckbox.c	/^static char* get_label(HCheckBox *p_checkbox)$/;"	f	file:
+get_label	WidgetLayer/hcheckbox.h	/^	char* (*get_label)(HCheckBox *p_checkbox);$/;"	m	struct:HCheckBoxOperation_t
+get_len	WidgetLayer/htextinput.c	/^static int get_len(HTextInput *p_textinput)$/;"	f	file:
+get_len	WidgetLayer/htextinput.h	/^	int (*get_len)(HTextInput *p_textinput);$/;"	m	struct:_HTextInputOperation
+get_len_wstr	WidgetLayer/hstatusbar.c	/^static short get_len_wstr(char *pc_str){$/;"	f	file:
+get_max_height	WidgetLayer/HLayout.c	/^static short get_max_height(HLayout* p_layout)$/;"	f	file:
+get_max_height	WidgetLayer/HLayout.h	/^	short (*get_max_height)(HLayout* p_layout);$/;"	m	struct:_hlayout
+get_max_height	WidgetLayer/hwidget.c	/^static short get_max_height(HWidget *p_widget)$/;"	f	file:
+get_max_height	WidgetLayer/hwidget.h	/^	short (*get_max_height)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_max_width	WidgetLayer/HLayout.c	/^static short get_max_width(HLayout* p_layout)$/;"	f	file:
+get_max_width	WidgetLayer/HLayout.h	/^	short (*get_max_width)(HLayout* p_layout);$/;"	m	struct:_hlayout
+get_max_width	WidgetLayer/hwidget.c	/^static short get_max_width(HWidget *p_widget)$/;"	f	file:
+get_max_width	WidgetLayer/hwidget.h	/^	short (*get_max_width)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_page_switch_contrller	WindowLayer/hwindow.h	/^	PageSwitchController * (*get_page_switch_contrller)();$/;"	m	struct:_HWindow
+get_paint_handle	WidgetLayer/hwidget.c	/^int get_paint_handle(HWidget *p_widget)$/;"	f
+get_paint_handle	WidgetLayer/hwidget.h	/^	int (*get_paint_handle)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_popupmenu_plane	WindowLayer/hwindow.h	/^	struct _HPlane * (*get_popupmenu_plane)();$/;"	m	struct:_HWindow	typeref:struct:_HWindow::get_popupmenu_plane
+get_position	WidgetLayer/himage.h	/^	HPoint (*get_position)(HImage *p_this);$/;"	m	struct:_HImageOperation_
+get_position	WidgetLayer/hwidget.c	/^static HPoint get_position(HWidget *p_widget)$/;"	f	file:
+get_position	WidgetLayer/hwidget.h	/^	HPoint (*get_position)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_prefered_height	WidgetLayer/hcheckbox.c	/^static short get_prefered_height(HWidget *p_widget)$/;"	f	file:
+get_prefered_height	WidgetLayer/htextarea.c	/^static short get_prefered_height(HWidget *p_widget)$/;"	f	file:
+get_prefered_height	WidgetLayer/htextinput.c	/^static short get_prefered_height(HWidget *p_widget)$/;"	f	file:
+get_prefered_height	WidgetLayer/hwidget.h	/^	short (*get_prefered_height)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_prefered_width	WidgetLayer/hcheckbox.c	/^static short get_prefered_width(HWidget *p_widget)$/;"	f	file:
+get_prefered_width	WidgetLayer/htextarea.c	/^static short get_prefered_width(HWidget *p_widget)$/;"	f	file:
+get_prefered_width	WidgetLayer/htextinput.c	/^static short get_prefered_width(HWidget *p_widget)$/;"	f	file:
+get_prefered_width	WidgetLayer/hwidget.h	/^	short (*get_prefered_width)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_root	WidgetLayer/hwidget.c	/^static HPlane* get_root(HWidget *p_widget)$/;"	f	file:
+get_root	WidgetLayer/hwidget.h	/^	struct _HPlane* (*get_root)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation	typeref:struct:_HWidgetOperation::get_root
+get_screen_point	WidgetLayer/hwidget.c	/^static HPoint get_screen_point(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+get_screen_point	WidgetLayer/hwidget.h	/^	HPoint (*get_screen_point)(HWidget *p_widget, short s_x, short s_y);$/;"	m	struct:_HWidgetOperation
+get_text	WidgetLayer/htextarea.c	/^static char* get_text(HTextArea *p_textarea)$/;"	f	file:
+get_text	WidgetLayer/htextarea.h	/^	char* (*get_text)(HTextArea *p_textarea);$/;"	m	struct:_HTextAreaOperation
+get_text	WidgetLayer/htextinput.c	/^static char* get_text(HTextInput *p_textinput)$/;"	f	file:
+get_text	WidgetLayer/htextinput.h	/^	char* (*get_text)(HTextInput *p_textinput);$/;"	m	struct:_HTextInputOperation
+get_text_len	WidgetLayer/htextarea.c	/^static int get_text_len(HTextArea *p_textarea)$/;"	f	file:
+get_text_len	WidgetLayer/htextarea.h	/^	int (*get_text_len)(HTextArea *p_textarea);$/;"	m	struct:_HTextAreaOperation
+get_w_str	WidgetLayer/htextarea.c	/^static void get_w_str(HTextArea *p_textarea)$/;"	f	file:
+get_widget_list	WidgetLayer/HLayout.c	/^static hlist_node_t* get_widget_list(HLayout* p_layout)$/;"	f	file:
+get_widget_list	WidgetLayer/HLayout.h	/^	hlist_node_t* (*get_widget_list)(HLayout* p_layout);$/;"	m	struct:_hlayout
+get_width	WidgetLayer/hwidget.c	/^static short get_width(HWidget *p_widget)$/;"	f	file:
+get_width	WidgetLayer/hwidget.h	/^	short (*get_width)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+get_width_image	WidgetLayer/himage.c	/^static short get_width_image(HImage *p_Me){$/;"	f	file:
+go_back	PageLayer/page.c	/^static void go_back(PageSwitchController *p_this)$/;"	f	file:
+go_back	PageLayer/page.h	/^	void (*go_back)(PageSwitchController *p_this);$/;"	m	struct:_PageSwitchController
+gp_container_ops	WidgetLayer/hcontainer.c	/^static HContainerOperation *gp_container_ops;$/;"	v	file:
+gp_container_ops	WidgetLayer/hplane.c	/^static HContainerOperation *gp_container_ops;$/;"	v	file:
+gp_hwidget_ops	WidgetLayer/hcontainer.c	/^static HWidgetOperation *gp_hwidget_ops;$/;"	v	file:
+gp_hwidget_ops	WidgetLayer/hplane.c	/^static HWidgetOperation *gp_hwidget_ops;$/;"	v	file:
+gp_plane_ops	WidgetLayer/hplane.c	/^static HPlaneOperation *gp_plane_ops;$/;"	v	file:
+gp_widget_ops	WidgetLayer/hwidget.c	/^static HWidgetOperation *gp_widget_ops;$/;"	v	file:
+has_been_moved_out	WidgetLayer/hplane.c	/^static char has_been_moved_out;$/;"	v	file:
+has_focus	WidgetLayer/hwidget.c	/^static int has_focus(HWidget *p_widget)$/;"	f	file:
+has_focus	WidgetLayer/hwidget.h	/^	int (*has_focus)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+hcheckbox_delete	WidgetLayer/hcheckbox.c	/^extern void hcheckbox_delete(HCheckBox *p_checkbox)$/;"	f
+hcheckbox_new	WidgetLayer/hcheckbox.c	/^extern HCheckBox* hcheckbox_new(const char* label)$/;"	f
+hcontainer_add_widget	WidgetLayer/hcontainer.c	/^static void hcontainer_add_widget(HContainer *p_container, HWidget *p_widget)$/;"	f	file:
+hcontainer_can_scroll	WidgetLayer/hcontainer.c	/^static int hcontainer_can_scroll(HContainer *p_container)$/;"	f	file:
+hcontainer_child_at	WidgetLayer/hcontainer.c	/^static HWidget* hcontainer_child_at(HContainer *p_container, short s_x, short s_y)$/;"	f	file:
+hcontainer_create_hcontainer_ops	WidgetLayer/hcontainer.c	/^static void hcontainer_create_hcontainer_ops()$/;"	f	file:
+hcontainer_create_hwidget_ops	WidgetLayer/hcontainer.c	/^static void hcontainer_create_hwidget_ops()$/;"	f	file:
+hcontainer_delete	WidgetLayer/hcontainer.c	/^void hcontainer_delete(HContainer *p_container)$/;"	f
+hcontainer_get_class	WidgetLayer/hcontainer.c	/^static HClass hcontainer_get_class(HWidget *p_widget)$/;"	f	file:
+hcontainer_get_prefered_height	WidgetLayer/hcontainer.c	/^static short hcontainer_get_prefered_height(HWidget *p_widget)$/;"	f	file:
+hcontainer_get_prefered_width	WidgetLayer/hcontainer.c	/^static short hcontainer_get_prefered_width(HWidget *p_widget)$/;"	f	file:
+hcontainer_init	WidgetLayer/hcontainer.c	/^void hcontainer_init(HContainer *p_container)$/;"	f
+hcontainer_is_container	WidgetLayer/hcontainer.c	/^static int hcontainer_is_container(HWidget *p_widget)$/;"	f	file:
+hcontainer_key_press	WidgetLayer/hcontainer.c	/^static void hcontainer_key_press(HWidget *p_widget, int keycode)$/;"	f	file:
+hcontainer_new	WidgetLayer/hcontainer.c	/^HContainer * hcontainer_new()$/;"	f
+hcontainer_notify_size_changed	WidgetLayer/hcontainer.c	/^static void hcontainer_notify_size_changed(HWidget *p_widget)$/;"	f	file:
+hcontainer_operation_init	WidgetLayer/hcontainer.c	/^void hcontainer_operation_init(HContainerOperation *p_container_ops)$/;"	f
+hcontainer_paint	WidgetLayer/hcontainer.c	/^static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)$/;"	f	file:
+hcontainer_paint_PF	WidgetLayer/hplane.c	/^static void (*hcontainer_paint_PF)(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y);$/;"	v	file:
+hcontainer_pen_enter	WidgetLayer/hcontainer.c	/^static void hcontainer_pen_enter(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hcontainer_pen_leave	WidgetLayer/hcontainer.c	/^void hcontainer_pen_leave(HWidget *p_widget, short s_x, short s_y)$/;"	f
+hcontainer_pen_move	WidgetLayer/hcontainer.c	/^static void hcontainer_pen_move(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hcontainer_pen_press	WidgetLayer/hcontainer.c	/^static void hcontainer_pen_press(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hcontainer_pen_release	WidgetLayer/hcontainer.c	/^static void hcontainer_pen_release(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hcontainer_remove_all	WidgetLayer/hcontainer.c	/^static void hcontainer_remove_all(HContainer *p_container)$/;"	f	file:
+hcontainer_remove_widget	WidgetLayer/hcontainer.c	/^static void hcontainer_remove_widget(HContainer *p_container, HWidget *p_widget)$/;"	f	file:
+hcontainer_scroll	WidgetLayer/hcontainer.c	/^static void hcontainer_scroll(HContainer *p_container, short s_dx, short s_dy)$/;"	f	file:
+hequal_func_t	Common/hlist.h	/^typedef int (*hequal_func_t) (void *pv_user_data, void *pv_node_data);$/;"	t
+hget_error_message	Common/herrorcode.h	16;"	d
+hhorizontal_layout_delete	WidgetLayer/HHorizontalLayout.c	/^void hhorizontal_layout_delete(HHorizontalLayout* p_hori_layout)$/;"	f
+hhorizontal_layout_new	WidgetLayer/HHorizontalLayout.c	/^HHorizontalLayout* hhorizontal_layout_new()$/;"	f
+hide_popupmenu	WidgetLayer/hpopupmenu.h	/^	void (*hide_popupmenu)( HPopupMenu* this );$/;"	m	struct:_HPopupMenuOperation_
+himage_delete	WidgetLayer/himage.c	/^void himage_delete( HImage *p_this )$/;"	f
+himage_new	WidgetLayer/himage.c	/^HImage *himage_new()$/;"	f
+hlabel_delete	WidgetLayer/hlabel.c	/^void hlabel_delete(HLabel *p_Me){$/;"	f
+hlabel_new	WidgetLayer/hlabel.c	/^HLabel *hlabel_new(){$/;"	f
+hlayout_delete	WidgetLayer/HLayout.c	/^void hlayout_delete(HLayout* p_layout)$/;"	f
+hlayout_init	WidgetLayer/HLayout.c	/^void hlayout_init(HLayout* p_layout)$/;"	f
+hlist_append	Common/hlist.c	/^int hlist_append(hlist_node_t *p_hlist, void *pv_data, hlist_key_t *p_key)$/;"	f
+hlist_clear	Common/hlist.c	/^int hlist_clear(hlist_node_t *p_hlist)$/;"	f
+hlist_destroy	Common/hlist.c	/^int hlist_destroy(hlist_node_t **pp_hlist)$/;"	f
+hlist_find	Common/hlist.c	/^int hlist_find(hlist_node_t *p_hlist, void *p_compare_data, hequal_func_t equal_func_PF, void **pv_data)$/;"	f
+hlist_for_each	Common/hlist.h	188;"	d
+hlist_foreach	Common/hlist.c	/^int hlist_foreach(hlist_node_t *p_hlist, hoperate_func_t operate_func_PF, void *p_user_data)$/;"	f
+hlist_insert	Common/hlist.c	/^int hlist_insert(hlist_node_t *p_hlist, void *pv_data, int i_position, hlist_key_t *p_key)$/;"	f
+hlist_insert_by_key	Common/hlist.c	/^int hlist_insert_by_key(hlist_node_t *p_hlist, void *pv_data, hlist_key_t *p_known_key, hlist_key_t *p_new_key)$/;"	f
+hlist_is_empty	Common/hlist.c	/^int hlist_is_empty(hlist_node_t *p_hlist)$/;"	f
+hlist_key_t	Common/hlist.h	/^}hlist_key_t;$/;"	t	typeref:struct:_hlist_key_t
+hlist_length	Common/hlist.c	/^int hlist_length(hlist_node_t *p_hlist)$/;"	f
+hlist_new	Common/hlist.c	/^hlist_node_t * hlist_new()$/;"	f
+hlist_node_t	Common/hlist.h	/^typedef struct _hlist_node_t hlist_node_t;$/;"	t	typeref:struct:_hlist_node_t
+hlist_remove	Common/hlist.c	/^int hlist_remove(hlist_node_t *p_hlist, void *pv_data)$/;"	f
+hlist_remove_all	Common/hlist.c	/^int hlist_remove_all(hlist_node_t *p_hlist, void *pv_data, hequal_func_t equal_func_PF)$/;"	f
+hlist_remove_by_key	Common/hlist.c	/^int hlist_remove_by_key(hlist_node_t *p_hlist, hlist_key_t *p_key)$/;"	f
+hlist_remove_by_node	Common/hlist.c	/^void hlist_remove_by_node(hlist_node_t *p_node)$/;"	f
+hlist_remove_by_position	Common/hlist.c	/^int hlist_remove_by_position(hlist_node_t *p_hlist, int i_position)$/;"	f
+hoperate_func_t	Common/hlist.h	/^typedef void (*hoperate_func_t) (void *pv_user_data, void *pv_node_data);$/;"	t
+hplane_add_widget	WidgetLayer/hplane.c	/^static void hplane_add_widget(HPlane *p_plane, HWidget *p_widget)$/;"	f	file:
+hplane_create_hcontainer_ops	WidgetLayer/hplane.c	/^static void hplane_create_hcontainer_ops(HContainerOperation *p_container_ops_prototype)$/;"	f	file:
+hplane_create_hwidget_ops	WidgetLayer/hplane.c	/^static void hplane_create_hwidget_ops(HWidgetOperation *p_widget_ops_prototype)$/;"	f	file:
+hplane_create_plane_ops	WidgetLayer/hplane.c	/^static void hplane_create_plane_ops()$/;"	f	file:
+hplane_delete	WidgetLayer/hplane.c	/^void hplane_delete(HPlane *p_plane)$/;"	f
+hplane_get_class	WidgetLayer/hplane.c	/^static HClass hplane_get_class(HWidget *p_widget)$/;"	f	file:
+hplane_get_max_height	WidgetLayer/hplane.c	/^static short hplane_get_max_height(HWidget *p_widget)$/;"	f	file:
+hplane_get_max_width	WidgetLayer/hplane.c	/^static short hplane_get_max_width(HWidget *p_widget)$/;"	f	file:
+hplane_is_plane	WidgetLayer/hplane.c	/^static int hplane_is_plane(HWidget *p_widget)$/;"	f	file:
+hplane_new	WidgetLayer/hplane.c	/^HPlane * hplane_new()$/;"	f
+hplane_paint	WidgetLayer/hplane.c	/^static void hplane_paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)$/;"	f	file:
+hplane_pen_move	WidgetLayer/hplane.c	/^static void hplane_pen_move(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hplane_pen_press	WidgetLayer/hplane.c	/^static void hplane_pen_press(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hplane_pen_release	WidgetLayer/hplane.c	/^static void hplane_pen_release(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+hplane_remove_all	WidgetLayer/hplane.c	/^static void hplane_remove_all(HPlane *p_plane)$/;"	f	file:
+hplane_remove_widget	WidgetLayer/hplane.c	/^static void hplane_remove_widget(HPlane *p_plane, HWidget *p_widget)$/;"	f	file:
+hplane_reset_content	WidgetLayer/hplane.c	/^static void hplane_reset_content(HContainer *p_cnt)$/;"	f	file:
+hplane_set_visible	WidgetLayer/hplane.c	/^static void hplane_set_visible(HWidget *p_widget, int i_visible)$/;"	f	file:
+hplane_validate	WidgetLayer/hplane.c	/^static void hplane_validate(HWidget *p_widget)$/;"	f	file:
+hpopupmenu_init	WidgetLayer/hpopupmenu.c	/^void hpopupmenu_init( HPopupMenu *p_this )$/;"	f
+hpushbutton_delete	WidgetLayer/hpushbutton.c	/^void hpushbutton_delete(HPushButton *p_Me){$/;"	f
+hpushbutton_new	WidgetLayer/hpushbutton.c	/^HPushButton *hpushbutton_new(const char *pc_str){$/;"	f
+hresource_delete	WidgetLayer/hlookandfeel.c	/^void hresource_delete(HResource *p_resource)$/;"	f
+hresource_new	WidgetLayer/hlookandfeel.c	/^HResource *hresource_new()$/;"	f
+hstatusbar_delete	WidgetLayer/hstatusbar.c	/^void hstatusbar_delete(HStatusBar *p_Me){$/;"	f
+hstatusbar_new	WidgetLayer/hstatusbar.c	/^HStatusBar *hstatusbar_new(const char *pc_left_str, const char *pc_right_str){$/;"	f
+htextarea_delete	WidgetLayer/htextarea.c	/^extern void htextarea_delete(HTextArea *p_textarea)$/;"	f
+htextarea_new	WidgetLayer/htextarea.c	/^extern HTextArea * htextarea_new(int i_input_method, int i_max_len)$/;"	f
+htextinput_new	WidgetLayer/htextinput.c	/^extern HTextInput * htextinput_new(int i_is_password, int i_input_method)$/;"	f
+hvertical_layout_delete	WidgetLayer/HVerticalLayout.c	/^void hvertical_layout_delete(HVerticalLayout* p_vert_layout)$/;"	f
+hvertical_layout_new	WidgetLayer/HVerticalLayout.c	/^HVerticalLayout* hvertical_layout_new()$/;"	f
+hwidget_delete	WidgetLayer/hcheckbox.c	/^static void hwidget_delete(HWidget *p_widget)$/;"	f	file:
+hwidget_delete	WidgetLayer/htextarea.c	/^static void hwidget_delete(HWidget *p_widget)$/;"	f	file:
+hwidget_delete	WidgetLayer/htextinput.c	/^static void hwidget_delete(HWidget *p_widget)$/;"	f	file:
+hwidget_init	WidgetLayer/hwidget.c	/^void hwidget_init(HWidget *p_widget)$/;"	f
+hwidget_operation_init	WidgetLayer/hwidget.c	/^void hwidget_operation_init(HWidgetOperation *p_widget_ops)$/;"	f
+hwindow_get_default_plane	WindowLayer/hwindow.c	/^static HPlane * hwindow_get_default_plane()$/;"	f	file:
+hwindow_get_glass_plane	WindowLayer/hwindow.c	/^static HPlane * hwindow_get_glass_plane()$/;"	f	file:
+hwindow_get_page_switch_contrller	WindowLayer/hwindow.c	/^static PageSwitchController * hwindow_get_page_switch_contrller()$/;"	f	file:
+hwindow_get_popupmenu_plane	WindowLayer/hwindow.c	/^static HPlane * hwindow_get_popupmenu_plane()$/;"	f	file:
+hwindow_get_topest_plane	WindowLayer/hwindow.c	/^static HPlane * hwindow_get_topest_plane()$/;"	f	file:
+hwindow_init	WindowLayer/hwindow.c	/^void hwindow_init()$/;"	f
+hwindow_paint	WindowLayer/hwindow.c	/^static void hwindow_paint()$/;"	f	file:
+hwindow_repaint	WindowLayer/hwindow.c	/^static void hwindow_repaint()$/;"	f	file:
+hwindow_validate	WindowLayer/hwindow.c	/^static void hwindow_validate()$/;"	f	file:
+i_bgcolor	WidgetLayer/hwidget.h	/^	int i_bgcolor;$/;"	m	struct:_HWidget
+i_canvas	WidgetLayer/himage.h	/^	VMINT	i_canvas;			\/\/ canvas$/;"	m	struct:_HImage_
+i_checkbox_ops	WidgetLayer/hcheckbox.c	/^static int i_checkbox_ops;  \/* Number HCheckBox instances *\/$/;"	v	file:
+i_color	WidgetLayer/hwidget.h	/^	int i_color;$/;"	m	struct:_HWidget
+i_current_position	WidgetLayer/htextarea.h	/^	int i_current_position;$/;"	m	struct:_HTextArea
+i_enable_transparent_bg	WidgetLayer/hplane.h	/^	short i_enable_transparent_bg;$/;"	m	struct:_HPlane
+i_handle	WidgetLayer/hplane.h	/^	int i_handle;$/;"	m	struct:_HPlane
+i_image_byte_size	WidgetLayer/hlookandfeel.h	/^	int		i_image_byte_size;$/;"	m	struct:_HResourceImageProperty
+i_is_available	Common/hlist.h	/^	int i_is_available;		\/*mark the node p_addr pointed to is LIST_NODE_AVAILABLE or LIST_NODE_UNAVAILABLE*\/$/;"	m	struct:_hlist_key_t
+i_max_len	WidgetLayer/htextarea.h	/^	int i_max_len;$/;"	m	struct:_HTextArea
+i_num_button	WidgetLayer/hpushbutton.c	/^static int					i_num_button = 0;$/;"	v	file:
+i_ops	WidgetLayer/htextarea.c	/^static int i_ops;							\/* Number of HTextArea instances *\/$/;"	v	file:
+i_ops	WidgetLayer/htextinput.c	/^static int i_ops;							\/* Number of HTextInput instances *\/$/;"	v	file:
+i_page_id	PageLayer/page.h	/^	int i_page_id;$/;"	m	struct:_Page
+i_page_type	PageLayer/page.h	/^	int i_page_type;$/;"	m	struct:_Page
+i_resource_byte_size	WidgetLayer/hlookandfeel.h	/^	int i_resource_byte_size;$/;"	m	struct:_HResource
+image_clean	WidgetLayer/hpushbutton.c	/^static void image_clean(HPushButton *p_Me){$/;"	f	file:
+image_clean	WidgetLayer/hstatusbar.c	/^static void image_clean(HStatusBar *p_Me){$/;"	f	file:
+image_set_buffer	WidgetLayer/hlabel.c	/^static void image_set_buffer(HLabel *p_Me, VMUINT8 *pi_buf, VMINT i_size){$/;"	f	file:
+image_set_buffer	WidgetLayer/hpushbutton.c	/^static void image_set_buffer(HPushButton *p_Me, VMUINT8 *pi_buf, VMINT i_size){$/;"	f	file:
+image_set_buffer	WidgetLayer/hstatusbar.c	/^static void image_set_buffer(HStatusBar *p_Me, VMUINT8 *pi_buf, VMINT i_size){$/;"	f	file:
+image_set_resouce	WidgetLayer/hlabel.c	/^static void image_set_resouce(HLabel *p_Me, char *pc_image_name){$/;"	f	file:
+image_set_resouce	WidgetLayer/hpushbutton.c	/^static void image_set_resouce(HPushButton *p_Me, char *pc_image_name){$/;"	f	file:
+image_set_resouce	WidgetLayer/hstatusbar.c	/^static void image_set_resouce(HStatusBar *p_Me, char *pc_image_name){$/;"	f	file:
+init	AnserCygnoides/Prompt.c	/^static void init() $/;"	f	file:
+init	AnserCygnoides/mainpage.c	/^static void init(MainPage* p_mainpage)$/;"	f	file:
+initialize	WidgetLayer/hlabel.c	/^static void initialize(HLabel *p_Me){$/;"	f	file:
+initialize	WidgetLayer/hpushbutton.c	/^static void initialize(HPushButton *p_Me){$/;"	f	file:
+initialize	WidgetLayer/hstatusbar.c	/^static void initialize(HStatusBar *p_Me){$/;"	f	file:
+input_method_callback	WidgetLayer/htextarea.c	/^void input_method_callback(VMINT state, VMWSTR str)$/;"	f
+input_method_callback	WidgetLayer/htextinput.c	/^static void input_method_callback(VMINT state, VMWSTR str)$/;"	f	file:
+insert_text	WidgetLayer/htextarea.c	/^static void insert_text(HTextArea *p_textarea, char *pc_text)$/;"	f	file:
+insert_text	WidgetLayer/htextarea.h	/^	void (*insert_text)(HTextArea *p_textarea, char *pc_text);$/;"	m	struct:_HTextAreaOperation
+invalidate	WidgetLayer/hwidget.c	/^static void invalidate(HWidget *p_widget)$/;"	f	file:
+invalidate	WidgetLayer/hwidget.h	/^	void (*invalidate)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_container	WidgetLayer/hcheckbox.c	/^static int is_container(HWidget *p_widget)$/;"	f	file:
+is_container	WidgetLayer/htextarea.c	/^static int is_container(HWidget *p_widget)$/;"	f	file:
+is_container	WidgetLayer/htextinput.c	/^static int is_container(HWidget *p_widget)$/;"	f	file:
+is_container	WidgetLayer/hwidget.c	/^static int is_container(HWidget *p_widget)$/;"	f	file:
+is_container	WidgetLayer/hwidget.h	/^	int (*is_container)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_enable	WidgetLayer/hwidget.c	/^static int is_enable(HWidget *p_widget)$/;"	f	file:
+is_enable	WidgetLayer/hwidget.h	/^	int (*is_enable)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_enable_bgcolor	WidgetLayer/hwidget.c	/^static int is_enable_bgcolor(HWidget *p_widget)$/;"	f	file:
+is_enable_bgcolor	WidgetLayer/hwidget.h	/^	int (*is_enable_bgcolor)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_enable_drag	WidgetLayer/hwidget.c	/^int is_enable_drag(HWidget *p_widget)$/;"	f
+is_enable_drag	WidgetLayer/hwidget.h	/^	int (*is_enable_drag)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_enable_focus	WidgetLayer/hwidget.c	/^static int is_enable_focus(HWidget *p_widget)$/;"	f	file:
+is_enable_focus	WidgetLayer/hwidget.h	/^	int (*is_enable_focus)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_plane	WidgetLayer/hcheckbox.c	/^static int is_plane(HWidget *p_widget)$/;"	f	file:
+is_plane	WidgetLayer/htextarea.c	/^static int is_plane(HWidget *p_widget)$/;"	f	file:
+is_plane	WidgetLayer/htextinput.c	/^static int is_plane(HWidget *p_widget)$/;"	f	file:
+is_plane	WidgetLayer/hwidget.c	/^static int is_plane(HWidget *p_widget)$/;"	f	file:
+is_plane	WidgetLayer/hwidget.h	/^	int (*is_plane)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+is_visible	WidgetLayer/hwidget.c	/^static int is_visible(HWidget *p_widget)$/;"	f	file:
+is_visible	WidgetLayer/hwidget.h	/^	int (*is_visible)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+key_event_handle	WindowLayer/hwindow.c	/^static void key_event_handle(VMINT evt, VMINT keycode)$/;"	f	file:
+key_event_handle	WindowLayer/hwindow.h	/^	void (*key_event_handle)(VMINT evt, VMINT keycode);$/;"	m	struct:_HWindow
+key_press	WidgetLayer/hcheckbox.c	/^static void key_press(HWidget *p_widget, int keycode)$/;"	f	file:
+key_press	WidgetLayer/htextarea.c	/^static void key_press(HWidget *p_widget, int keycode)$/;"	f	file:
+key_press	WidgetLayer/htextinput.c	/^static void key_press(HWidget *p_widget, int keycode)$/;"	f	file:
+key_press	WidgetLayer/hwidget.c	/^static void key_press(HWidget *p_widget, int keycode)$/;"	f	file:
+key_press	WidgetLayer/hwidget.h	/^	void (*key_press)(HWidget *p_widget, int keycode);$/;"	m	struct:_HWidgetOperation
+leave_pen	WidgetLayer/hlabel.c	/^static void leave_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+leave_pen	WidgetLayer/hpushbutton.c	/^static void leave_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+leave_pen	WidgetLayer/hstatusbar.c	/^static void leave_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+load_exists_page	PageLayer/page.c	/^static void load_exists_page(PageSwitchController *p_this, Page *p_exist_page)$/;"	f	file:
+load_exists_page	PageLayer/page.h	/^	void (*load_exists_page)(PageSwitchController *p_this, Page *p_exist_page);$/;"	m	struct:_PageSwitchController
+load_image	WidgetLayer/himage.h	/^	void (*load_image)(HImage *p_this, char *strPath);$/;"	m	struct:_HImageOperation_
+load_image_2	WidgetLayer/himage.h	/^	void (*load_image_2)(HImage *p_this, VMUINT8 *p_buf, VMINT i_size);$/;"	m	struct:_HImageOperation_
+load_local_image	WidgetLayer/hlookandfeel.c	/^HImage* load_local_image(HResource *p_resource, char *p_strparth)$/;"	f
+load_local_image	WidgetLayer/hlookandfeel.h	/^	HImage* (*load_local_image)(HResource *p_resource, char *p_strParth);$/;"	m	struct:_HResource
+load_new_page	PageLayer/page.c	/^static void load_new_page(PageSwitchController *p_this, Page *p_page)$/;"	f	file:
+load_new_page	PageLayer/page.h	/^	void (*load_new_page)(PageSwitchController *p_this, Page *p_new_page);$/;"	m	struct:_PageSwitchController
+locate_position	WidgetLayer/htextarea.c	/^static void locate_position(HTextArea *p_textarea, short s_x, short s_y)$/;"	f	file:
+look_draw_highlight_by_change_saturation	WidgetLayer/hlookandfeel.c	/^void look_draw_highlight_by_change_saturation(VMINT i_layer_handle, HRect p_rect, int i_saturation_change)$/;"	f
+look_draw_highlight_in_trans	WidgetLayer/hlookandfeel.c	/^void look_draw_highlight_in_trans(VMINT i_layer_handle, HRect p_hightlight_rect, HRect p_trans_rect, VMUINT16 trans_color, VMINT i_transparency)$/;"	f
+look_draw_plane	WidgetLayer/hlookandfeel.c	/^void look_draw_plane(HPlane *p_plane)$/;"	f
+look_draw_trans_color	WidgetLayer/hlookandfeel.c	/^void look_draw_trans_color(VMINT i_layer_handle, HRect p_rect, VMUINT16 trans_color, VMINT i_transparency)$/;"	f
+look_paint_checkbox	WidgetLayer/hlookandfeel.c	/^ void look_paint_checkbox(HCheckBox* p_checkbox, int i_layer_handle, short s_screen_x, short s_screen_y)$/;"	f
+look_paint_label	WidgetLayer/hlookandfeel.c	/^void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int i_screen_y)$/;"	f
+look_paint_pushbutton	WidgetLayer/hlookandfeel.c	/^void look_paint_pushbutton(HPushButton *p_pushbutton, VMINT i_layer_handle, int i_screen_x, int i_screen_y)$/;"	f
+look_paint_textarea	WidgetLayer/hlookandfeel.c	/^extern void look_paint_textarea(HTextArea *p_textarea, VMINT i_layer_handle, int i_screen_x, int i_screen_y)$/;"	f
+look_paint_textinput	WidgetLayer/hlookandfeel.c	/^void look_paint_textinput(HTextInput *p_textinput, VMINT i_layer_handle, int i_screen_x, int i_screen_y)$/;"	f
+main_firevisible	AnserCygnoides/mainpage.c	/^static void main_firevisible(MainPage* mainpage)$/;"	f	file:
+main_switchtonewpage	AnserCygnoides/mainpage.c	/^void  main_switchtonewpage()$/;"	f
+make_rect	AnserCygnoides/tools.c	/^HRect make_rect(const int left, const int top, const int width, const int height)$/;"	f
+make_shift_rect	AnserCygnoides/tools.c	/^HRect make_shift_rect (const HRect source_rect, const int dx, const int dy)$/;"	f
+move_pen	WidgetLayer/hlabel.c	/^static void move_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+move_pen	WidgetLayer/hpushbutton.c	/^static void move_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+move_pen	WidgetLayer/hstatusbar.c	/^static void move_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+notify_coordinate_changed	WidgetLayer/hwidget.c	/^static void notify_coordinate_changed(HWidget *p_widget)$/;"	f	file:
+notify_coordinate_changed	WidgetLayer/hwidget.h	/^	void (*notify_coordinate_changed)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+notify_size_changed	WidgetLayer/hwidget.c	/^static void notify_size_changed(HWidget *p_widget)$/;"	f	file:
+notify_size_changed	WidgetLayer/hwidget.h	/^	void (*notify_size_changed)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+notify_visible_changed	WidgetLayer/hwidget.c	/^static void notify_visible_changed(HWidget *p_widget)$/;"	f	file:
+notify_visible_changed	WidgetLayer/hwidget.h	/^	void (*notify_visible_changed)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+old_screen_pos	WidgetLayer/hplane.c	/^static HPoint old_screen_pos;$/;"	v	file:
+old_widget_pos	WidgetLayer/hplane.c	/^static HPoint old_widget_pos;$/;"	v	file:
+ops	WidgetLayer/hpushbutton.h	/^	HPUSHBUTTON_OPS			*ops;$/;"	m	struct:_hPushButton
+p_MainPage	AnserCygnoides/business.c	/^MainPage*    p_MainPage;$/;"	v
+p_addr	Common/hlist.h	/^	hlist_node_t *p_addr;		\/*point to a list node so that user can find the node by O(1)*\/$/;"	m	struct:_hlist_key_t
+p_base_ops	WidgetLayer/hcheckbox.c	/^static HWidgetOperation *p_base_ops;  \/* Single instance of HWidget Operations  *\/$/;"	v	file:
+p_base_ops	WidgetLayer/htextarea.c	/^static HWidgetOperation *p_base_ops;			\/* Single instance of HWidget Operations  *\/$/;"	v	file:
+p_base_ops	WidgetLayer/htextinput.c	/^static HWidgetOperation *p_base_ops;			\/* Single instance of HWidget Operations *\/$/;"	v	file:
+p_base_ops_button	WidgetLayer/hpushbutton.c	/^static HWidgetOperation		*p_base_ops_button = NULL;$/;"	v	file:
+p_bottom_widget	WidgetLayer/hplane.h	/^	HWidget *p_bottom_widget;$/;"	m	struct:_HPlane
+p_button_ops	WidgetLayer/hpushbutton.c	/^static HPUSHBUTTON_OPS		*p_button_ops = NULL;$/;"	v	file:
+p_checkbox_ops	WidgetLayer/hcheckbox.c	/^static HCheckBoxOperation *p_checkbox_ops; \/* Single instance of HCheckBox Operations *\/$/;"	v	file:
+p_checkbox_ops	WidgetLayer/hcheckbox.h	/^	HCheckBoxOperation *p_checkbox_ops;$/;"	m	struct:HCheckBox_t
+p_children	WidgetLayer/hcontainer.h	/^	hlist_node_t *p_children;$/;"	m	struct:_HContainer
+p_class_name	WidgetLayer/hwidget.h	/^	char *p_class_name;$/;"	m	struct:_HWidget
+p_connectpage	AnserCygnoides/business.c	/^ConnectPage* p_connectpage;$/;"	v
+p_container_ops	WidgetLayer/hcontainer.h	/^	HContainerOperation *p_container_ops;$/;"	m	struct:_HContainer
+p_content	WidgetLayer/hplane.h	/^	HContainer *p_content;$/;"	m	struct:_HPlane
+p_cur_page_node	PageLayer/page.h	/^	PageNode *p_cur_page_node;$/;"	m	struct:_PageSwitchController
+p_cur_press_widget	WidgetLayer/hplane.c	/^static HWidget *p_cur_press_widget;$/;"	v	file:
+p_has_focus_widget_node	WidgetLayer/hcontainer.h	/^	hlist_node_t *p_has_focus_widget_node;$/;"	m	struct:_HContainer
+p_htextarea_ops	WidgetLayer/htextarea.h	/^	HTextAreaOperation *p_htextarea_ops;$/;"	m	struct:_HTextArea
+p_image	WidgetLayer/hlookandfeel.h	/^	HImage *p_image;$/;"	m	struct:_HResourceImageProperty
+p_image_strparth	WidgetLayer/hlookandfeel.h	/^	char		*p_image_strparth;$/;"	m	struct:_HResourceImageProperty
+p_key	Common/hlist.h	/^	hlist_key_t *p_key;		\/*point to key, can be NULL if user don't want to known the address of this node*\/$/;"	m	struct:_hlist_node_t
+p_label_class_ops	WidgetLayer/hlabel.c	/^static HWidgetOperation		*p_label_class_ops = NULL;$/;"	v	file:
+p_line_list	WidgetLayer/htextarea.h	/^	LineNode *p_line_list;$/;"	m	struct:_HTextArea
+p_line_list_tail	WidgetLayer/htextarea.h	/^	LineNode *p_line_list_tail;$/;"	m	struct:_HTextArea
+p_max_image	WidgetLayer/hlookandfeel.h	/^	HImage *p_max_image;$/;"	m	struct:_HResource
+p_next	Common/hlist.h	/^	hlist_node_t *p_next;		\/*point to next node*\/$/;"	m	struct:_hlist_node_t
+p_next	PageLayer/page.h	/^	PageNode *p_next;$/;"	m	struct:_PageNode
+p_next	WidgetLayer/htextarea.h	/^	LineNode *p_next;$/;"	m	struct:_LineNode
+p_oper	WidgetLayer/himage.h	/^	HImageOperation *p_oper;	\/\/ Its operation pointer$/;"	m	struct:_HImage_
+p_oper	WidgetLayer/hpopupmenu.h	/^	HPopupMenuOperation *p_oper;$/;"	m	struct:_HPopupMenu_
+p_own_focus_widget	WidgetLayer/hplane.h	/^	HWidget *p_own_focus_widget;$/;"	m	struct:_HPlane
+p_page	PageLayer/page.h	/^	Page *p_page;$/;"	m	struct:_PageNode
+p_page_switch_contrller	WindowLayer/hwindow.h	/^	PageSwitchController *p_page_switch_contrller;$/;"	m	struct:_HWindow
+p_parent	WidgetLayer/hwidget.h	/^	struct _HContainer *p_parent;$/;"	m	struct:_HWidget	typeref:struct:_HWidget::_HContainer
+p_plane_ops	WidgetLayer/hplane.h	/^	HPlaneOperation *p_plane_ops;$/;"	m	struct:_HPlane
+p_planes	WindowLayer/hwindow.h	/^	struct _HPlane *p_planes[3];$/;"	m	struct:_HWindow	typeref:struct:_HWindow::_HPlane
+p_prev	Common/hlist.h	/^	hlist_node_t *p_prev;		\/*point to previous node*\/$/;"	m	struct:_hlist_node_t
+p_prev	PageLayer/page.h	/^	PageNode *p_prev;$/;"	m	struct:_PageNode
+p_prev_page_node	PageLayer/page.h	/^	PageNode *p_prev_page_node;$/;"	m	struct:_PageSwitchController
+p_promptpage	AnserCygnoides/business.c	/^PromptPage*  p_promptpage;$/;"	v
+p_property_list_head	WidgetLayer/hlookandfeel.h	/^	hlist_node_t* p_property_list_head;$/;"	m	struct:_HResource
+p_text_global	WidgetLayer/htextarea.c	/^static HTextGlobal *p_text_global;$/;"	v	file:
+p_textarea	WidgetLayer/htextarea.h	/^	HTextArea *p_textarea;$/;"	m	struct:_HTextGlobal
+p_textarea_buf	WidgetLayer/htextarea.c	/^static HTextArea *p_textarea_buf;   \/* Template pointer for calling input method *\/$/;"	v	file:
+p_textarea_ops	WidgetLayer/htextarea.c	/^static HTextAreaOperation *p_textarea_ops;		\/* Single instance of HTextArea Operations  *\/$/;"	v	file:
+p_textinput_buf	WidgetLayer/htextinput.c	/^static HTextInput *p_textinput_buf;			\/* Template pointer of HTextInput for input method callback *\/$/;"	v	file:
+p_textinput_ops	WidgetLayer/htextinput.c	/^static HTextInputOperation *p_textinput_ops;	\/* Single instance of HTextInput Operations  *\/$/;"	v	file:
+p_textinput_ops	WidgetLayer/htextinput.h	/^	HTextInputOperation *p_textinput_ops;$/;"	m	struct:_HTextInput
+p_top_widget	WidgetLayer/hplane.h	/^	HWidget *p_top_widget;$/;"	m	struct:_HPlane
+p_widget_list	WidgetLayer/HLayout.h	/^	hlist_node_t* p_widget_list;$/;"	m	struct:_hlayout
+p_widget_ops	WidgetLayer/hwidget.h	/^	HWidgetOperation *p_widget_ops;$/;"	m	struct:_HWidget
+page_switch_controller_delete	PageLayer/page.c	/^void page_switch_controller_delete(PageSwitchController *p_this)$/;"	f
+page_switch_controller_new	PageLayer/page.c	/^PageSwitchController *page_switch_controller_new()$/;"	f
+paint	WidgetLayer/hcheckbox.c	/^static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)$/;"	f	file:
+paint	WidgetLayer/himage.h	/^	void (*paint)(HImage *p_this, VMINT i_LayerHandle, VMINT i_OffsetX, VMINT i_OffsetY);$/;"	m	struct:_HImageOperation_
+paint	WidgetLayer/htextarea.c	/^static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)$/;"	f	file:
+paint	WidgetLayer/htextinput.c	/^static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)$/;"	f	file:
+paint	WidgetLayer/hwidget.h	/^	void (*paint)(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y);$/;"	m	struct:_HWidgetOperation
+paint_frame	WidgetLayer/himage.h	/^	void (*paint_frame)( HImage *p_this, VMINT i_LayerHandle, VMINT i_OffsetX, VMINT i_OffsetY, int i_frame_index );$/;"	m	struct:_HImageOperation_
+parent_ops	WidgetLayer/hstatusbar.h	/^	HWidgetOperation		parent_ops;$/;"	m	struct:_HStatusBar
+parser_w_str	WidgetLayer/htextarea.c	/^static void parser_w_str(HTextArea *p_textarea)$/;"	f	file:
+pc_label	WidgetLayer/hcheckbox.h	/^	char *pc_label;$/;"	m	struct:HCheckBox_t
+pc_left_str	WidgetLayer/hstatusbar.h	/^	char					*pc_left_str;$/;"	m	struct:_HStatusBar
+pc_right_str	WidgetLayer/hstatusbar.h	/^	char					*pc_right_str;$/;"	m	struct:_HStatusBar
+pc_text	WidgetLayer/htextarea.h	/^	char *pc_text;$/;"	m	struct:_HTextArea
+pc_text	WidgetLayer/htextinput.h	/^	char *pc_text;$/;"	m	struct:_HTextInput
+pen_enter	WidgetLayer/hcheckbox.c	/^static void pen_enter(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_enter	WidgetLayer/htextarea.c	/^static void pen_enter(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_enter	WidgetLayer/htextinput.c	/^static void pen_enter(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_enter	WidgetLayer/hwidget.c	/^static void pen_enter(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_enter	WidgetLayer/hwidget.h	/^	void (*pen_enter)(HWidget *p_widget, short s_x, short s_y);$/;"	m	struct:_HWidgetOperation
+pen_event_handle	WindowLayer/hwindow.c	/^static void pen_event_handle(VMINT evt, VMINT x, VMINT y)$/;"	f	file:
+pen_event_handle	WindowLayer/hwindow.h	/^	 void (*pen_event_handle)(VMINT evt, VMINT x, VMINT y);$/;"	m	struct:_HWindow
+pen_leave	WidgetLayer/hcheckbox.c	/^static void pen_leave(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_leave	WidgetLayer/htextarea.c	/^static void pen_leave(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_leave	WidgetLayer/htextinput.c	/^static void pen_leave(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_leave	WidgetLayer/hwidget.c	/^static void pen_leave(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_leave	WidgetLayer/hwidget.h	/^	void (*pen_leave)(HWidget *p_widget, short s_x, short s_y);$/;"	m	struct:_HWidgetOperation
+pen_move	WidgetLayer/hcheckbox.c	/^static void pen_move(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_move	WidgetLayer/htextarea.c	/^static void pen_move(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_move	WidgetLayer/htextinput.c	/^static void pen_move(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_move	WidgetLayer/hwidget.c	/^static void pen_move(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_move	WidgetLayer/hwidget.h	/^	void (*pen_move)(HWidget *p_widget, short s_x, short s_y);$/;"	m	struct:_HWidgetOperation
+pen_press	WidgetLayer/hcheckbox.c	/^static void pen_press(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_press	WidgetLayer/htextarea.c	/^static void pen_press(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_press	WidgetLayer/htextinput.c	/^static void pen_press(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_press	WidgetLayer/hwidget.c	/^static void pen_press(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_press	WidgetLayer/hwidget.h	/^	void (*pen_press)(HWidget *p_widget, short s_x, short s_y);$/;"	m	struct:_HWidgetOperation
+pen_release	WidgetLayer/hcheckbox.c	/^static void pen_release(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_release	WidgetLayer/htextarea.c	/^static void pen_release(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_release	WidgetLayer/htextinput.c	/^static void pen_release(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_release	WidgetLayer/hwidget.c	/^static void pen_release(HWidget *p_widget, short s_x, short s_y)$/;"	f	file:
+pen_release	WidgetLayer/hwidget.h	/^	void (*pen_release)(HWidget *p_widget, short s_x, short s_y);$/;"	m	struct:_HWidgetOperation
+play_Button	AnserCygnoides/video_detail.h	/^	HPushButton* play_Button;$/;"	m	struct:_VideoDetail_Page
+play_video	AnserCygnoides/video_detail.c	/^void play_video() $/;"	f
+pmy_Button	AnserCygnoides/video_detail.h	/^	HPushButton* pmy_Button;$/;"	m	struct:_VideoDetail_Page
+point_at_widget	WidgetLayer/hplane.c	/^static HPoint point_at_widget(HWidget *p_widget, short s_screen_x, short s_screen_y)$/;"	f	file:
+precommand_Button	AnserCygnoides/video_detail.h	/^	HPushButton* precommand_Button;$/;"	m	struct:_VideoDetail_Page
+preferred_height	WidgetLayer/hlabel.c	/^static short preferred_height(HWidget *p_Me){$/;"	f	file:
+preferred_height	WidgetLayer/hpushbutton.c	/^static short preferred_height(HWidget *p_Me){$/;"	f	file:
+preferred_height	WidgetLayer/hstatusbar.c	/^static short preferred_height(HWidget *p_Me){$/;"	f	file:
+preferred_width	WidgetLayer/hlabel.c	/^static short preferred_width(HWidget *p_Me){$/;"	f	file:
+preferred_width	WidgetLayer/hpushbutton.c	/^static short preferred_width(HWidget *p_Me){$/;"	f	file:
+preferred_width	WidgetLayer/hstatusbar.c	/^static short preferred_width(HWidget *p_Me){$/;"	f	file:
+press_key	WidgetLayer/hlabel.c	/^static void press_key(HWidget *p_par, int keycode){$/;"	f	file:
+press_key	WidgetLayer/hpushbutton.c	/^static void press_key(HWidget *p_par, int keycode){$/;"	f	file:
+press_key	WidgetLayer/hstatusbar.c	/^static void press_key(HWidget *p_par, int keycode){$/;"	f	file:
+press_pen	WidgetLayer/hlabel.c	/^static void press_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+press_pen	WidgetLayer/hpushbutton.c	/^static void press_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+press_pen	WidgetLayer/hstatusbar.c	/^static void press_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+print_string_state	WidgetLayer/hlookandfeel.c	/^void print_string_state(VMWCHAR* p_ucs2_string)$/;"	f
+psearch_Button	AnserCygnoides/video_detail.h	/^	HPushButton* psearch_Button;$/;"	m	struct:_VideoDetail_Page
+ptop_Button	AnserCygnoides/video_detail.h	/^	HPushButton* ptop_Button;$/;"	m	struct:_VideoDetail_Page
+ptype_Button	AnserCygnoides/video_detail.h	/^	HPushButton* ptype_Button;$/;"	m	struct:_VideoDetail_Page
+pv_data	Common/hlist.h	/^	void *pv_data;			\/*store data*\/$/;"	m	struct:_hlist_node_t
+release_maximun_image	WidgetLayer/hlookandfeel.c	/^void release_maximun_image(HResource *p_resource)$/;"	f
+release_maximun_image	WidgetLayer/hlookandfeel.h	/^	void (*release_maximun_image)(HResource *p_resource);$/;"	m	struct:_HResource
+release_pen	WidgetLayer/hlabel.c	/^static void release_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+release_pen	WidgetLayer/hpushbutton.c	/^static void release_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+release_pen	WidgetLayer/hstatusbar.c	/^static void release_pen(HWidget *p_par, short s_x, short s_y){$/;"	f	file:
+remove_all	WidgetLayer/hcontainer.h	/^	void (*remove_all)(HContainer *p_container);$/;"	m	struct:_HContainerOperation
+remove_all	WidgetLayer/hplane.h	/^	void (*remove_all)(HPlane *p_plane);$/;"	m	struct:_HPlaneOperation
+remove_property_and_strparth	WidgetLayer/hlookandfeel.c	/^int remove_property_and_strparth(HResource *p_resource, HImage *p_image)$/;"	f
+remove_property_and_strparth	WidgetLayer/hlookandfeel.h	/^	int (*remove_property_and_strparth)(HResource *p_resource, HImage *p_image);$/;"	m	struct:_HResource
+remove_widget	WidgetLayer/HLayout.c	/^static void remove_widget(HLayout* p_layout, HWidget* p_widget)$/;"	f	file:
+remove_widget	WidgetLayer/HLayout.h	/^	void (*remove_widget)(HLayout* p_layout, HWidget* p_widget);$/;"	m	struct:_hlayout
+remove_widget	WidgetLayer/hcontainer.h	/^	void (*remove_widget)(HContainer *p_container, HWidget *p_widget);$/;"	m	struct:_HContainerOperation
+remove_widget	WidgetLayer/hplane.h	/^	void (*remove_widget)(HPlane *p_plane, HWidget *p_widget);$/;"	m	struct:_HPlaneOperation
+repaint	WidgetLayer/hwidget.c	/^static void repaint(HWidget *p_widget)$/;"	f	file:
+repaint	WidgetLayer/hwidget.h	/^	void (*repaint)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+repaint	WindowLayer/hwindow.h	/^	void (*repaint)();$/;"	m	struct:_HWindow
+reset_plane_child_height	WidgetLayer/hplane.c	/^static void reset_plane_child_height(HPlane *p_plane)$/;"	f	file:
+retry_Button	AnserCygnoides/Prompt.h	/^	HPushButton* retry_Button;$/;"	m	struct:_Prompt_Page
+retry_Button	AnserCygnoides/prompt.h	/^	HPushButton* retry_Button;$/;"	m	struct:_Prompt_Page
+root_page_node	PageLayer/page.h	/^	PageNode root_page_node;$/;"	m	struct:_PageSwitchController
+s_ImageOperation	WidgetLayer/himage.c	/^static HImageOperation s_ImageOperation;$/;"	v	file:
+s_PopupMenuOper	WidgetLayer/hpopupmenu.c	/^static HPopupMenuOperation s_PopupMenuOper;$/;"	v	file:
+s_attr	WidgetLayer/hwidget.h	/^	short s_attr;$/;"	m	struct:_HWidget
+s_gap_x	WidgetLayer/HLayout.h	/^	short s_gap_x;$/;"	m	struct:_Layout_Gap
+s_gap_y	WidgetLayer/HLayout.h	/^	short s_gap_y;$/;"	m	struct:_Layout_Gap
+s_height	WidgetLayer/himage.h	/^	short	s_height;$/;"	m	struct:_HImage_
+s_height	WidgetLayer/hwidget.h	/^	short s_height;$/;"	m	struct:_HRect
+s_height	WidgetLayer/hwidget.h	/^	short s_height;$/;"	m	struct:_HWidget
+s_left_len	WidgetLayer/hstatusbar.h	/^	short					s_left_len;$/;"	m	struct:_HStatusBar
+s_line_len	WidgetLayer/htextarea.h	/^	short s_line_len;$/;"	m	struct:_LineNode
+s_max_height	WidgetLayer/HLayout.h	/^	short s_max_height;$/;"	m	struct:_hlayout
+s_max_height	WidgetLayer/hwidget.h	/^	short s_max_height;$/;"	m	struct:_HWidget
+s_max_width	WidgetLayer/HLayout.h	/^	short s_max_width;$/;"	m	struct:_hlayout
+s_max_width	WidgetLayer/hwidget.h	/^	short s_max_width;$/;"	m	struct:_HWidget
+s_move_from_x	WidgetLayer/htextarea.h	/^	short s_move_from_x;$/;"	m	struct:_HTextGlobal
+s_move_from_y	WidgetLayer/htextarea.h	/^	short s_move_from_y;$/;"	m	struct:_HTextGlobal
+s_move_offset	WidgetLayer/htextarea.h	/^	short s_move_offset;$/;"	m	struct:_HTextArea
+s_padding_bottom	WidgetLayer/hwidget.h	/^	short s_padding_bottom;$/;"	m	struct:_HWidget
+s_padding_left	WidgetLayer/hwidget.h	/^	short s_padding_left;$/;"	m	struct:_HWidget
+s_padding_right	WidgetLayer/hwidget.h	/^	short s_padding_right;$/;"	m	struct:_HWidget
+s_padding_top	WidgetLayer/hwidget.h	/^	short s_padding_top;$/;"	m	struct:_HWidget
+s_plane_index	WidgetLayer/hplane.h	/^	short s_plane_index;$/;"	m	struct:_HPlane
+s_prefered_height	WidgetLayer/hwidget.h	/^	short s_prefered_height;$/;"	m	struct:_HWidget
+s_prefered_width	WidgetLayer/hwidget.h	/^	short s_prefered_width;$/;"	m	struct:_HWidget
+s_right_len	WidgetLayer/hstatusbar.h	/^	short					s_right_len;$/;"	m	struct:_HStatusBar
+s_top_x	WidgetLayer/hwidget.h	/^	short s_top_x;$/;"	m	struct:_HWidget
+s_top_y	WidgetLayer/hwidget.h	/^	short s_top_y;$/;"	m	struct:_HWidget
+s_translate_x	WidgetLayer/hcontainer.h	/^	short s_translate_x;$/;"	m	struct:_HContainer
+s_translate_y	WidgetLayer/hcontainer.h	/^	short s_translate_y;$/;"	m	struct:_HContainer
+s_transparent_color	WidgetLayer/hplane.h	/^	short s_transparent_color;$/;"	m	struct:_HPlane
+s_width	WidgetLayer/himage.h	/^	short	s_width;$/;"	m	struct:_HImage_
+s_width	WidgetLayer/hwidget.h	/^	short s_width;$/;"	m	struct:_HRect
+s_width	WidgetLayer/hwidget.h	/^	short s_width;$/;"	m	struct:_HWidget
+s_x	WidgetLayer/hwidget.h	/^	short s_x;$/;"	m	struct:_HPoint
+s_x	WidgetLayer/hwidget.h	/^	short s_x;$/;"	m	struct:_HRect
+s_y	WidgetLayer/hwidget.h	/^	short s_y;$/;"	m	struct:_HPoint
+s_y	WidgetLayer/hwidget.h	/^	short s_y;$/;"	m	struct:_HRect
+scroll	WidgetLayer/hcontainer.h	/^	void (*scroll)(HContainer *p_container, short s_dx, short s_dy);$/;"	m	struct:_HContainerOperation
+set_bgcolor	WidgetLayer/hwidget.c	/^static void set_bgcolor(HWidget *p_widget, int i_rgb)$/;"	f	file:
+set_bgcolor	WidgetLayer/hwidget.h	/^	void (*set_bgcolor)(HWidget *p_widget, int i_rgb);$/;"	m	struct:_HWidgetOperation
+set_bottom_widget	WidgetLayer/hplane.c	/^static void set_bottom_widget(HPlane *p_plane, HWidget *p_widget)$/;"	f	file:
+set_bottom_widget	WidgetLayer/hplane.h	/^	void (*set_bottom_widget)(HPlane *p_plane, HWidget *p_widget);$/;"	m	struct:_HPlaneOperation
+set_button_autosize_image	WidgetLayer/hpushbutton.h	/^	void			(*set_button_autosize_image)(struct _hPushButton *p_Me, int i_isautosize);$/;"	m	struct:__anon1
+set_check_state	WidgetLayer/hcheckbox.c	/^static void set_check_state(HCheckBox *p_checkbox, char c_state)$/;"	f	file:
+set_check_state	WidgetLayer/hcheckbox.h	/^	void (*set_check_state)(HCheckBox *p_checkbox, char c_check_state);$/;"	m	struct:HCheckBoxOperation_t
+set_color	WidgetLayer/hwidget.c	/^static void set_color(HWidget *p_widget, int i_rgb)$/;"	f	file:
+set_color	WidgetLayer/hwidget.h	/^	void (*set_color)(HWidget *p_widget, int i_rgb);$/;"	m	struct:_HWidgetOperation
+set_enable	WidgetLayer/hwidget.c	/^static void set_enable(HWidget *p_widget, int i_enable)$/;"	f	file:
+set_enable	WidgetLayer/hwidget.h	/^	void (*set_enable)(HWidget *p_widget, int i_enable);$/;"	m	struct:_HWidgetOperation
+set_enable_bgcolor	WidgetLayer/hwidget.c	/^static void set_enable_bgcolor(HWidget *p_widget, int i_bgcolor_enable)$/;"	f	file:
+set_enable_bgcolor	WidgetLayer/hwidget.h	/^	void (*set_enable_bgcolor)(HWidget *p_widget, int i_bgcolor_enable);$/;"	m	struct:_HWidgetOperation
+set_enable_drag	WidgetLayer/hwidget.c	/^void set_enable_drag(HWidget *p_widget, int i_enable_drag)$/;"	f
+set_enable_drag	WidgetLayer/hwidget.h	/^	void (*set_enable_drag)(HWidget *p_widget, int i_enable_drag);$/;"	m	struct:_HWidgetOperation
+set_enable_focus	WidgetLayer/hwidget.c	/^static void set_enable_focus(HWidget *p_widget, int i_enable_focus)$/;"	f	file:
+set_enable_focus	WidgetLayer/hwidget.h	/^	void (*set_enable_focus)(HWidget *p_widget, int i_enable_focus);$/;"	m	struct:_HWidgetOperation
+set_focus	WidgetLayer/hwidget.c	/^static void set_focus(HWidget *p_widget, int i_focus)$/;"	f	file:
+set_focus	WidgetLayer/hwidget.h	/^	void (*set_focus)(HWidget *p_widget, int i_focus);$/;"	m	struct:_HWidgetOperation
+set_font	WidgetLayer/hwidget.c	/^static void set_font(HWidget *p_widget, HFont font)$/;"	f	file:
+set_font	WidgetLayer/hwidget.h	/^	void (*set_font)(HWidget *p_widget, HFont font);$/;"	m	struct:_HWidgetOperation
+set_gap	WidgetLayer/HLayout.c	/^static void set_gap(HLayout* p_layout, LayoutGap st_gap)$/;"	f	file:
+set_gap	WidgetLayer/HLayout.h	/^	void (*set_gap)(HLayout* p_layout, LayoutGap st_gap);$/;"	m	struct:_hlayout
+set_height	WidgetLayer/hwidget.c	/^static void set_height(HWidget *p_widget, short s_height)$/;"	f	file:
+set_height	WidgetLayer/hwidget.h	/^	void (*set_height)(HWidget *p_widget, short s_height);$/;"	m	struct:_HWidgetOperation
+set_image_from_buffer	WidgetLayer/hlabel.h	/^	void			(*set_image_from_buffer)(struct _hLabel *p_Me, VMUINT8 *pi_buf, VMINT i_size);$/;"	m	struct:_hLabel
+set_image_from_buffer	WidgetLayer/hpushbutton.h	/^	void			(*set_image_from_buffer)(struct _hPushButton *p_Me, VMUINT8 *pi_buf, VMINT i_size);$/;"	m	struct:__anon1
+set_image_from_buffer	WidgetLayer/hstatusbar.h	/^	void			(*set_image_from_buffer)(struct _HStatusBar *p_Me, VMUINT8 *pi_buf, VMINT i_size);$/;"	m	struct:_HStatusBar
+set_image_from_resource	WidgetLayer/hlabel.h	/^	void			(*set_image_from_resource)(struct _hLabel *p_Me, char *pc_image_name);$/;"	m	struct:_hLabel
+set_image_from_resource	WidgetLayer/hpushbutton.h	/^	void			(*set_image_from_resource)(struct _hPushButton *p_Me, char *pc_image_name);$/;"	m	struct:__anon1
+set_image_from_resource	WidgetLayer/hstatusbar.h	/^	void			(*set_image_from_resource)(struct _HStatusBar *p_Me, char *pc_image_name);$/;"	m	struct:_HStatusBar
+set_input_method	WidgetLayer/htextinput.c	/^static void set_input_method(HTextInput *p_textinput, int i_input_method)$/;"	f	file:
+set_input_method	WidgetLayer/htextinput.h	/^	void (*set_input_method)(HTextInput *p_textinput, int i_input_method);$/;"	m	struct:_HTextInputOperation
+set_inputmethod	WidgetLayer/htextarea.c	/^static void set_inputmethod(HTextArea *p_textarea, int i_method)$/;"	f	file:
+set_inputmethod	WidgetLayer/htextarea.h	/^	void (*set_inputmethod)(HTextArea *p_textarea, int i_method);$/;"	m	struct:_HTextAreaOperation
+set_is_password	WidgetLayer/htextinput.c	/^static void set_is_password(HTextInput *p_textinput, int i_password)$/;"	f	file:
+set_is_password	WidgetLayer/htextinput.h	/^	void (*set_is_password)(HTextInput *p_textinput, int i_password);$/;"	m	struct:_HTextInputOperation
+set_label	WidgetLayer/hcheckbox.c	/^static void set_label(HCheckBox *p_checkbox, const char *pc_label)$/;"	f	file:
+set_label	WidgetLayer/hcheckbox.h	/^	void (*set_label)(HCheckBox *p_checkbox, char *pc_label);$/;"	m	struct:HCheckBoxOperation_t
+set_label_row_width_count	WidgetLayer/hlabel.c	/^static void set_label_row_width_count(HLabel *p_Me){$/;"	f	file:
+set_line_num	WidgetLayer/htextarea.c	/^static void set_line_num(HTextArea *p_textarea, int i_line_num)$/;"	f	file:
+set_line_num	WidgetLayer/htextarea.h	/^	void (*set_line_num)(HTextArea *p_textarea, int i_line_num);$/;"	m	struct:_HTextAreaOperation
+set_line_space	WidgetLayer/htextarea.c	/^static void set_line_space(HTextArea *p_textarea, int i_line_space)$/;"	f	file:
+set_line_space	WidgetLayer/htextarea.h	/^	void (*set_line_space)(HTextArea *p_textarea, int i_line_space);$/;"	m	struct:_HTextAreaOperation
+set_max_height	WidgetLayer/HLayout.c	/^static void set_max_height(HLayout* p_layout, short s_height)$/;"	f	file:
+set_max_height	WidgetLayer/HLayout.h	/^	void (*set_max_height)(HLayout* p_layout, short s_height);$/;"	m	struct:_hlayout
+set_max_height	WidgetLayer/hwidget.c	/^static void set_max_height(HWidget *p_widget, short s_max_height)$/;"	f	file:
+set_max_height	WidgetLayer/hwidget.h	/^	void (*set_max_height)(HWidget *p_widget, short s_max_height);$/;"	m	struct:_HWidgetOperation
+set_max_len	WidgetLayer/htextarea.c	/^static void set_max_len(HTextArea *p_textarea, int i_len)$/;"	f	file:
+set_max_len	WidgetLayer/htextarea.h	/^	void (*set_max_len)(HTextArea *p_textarea, int i_len);$/;"	m	struct:_HTextAreaOperation
+set_max_width	WidgetLayer/HLayout.c	/^static void set_max_width(HLayout* p_layout, short s_width)$/;"	f	file:
+set_max_width	WidgetLayer/HLayout.h	/^	void (*set_max_width)(HLayout* p_layout, short s_width);$/;"	m	struct:_hlayout
+set_max_width	WidgetLayer/hwidget.c	/^static void set_max_width(HWidget *p_widget, short s_max_width)$/;"	f	file:
+set_max_width	WidgetLayer/hwidget.h	/^	void (*set_max_width)(HWidget *p_widget, short s_max_width);$/;"	m	struct:_HWidgetOperation
+set_padding_bottom	WidgetLayer/hwidget.c	/^static void set_padding_bottom(HWidget *p_widget, unsigned char s_padding_bottom)$/;"	f	file:
+set_padding_bottom	WidgetLayer/hwidget.h	/^	void (*set_padding_bottom)(HWidget *p_widget, unsigned char s_padding_bottom);$/;"	m	struct:_HWidgetOperation
+set_padding_left	WidgetLayer/hwidget.c	/^static void set_padding_left(HWidget *p_widget, unsigned char s_padding_left)$/;"	f	file:
+set_padding_left	WidgetLayer/hwidget.h	/^	void (*set_padding_left)(HWidget *p_widget, unsigned char s_padding_left);$/;"	m	struct:_HWidgetOperation
+set_padding_right	WidgetLayer/hwidget.c	/^static void set_padding_right(HWidget *p_widget, unsigned char s_padding_right)$/;"	f	file:
+set_padding_right	WidgetLayer/hwidget.h	/^	void (*set_padding_right)(HWidget *p_widget, unsigned char s_padding_right);$/;"	m	struct:_HWidgetOperation
+set_padding_top	WidgetLayer/hwidget.c	/^static void set_padding_top(HWidget *p_widget, unsigned char s_padding_top)$/;"	f	file:
+set_padding_top	WidgetLayer/hwidget.h	/^	void (*set_padding_top)(HWidget *p_widget, unsigned char s_padding_top);$/;"	m	struct:_HWidgetOperation
+set_position	WidgetLayer/himage.h	/^	void (*set_position)(HImage *p_this, short x, short y);$/;"	m	struct:_HImageOperation_
+set_position	WidgetLayer/hwidget.c	/^static void set_position(HWidget *p_widget, short s_top_x, short s_top_y)$/;"	f	file:
+set_position	WidgetLayer/hwidget.h	/^	void (*set_position)(HWidget *p_widget, short s_top_x, short s_top_y);$/;"	m	struct:_HWidgetOperation
+set_size	WidgetLayer/himage.h	/^	void (*set_size)(HImage *p_this, short s_width, short s_height);$/;"	m	struct:_HImageOperation_
+set_spacing	WidgetLayer/hlabel.h	/^	void			(*set_spacing)(struct _hLabel *p_Me, int i_spacing);$/;"	m	struct:_hLabel
+set_split_line	WidgetLayer/htextarea.c	/^static void set_split_line(HTextArea *p_textarea, int i_split_line)$/;"	f	file:
+set_split_line	WidgetLayer/htextarea.h	/^	void (*set_split_line)(HTextArea *p_textarea, int i_split_line);$/;"	m	struct:_HTextAreaOperation
+set_text	WidgetLayer/hlabel.h	/^	void			(*set_text)(struct _hLabel *p_Me, const char *pc_str);$/;"	m	struct:_hLabel
+set_text	WidgetLayer/hpushbutton.h	/^	void			(*set_text)(struct _hPushButton *p_Me, const char *pc_str);$/;"	m	struct:__anon1
+set_text	WidgetLayer/hstatusbar.h	/^	void				(*set_text)(struct _HStatusBar *p_Me, const char *pc_left_str, const char *pc_right_str);$/;"	m	struct:_HStatusBar
+set_text	WidgetLayer/htextarea.c	/^static void set_text(HTextArea *p_textarea, char *pc_text)$/;"	f	file:
+set_text	WidgetLayer/htextarea.h	/^	void (*set_text)(HTextArea *p_textarea, char *pc_text);$/;"	m	struct:_HTextAreaOperation
+set_text	WidgetLayer/htextinput.c	/^static void set_text(HTextInput *p_textinput, char *pc_text)$/;"	f	file:
+set_text	WidgetLayer/htextinput.h	/^	void (*set_text)(HTextInput *p_textinput, char *pc_text);$/;"	m	struct:_HTextInputOperation
+set_text_mid	WidgetLayer/hpushbutton.h	/^	void			(*set_text_mid)(struct _hPushButton *p_Me, int i_ismid);$/;"	m	struct:__anon1
+set_text_point	WidgetLayer/hpushbutton.h	/^	void			(*set_text_point)(struct _hPushButton *p_Me, short s_x, short s_y);$/;"	m	struct:__anon1
+set_top_widget	WidgetLayer/hplane.c	/^static void set_top_widget(HPlane *p_plane, HWidget *p_widget)$/;"	f	file:
+set_top_widget	WidgetLayer/hplane.h	/^	void (*set_top_widget)(HPlane *p_plane, HWidget *p_widget);$/;"	m	struct:_HPlaneOperation
+set_visible	WidgetLayer/hwidget.c	/^static void set_visible(HWidget *p_widget, int i_visible)$/;"	f	file:
+set_visible	WidgetLayer/hwidget.h	/^	void (*set_visible)(HWidget *p_widget, int i_visible);$/;"	m	struct:_HWidgetOperation
+set_widget_rect	AnserCygnoides/tools.c	/^void set_widget_rect(HWidget* const p_widget, const HRect rect)$/;"	f
+set_width	WidgetLayer/hwidget.c	/^static void set_width(HWidget *p_widget, short s_width)$/;"	f	file:
+set_width	WidgetLayer/hwidget.h	/^	void (*set_width)(HWidget *p_widget, short s_width);$/;"	m	struct:_HWidgetOperation
+share	AnserCygnoides/video_detail.c	/^void share() $/;"	f
+share_Button	AnserCygnoides/video_detail.h	/^	HPushButton* share_Button;$/;"	m	struct:_VideoDetail_Page
+show_category_interface	AnserCygnoides/mainpage.c	/^static void show_category_interface(MainPage* p_mainpage)$/;"	f	file:
+show_myyouku_interface	AnserCygnoides/mainpage.c	/^static void show_myyouku_interface(MainPage* p_mainpage)$/;"	f	file:
+show_popupmenu	WidgetLayer/hpopupmenu.h	/^	void (*show_popupmenu)( HPopupMenu* this, short x, short y );$/;"	m	struct:_HPopupMenuOperation_
+show_recommend_interface	AnserCygnoides/mainpage.c	/^static void show_recommend_interface(MainPage* p_mainpage)$/;"	f	file:
+show_search_interface	AnserCygnoides/mainpage.c	/^static void show_search_interface(MainPage* p_mainpage)$/;"	f	file:
+show_top_interface	AnserCygnoides/mainpage.c	/^static void show_top_interface(MainPage* p_mainpage)$/;"	f	file:
+spacing_set	WidgetLayer/hlabel.c	/^static void spacing_set(HLabel *p_Me, int i_spacing){$/;"	f	file:
+st_gap	WidgetLayer/HLayout.h	/^	LayoutGap st_gap;$/;"	m	struct:_hlayout
+st_layout_base	WidgetLayer/HHorizontalLayout.h	/^	HLayout st_layout_base;$/;"	m	struct:_HHorizontalLayout
+st_layout_base	WidgetLayer/HVerticalLayout.h	/^	HLayout st_layout_base;$/;"	m	struct:_HVerticalLayout
+st_pos_size	WidgetLayer/himage.h	/^	HRect	st_pos_size;		\/\/ Image's relative position & the restricting size$/;"	m	struct:_HImage_
+sys_event_handle	WindowLayer/hwindow.c	/^static void sys_event_handle(VMINT message, VMINT param)$/;"	f	file:
+sys_event_handle	WindowLayer/hwindow.h	/^	void (*sys_event_handle)(VMINT message, VMINT param);$/;"	m	struct:_HWindow
+text	WidgetLayer/hlabel.h	/^	char			*text;		\/*** storage text ***\/$/;"	m	struct:_hLabel
+text	WidgetLayer/hpushbutton.h	/^	char					*text;$/;"	m	struct:_hPushButton
+text_height	WidgetLayer/hpushbutton.h	/^	short					text_height;$/;"	m	struct:_hPushButton
+text_point_set	WidgetLayer/hpushbutton.c	/^static void text_point_set(HPushButton *p_Me, short s_x, short s_y){$/;"	f	file:
+text_row_count	WidgetLayer/hlabel.h	/^	short			text_row_count;$/;"	m	struct:_hLabel
+text_row_spacing	WidgetLayer/hlabel.h	/^	short			text_row_spacing;$/;"	m	struct:_hLabel
+text_row_width	WidgetLayer/hlabel.h	/^	short			text_row_width;$/;"	m	struct:_hLabel
+text_set	WidgetLayer/hlabel.c	/^static void text_set(HLabel *p_Me, const char *pc_str){$/;"	f	file:
+text_set	WidgetLayer/hpushbutton.c	/^static void text_set(HPushButton *p_Me, const char *pc_str){$/;"	f	file:
+text_set	WidgetLayer/hstatusbar.c	/^static void text_set(HStatusBar *p_Me, const char *pc_left_str, const char *pc_right_str){$/;"	f	file:
+text_set_mid	WidgetLayer/hpushbutton.c	/^static void text_set_mid(HPushButton *p_Me, int i_ismid){$/;"	f	file:
+text_status_set	WidgetLayer/hstatusbar.c	/^static char *text_status_set(const char *pc_str){$/;"	f	file:
+text_width	WidgetLayer/hpushbutton.h	/^	short					text_width;$/;"	m	struct:_hPushButton
+text_width_height	WidgetLayer/hpushbutton.c	/^static void text_width_height(HPushButton *p_Me){$/;"	f	file:
+textinput_delete	WidgetLayer/htextinput.c	/^extern void textinput_delete(HTextInput *p_textinput)$/;"	f
+try_scroll	WidgetLayer/hplane.c	/^static void try_scroll(short s_dx, short s_dy)$/;"	f	file:
+uc_isautosize	WidgetLayer/hpushbutton.h	/^	unsigned char			uc_isautosize;$/;"	m	struct:_hPushButton
+uc_ismid	WidgetLayer/hpushbutton.h	/^	unsigned char			uc_ismid;$/;"	m	struct:_hPushButton
+uc_ps	WidgetLayer/hlabel.h	/^	unsigned char	uc_ps;$/;"	m	struct:_hLabel
+uc_ps	WidgetLayer/hpushbutton.h	/^	unsigned char			uc_ps;$/;"	m	struct:_hPushButton
+up	AnserCygnoides/video_detail.c	/^void up() $/;"	f
+up_Button	AnserCygnoides/video_detail.h	/^	HPushButton* up_Button;$/;"	m	struct:_VideoDetail_Page
+validate	WidgetLayer/hwidget.c	/^static void validate(HWidget *p_widget)$/;"	f	file:
+validate	WidgetLayer/hwidget.h	/^	void (*validate)(HWidget *p_widget);$/;"	m	struct:_HWidgetOperation
+validate	WindowLayer/hwindow.h	/^	void (*validate)();$/;"	m	struct:_HWindow
+validate_layout	WidgetLayer/HHorizontalLayout.c	/^static void validate_layout(HLayout* p_layout)$/;"	f	file:
+validate_layout	WidgetLayer/HLayout.h	/^	void (*validate_layout)(HLayout* p_layout);$/;"	m	struct:_hlayout
+validate_layout	WidgetLayer/HVerticalLayout.c	/^static void validate_layout(HLayout* p_layout)$/;"	f	file:
+vedio_detail_page_delete	AnserCygnoides/video_detail.c	/^VideoDetailPage* vedio_detail_page_delete()$/;"	f
+vedio_detail_page_new	AnserCygnoides/video_detail.c	/^VideoDetailPage* vedio_detail_page_new() $/;"	f
+video_detail	AnserCygnoides/video_detail.h	/^	Page video_detail;$/;"	m	struct:_VideoDetail_Page
+video_detail_page_init	AnserCygnoides/video_detail.c	/^void video_detail_page_init( VideoDetailPage* pvideo_detail_page ) $/;"	f
+video_list_button	AnserCygnoides/video_detail.h	/^	HPushButton video_list_button[30];$/;"	m	struct:_VideoDetail_Page
+video_list_image	AnserCygnoides/video_detail.h	/^	HPushButton* video_list_image[30];$/;"	m	struct:_VideoDetail_Page
+video_list_label	AnserCygnoides/video_detail.h	/^	HLabel * video_list_label[30];$/;"	m	struct:_VideoDetail_Page
+video_list_label2	AnserCygnoides/video_detail.h	/^	HLabel* video_list_label2[30];$/;"	m	struct:_VideoDetail_Page
+video_list_star_image	AnserCygnoides/video_detail.h	/^	HPushButton video_list_star_image[30];$/;"	m	struct:_VideoDetail_Page
+video_list_title	AnserCygnoides/video_detail.h	/^	HLabel* video_list_title; $/;"	m	struct:_VideoDetail_Page
+videolist	AnserCygnoides/video_detail.h	/^	HContainer* videolist[30];$/;"	m	struct:_VideoDetail_Page
+vm_main	AnserCygnoides/AnserCygnoides.c	/^void vm_main(void) {$/;"	f
+w_line_head	WidgetLayer/htextarea.h	/^	VMWSTR w_line_head;$/;"	m	struct:_LineNode
+w_str	WidgetLayer/htextarea.h	/^	VMWSTR w_str;$/;"	m	struct:_HTextGlobal
+window	WindowLayer/hwindow.c	/^HWindow *window;$/;"	v
