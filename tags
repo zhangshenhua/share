@@ -1,0 +1,31 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ASM_SRCS	Debug/sources.mk	/^ASM_SRCS := $/;"	m
+C_DEPS	Debug/sources.mk	/^C_DEPS := $/;"	m
+C_SRCS	Debug/sources.mk	/^C_SRCS := $/;"	m
+EXECUTABLES	Debug/sources.mk	/^EXECUTABLES := $/;"	m
+LIBS	Debug/objects.mk	/^LIBS :=$/;"	m
+MANY	main.c	9;"	d	file:
+NEW_H_	new.h	9;"	d
+OBJECT_H_	Object.h	9;"	d
+OBJS	Debug/sources.mk	/^OBJS := $/;"	m
+OBJ_SRCS	Debug/sources.mk	/^OBJ_SRCS := $/;"	m
+O_SRCS	Debug/sources.mk	/^O_SRCS := $/;"	m
+RM	Debug/makefile	/^RM := rm -rf$/;"	m
+SET_H_	Set.h	9;"	d
+SUBDIRS	Debug/sources.mk	/^SUBDIRS := \\$/;"	m
+S_UPPER_SRCS	Debug/sources.mk	/^S_UPPER_SRCS := $/;"	m
+USER_OBJS	Debug/objects.mk	/^USER_OBJS :=$/;"	m
+add	main.c	/^void * add (void * _set, const void * _element)$/;"	f
+contains	main.c	/^int contains (const void * _set, const void * _element)$/;"	f
+delete	main.c	/^void delete (void * _item)$/;"	f
+differ	main.c	/^int differ (const void * a, const void *b){$/;"	f
+drop	main.c	/^void * drop (void * _set, const void * _element){$/;"	f
+find	main.c	/^void * find (const void * _set, const void * _element) {$/;"	f
+heap	main.c	/^static int heap [MANY];$/;"	v	file:
+main	main.c	/^int main ()$/;"	f
+new	main.c	/^void * new (const void * type, ...)$/;"	f
