@@ -25,9 +25,11 @@
 #include "hlabel.h"
 #include "hcheckbox.h"
 #include "himage.h"
+#include "../WindowLayer/hwindow.h"
 
-#define MAX_RESOURCE_SIZE 1024*1024
-
+#define	MAX_RESOURCE_SIZE	1024*1024
+#define	SCREEN_WIDTH				(vm_graphic_get_screen_width())
+#define	SCREEN_HEIGHT			(vm_graphic_get_screen_height())
 
 typedef struct _HResourceImageProperty HResourceImageProperty;
 typedef struct _HResource HResource;
@@ -240,6 +242,9 @@ void draw_rect_by_hrect(VMINT layer_handle, HRect p_rect, VMUINT16 f_color, VMUI
 */
 void draw_rect_by_hrect_trans(VMINT i_layer_handle, HRect p_rect, VMUINT16 f_color);
 
+
+VMWCHAR *gb2312_to_ucs2(char *p_char_str);
+
 /*
 * name : draw_gb2312_text_by_hpoint
 * description : draw rect into a layer
@@ -281,6 +286,18 @@ void draw_gb2312_text_by_widget_oneline(VMINT i_layer_handle, HWidget* p_widget,
 * @para(in) p_char_str : the GB2312 string
 */
 void draw_gb2312_text_by_widget_center(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y);
+
+/*
+* name : draw_gb2312_text_by_hrect_center
+* description : draw GB2312 string into a layer
+* description : the string is in the center of the rect
+* @para(in) layer_handle : a layer handle
+* @para(in) p_rect : a hrect structure
+* @para(in) p_char_str : the GB2312 string
+* @para(in) c_font : the string font
+* @para(in) us_color : the string color
+*/
+void draw_gb2312_text_by_hrect_center(VMINT i_layer_handle, HRect p_rect, char *p_char_str, char c_font, VMUINT16 us_color);
 
 /*
 * name : draw_ucs2_text_by_hpoint
@@ -338,6 +355,21 @@ void draw_ucs2_text_by_widget_more_line(VMINT i_layer_handle, HWidget* p_widget,
 */
 extern void draw_ucs2_text_by_widget_center(VMINT i_layer_handle, HWidget* p_widget, VMWCHAR* p_ucs2_string, int i_screen_x, int i_screen_y);
 
+/*
+* name : set_actual_clip
+* description : set the actual clip 
+* @para(in) i_left_x1 : the left x pointer
+* @para(in) i_top_y1 : the top y pointer
+* @para(in) i_right_x2 : the right x pointer
+* @para(in) i_bottom_y2 : the bottom y pointer
+*/
+void set_actual_clip(VMINT i_left_x1, VMINT i_top_y1, VMINT i_right_x2, VMINT i_bottom_y2);
+
+/*
+* name : reset_parent_clip
+* description : reset to the parent clip
+*/
+void reset_parent_clip();
 
 /*
 * name : get_gb2312_width_and_height

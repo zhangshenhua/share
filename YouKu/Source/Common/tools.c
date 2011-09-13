@@ -13,6 +13,8 @@
 #include "tools.h"
 #include "himage.h"
 
+
+
 A_Rect Rect(const int left, const int top, const int width, const int height)
 {
 	A_Rect rect;
@@ -33,32 +35,60 @@ HRect make_shift_rect (const HRect source_rect, const int dx, const int dy)
 	return dest_rect;
 }
 
-void set_widget_rect(HWidget* const p_widget, const HRect rect)
+HWidget* set_widget_rect(HWidget* p_widget, const HRect* p_rect)
 {
-	p_widget->s_top_x = rect.s_x;
-	p_widget->s_top_y = rect.s_y;
-	p_widget->s_width = rect.s_width;
-	p_widget->s_height = rect.s_height;
+	p_widget->p_widget_ops->set_position(p_widget, p_rect->s_x, p_rect->s_y)  ;
+	p_widget->p_widget_ops->set_width(p_widget,	p_rect->s_width );
+	p_widget->p_widget_ops->set_height(p_widget, p_rect->s_height );
+	return p_widget;
 }
 
-P_Button Button(A_Rect a_rect, CString cstr_imgname, CString cstr_title, EVENT_CALLBACK_FN callback_fn) {
+P_Button Button(P_Rect p_rect, CString cstr_imgname, CString cstr_title, EVENT_CALLBACK_FN callback_fn) {
 	P_Button p_button = hpushbutton_new( cstr_title );
 	
-	p_button->base.p_widget_ops->set_position((HWidget*)p_button, a_rect.s_x, a_rect.s_y );
-	p_button->base.p_widget_ops->set_width((HWidget*)p_button, a_rect.s_width );
-	p_button->base.p_widget_ops->set_height((HWidget*)p_button, a_rect.s_height );
+	set_widget_rect( (HWidget*)p_button, p_rect);
 	
-	p_button->ops.set_image_from_resource( cstr_imgname ) ;
+	p_button->ops->set_image_from_resource(p_button, cstr_imgname ) ;
 
 	p_button->base.action_performed = callback_fn;
 
 	return p_button;
 }
 
-P_Image  Image(A_Rect a_rect, CString cstr_path) {
-	P_Image p_image = himage_new();
-	p_image->p_oper->set_position( p_image, a_rect.s_x, a_rect.s_y );
-	p_image->p_oper->set_size( p_image, a_rect.s_width, a_rect.s_height );
-	p_image->p_oper->load_image( p_image, cstr_path );
-	return p_image;
+
+//static void empty_callback(HWidget *p_source, HEvent *p_evt, void *p_param){/*empty procedure*/}
+/************************************************************************/
+/* 从文件构造出图片                                                                     */
+/************************************************************************/
+P_Image  Image(P_Rect p_rect, CString cstr_path) {
+	return Button( p_rect, cstr_path, "", NULL );
 }
+
+/************************************************************************/
+/* 从缓冲构造出图片                                                                     */
+/************************************************************************/
+P_Image  ImageB(VMUINT8 *pi_buf, VMINT i_size) {
+	P_Button p_pushbutton  = hpushbutton_new("");
+	p_pushbutton->ops->set_image_from_buffer( p_pushbutton, pi_buf, i_size);
+	
+	return p_pushbutton;
+}
+
+
+P_Button Button2(P_Rect p_rect, P_Image p_image, CString cstr_title, EVENT_CALLBACK_FN callback_fn) {
+	P_Button p_button ;
+
+	if( p_image ) {
+		p_button = p_image;
+		p_button->ops->set_text( p_button, cstr_title );
+	}
+	else {
+		p_button = hpushbutton_new( cstr_title );
+
+	}
+
+	set_widget_rect( (HWidget*)p_button, p_rect);
+	p_button->base.action_performed = callback_fn;
+	return p_button;
+}
+

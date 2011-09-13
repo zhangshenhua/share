@@ -19,6 +19,8 @@ extern HWindow *window;
 
 void hwindow_init();
 
+void hwindow_exit();
+
 struct _HWindow {
 
 	/******************* private member **********************/
@@ -84,6 +86,10 @@ struct _HWindow {
 	************************************************************************/
 	short s_is_support_touch_screen;
 
+	/************************************************************************
+	/* current clip
+	************************************************************************/
+	HRect cur_clip_rect;
 };
 
 

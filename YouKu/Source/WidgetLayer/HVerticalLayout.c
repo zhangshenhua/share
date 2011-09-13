@@ -41,9 +41,9 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 
 	s_start_y = p_widget->s_top_y;
 	s_sum_x = p_widget->s_top_x;
-	s_sum_y  = p_widget->s_top_y + p_widget->s_height;
+	s_sum_y  = p_widget->s_top_y + p_widget->p_widget_ops->get_height(p_widget);
 	
-	s_column_width = p_widget->s_width;
+	s_column_width = p_widget->p_widget_ops->get_width(p_widget);
 
 	// save returning value
 	if (NULL != ret_p_rect)
@@ -56,7 +56,7 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 	for(p_node = p_widget_list->p_next->p_next; p_node!= p_widget_list; p_node = p_node->p_next)
 	{
 		p_widget = (HWidget*)(p_node->pv_data);
-		s_sum_y = s_sum_y + st_gap.s_gap_y + p_widget->s_height;
+		s_sum_y = s_sum_y + st_gap.s_gap_y + p_widget->p_widget_ops->get_height(p_widget);
 
 		/* adjust widgets from the second based the first */
 		/* put widgets in one column */
@@ -72,7 +72,7 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 			}
 
 			/* save the max widget height in one line */
-			if (p_widget->s_width > s_column_width)
+			if (p_widget->p_widget_ops->get_width(p_widget) > s_column_width)
 			{
 				s_column_width = p_widget->s_width;
 			}
@@ -95,7 +95,7 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 				p_widget->s_top_x = s_sum_x;
 				p_widget->s_top_y = s_sum_y;
 
-				s_sum_y = s_sum_y + p_widget->s_width;
+				s_sum_y = s_sum_y + p_widget->s_height;
 			}
 			/* break if layout cannot put all widgets in it*/
 			else
@@ -119,18 +119,21 @@ HVerticalLayout* hvertical_layout_new()
 	hlayout_init(&(p_layout->st_layout_base));
 
 	p_layout->st_layout_base.p_ops->validate_layout = validate_layout;
+	p_layout->st_layout_base.p_ops->delete_layout = hvertical_layout_delete;
 
 	return p_layout;
 
 }
 
-void hvertical_layout_delete(HVerticalLayout* p_vert_layout)
+void hvertical_layout_delete(HLayout* p_vert_layout)
 {
-	if (NULL != p_vert_layout)
+	HVerticalLayout* p_vert = (HVerticalLayout*)p_vert_layout;
+
+	if (NULL != p_vert)
 	{
-		hlayout_delete(&(p_vert_layout->st_layout_base));
+		hlayout_delete(&(p_vert->st_layout_base));
 	}
 
-	vm_free(p_vert_layout);
+	vm_free(p_vert);
 }
 /*********************EOF******************************/

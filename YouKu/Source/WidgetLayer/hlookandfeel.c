@@ -250,6 +250,15 @@ void hresource_delete(HResource *p_resource)
 //		vm_free(p_image_property);
 	}
 	hlist_clear(p_resource->p_property_list_head);
+
+	p_resource->append_property_into_resource = NULL;
+	p_resource->free_image_by_hresource = NULL;
+	p_resource->get_image_size = NULL;
+	p_resource->load_local_image = NULL;
+	p_resource->release_maximun_image = NULL;
+	p_resource->remove_property_from_resource = NULL;
+
+	vm_free(p_resource);
 }
 
 /*
@@ -266,17 +275,17 @@ void look_draw_plane(HPlane *p_plane)
 	vm_log_debug("look_draw_plane");
 #endif
 
-	i_gray_handle = vm_graphic_create_canvas(vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+	i_gray_handle = vm_graphic_create_canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 	p_layer_buf = vm_graphic_get_layer_buffer(p_plane->i_handle);
 	p_gray_buf = vm_graphic_get_canvas_buffer(i_gray_handle);
 
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+	vm_graphic_set_clip(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	vm_graphic_fill_rect(p_gray_buf, 0, 0, 
-		vm_graphic_get_screen_width(), vm_graphic_get_screen_height(),
+		SCREEN_WIDTH, SCREEN_HEIGHT,
 		VM_COLOR_BLACK, VM_COLOR_BLACK);
 
 	vm_graphic_blt_ex(p_layer_buf, 0, 0, p_gray_buf, 0, 0, 
-		vm_graphic_get_screen_width(), vm_graphic_get_screen_height(), 1, 150);
+		SCREEN_WIDTH, SCREEN_HEIGHT, 1, 150);
 
 	vm_graphic_release_canvas(i_gray_handle);
 }
@@ -299,11 +308,11 @@ void look_draw_trans_color(VMINT i_layer_handle, HRect p_rect, VMUINT16 trans_co
 	p_layer_buf = vm_graphic_get_layer_buffer(i_layer_handle);
 	p_trans_buf = vm_graphic_get_canvas_buffer(i_gray_handle);
 
-	vm_graphic_set_clip(0, 0, p_rect.s_width, p_rect.s_height);
-	vm_graphic_fill_rect(p_trans_buf, 0, 0, p_rect.s_width, p_rect.s_height,
+	set_actual_clip(p_rect.s_x, p_rect.s_y, p_rect.s_width, p_rect.s_height);
+	vm_graphic_fill_rect(p_trans_buf, p_rect.s_x, p_rect.s_y, p_rect.s_width, p_rect.s_height,
 		trans_color, trans_color);
 
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+	reset_parent_clip();
 	vm_graphic_blt_ex(p_layer_buf, p_rect.s_x, p_rect.s_y, p_trans_buf, 0, 0, 
 		p_rect.s_width,  p_rect.s_height, 1, i_transparency);
 
@@ -368,8 +377,6 @@ void RGB_to_HSL(double var_R, double var_G, double var_B, double *var_H, double 
 	double del_G;
 	double del_B;
 
-//	printf("start:var_R: %f, var_G: %f, var_B: %f\n",var_R, var_G, var_B);
-
 	if (var_R >= var_G && var_R >= var_B) {
 		var_max = var_R;
 	}
@@ -432,8 +439,6 @@ void RGB_to_HSL(double var_R, double var_G, double var_B, double *var_H, double 
 }
 
 double Hue_to_RGB(double v1, double v2, double vH ) {
-//	printf("vH:%f\n ", vH);
-
 	if ( vH < 0.0 ) {
 		vH += 1.0;
 	}
@@ -475,8 +480,6 @@ void HSL_to_RGB(double var_H, double var_S, double var_L, double *var_R, double 
 		*var_R = Hue_to_RGB( var_1, var_2, var_H + 1.0/3.0);
 		*var_G = Hue_to_RGB( var_1, var_2, var_H);
 		*var_B = Hue_to_RGB( var_1, var_2, var_H - 1.0/3.0);
-
-//		printf("end  :var_R: %f, var_G: %f, var_B: %f\n\n",*var_R, *var_G, *var_B);
 	}
 }
 
@@ -586,6 +589,7 @@ void look_paint_pushbutton(HPushButton *p_pushbutton, VMINT i_layer_handle, int 
 	if(p_pushbutton->text == NULL) {
 		return;
 	}
+
 	draw_gb2312_text_by_widget_center(i_layer_handle, p_widget, p_pushbutton->text, i_screen_x, i_screen_y);
 }
 
@@ -596,7 +600,6 @@ void look_paint_pushbutton(HPushButton *p_pushbutton, VMINT i_layer_handle, int 
 void look_paint_textinput(HTextInput *p_textinput, VMINT i_layer_handle, int i_screen_x, int i_screen_y)
 {
 	int						i;
-	VMINT				i_ucs2_max_len;
 	VMUINT16		f_color;
 	VMWCHAR		*p_ucs2_string;
 	HWidget			*p_widget = NULL;
@@ -622,13 +625,8 @@ void look_paint_textinput(HTextInput *p_textinput, VMINT i_layer_handle, int i_s
 	if(p_textinput->pc_text ==NULL) {
 		return;
 	}
-	i_ucs2_max_len = strlen(p_textinput->pc_text) + 1;
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
 
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len* 2, p_textinput->pc_text);
+	p_ucs2_string = gb2312_to_ucs2(p_textinput->pc_text);
 
 	if (p_textinput->c_is_password) {
 		for (i = 0; p_ucs2_string[i] != '\0'; i++) {
@@ -636,7 +634,7 @@ void look_paint_textinput(HTextInput *p_textinput, VMINT i_layer_handle, int i_s
 		}
 	}
 
-	draw_ucs2_text_by_widget_oneline(i_layer_handle, p_widget, p_ucs2_string, i_screen_x, i_screen_y);
+	draw_ucs2_text_by_widget_oneline(i_layer_handle, p_widget, p_ucs2_string, i_screen_x + p_textinput->s_move_offset, i_screen_y);
 
 	vm_free(p_ucs2_string);
 }
@@ -647,10 +645,9 @@ void look_paint_textinput(HTextInput *p_textinput, VMINT i_layer_handle, int i_s
 */
 extern void look_paint_textarea(HTextArea *p_textarea, VMINT i_layer_handle, int i_screen_x, int i_screen_y)
 {
-	VMINT				i_ucs2_max_len;
 	VMUINT16		f_color;
-	VMWCHAR		*p_ucs2_string;
 	HWidget			*p_widget = NULL;
+//	VMWCHAR		*p_ucs2_string;
 
 #ifdef H_DEBUG
 	vm_log_debug("look_paint_textarea");
@@ -677,20 +674,12 @@ extern void look_paint_textarea(HTextArea *p_textarea, VMINT i_layer_handle, int
 	}
 	draw_rect_by_widget_trans(i_layer_handle, p_widget, i_screen_x, i_screen_y, f_color);
 
-	if(p_textarea->pc_text ==NULL){
-		return;
-	}
-	i_ucs2_max_len = strlen(p_textarea->pc_text) + 1;
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
 
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_textarea->pc_text);
-
-	draw_ucs2_text_by_widget_more_line(i_layer_handle,p_widget,p_ucs2_string,i_screen_x,i_screen_y,p_textarea->c_line_space);
-
-	vm_free(p_ucs2_string);
+//  	p_ucs2_string = gb2312_to_ucs2(p_textarea->pc_text);
+//  
+//  	draw_ucs2_text_by_widget_more_line(i_layer_handle,p_widget,p_ucs2_string,i_screen_x,i_screen_y,p_textarea->c_line_space);
+//  
+//  	vm_free(p_ucs2_string);
 }
 
 /*
@@ -699,7 +688,6 @@ extern void look_paint_textarea(HTextArea *p_textarea, VMINT i_layer_handle, int
 */
 void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int i_screen_y)
 {
-	VMINT				i_ucs2_max_len;
 	VMUINT16		f_color;
 	VMWCHAR		*p_ucs2_string;
 	HWidget			*p_widget;
@@ -727,16 +715,7 @@ void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int
 	}
 	draw_rect_by_widget_trans(i_layer_handle, p_widget, i_screen_x, i_screen_y, f_color);
 
-	if (p_label->text == NULL) {
-		return;
-	}
-	i_ucs2_max_len = strlen(p_label->text) + 1;
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_label->text);
+	p_ucs2_string = gb2312_to_ucs2(p_label->text);
 
 	draw_ucs2_text_by_widget_more_line(i_layer_handle,p_widget,p_ucs2_string,i_screen_x,i_screen_y,p_label->text_row_spacing);
 
@@ -749,7 +728,6 @@ void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int
 */
  void look_paint_checkbox(HCheckBox* p_checkbox, int i_layer_handle, short s_screen_x, short s_screen_y)
 {
-	int					i_ucs2_max_len;
 	VMWCHAR	*p_ucs2_string;
 
 	short				s_rect_x;
@@ -781,12 +759,8 @@ void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int
 	if (p_checkbox->pc_label == NULL) {
 		return;
 	}
-	i_ucs2_max_len = strlen(p_checkbox->pc_label);
-	p_ucs2_string = vm_malloc((i_ucs2_max_len + 1) * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-	vm_gb2312_to_ucs2(p_ucs2_string, (i_ucs2_max_len + 1)* 2, p_checkbox->pc_label);
+
+	p_ucs2_string = gb2312_to_ucs2(p_checkbox->pc_label);
 
 	s_rect_height = vm_graphic_get_string_height(p_ucs2_string);
 	s_rect_width = s_rect_height;
@@ -795,9 +769,9 @@ void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int
 	s_text_x = s_rect_x + s_rect_width + 4;
 	s_text_y = s_rect_y;
 
-//	printf("s_screen_x: %d, s_screen_y: %d, p_widget->s_width: %d, p_widget->s_height: %d\n",
-//		s_screen_x, s_screen_y, p_widget->s_width, p_widget->s_height );
-	vm_graphic_set_clip(s_screen_x, s_screen_y, s_screen_x + p_widget->s_width, s_screen_y + p_widget->s_height);
+	printf("s_screen_x: %d, s_screen_y: %d, p_widget->s_width: %d, p_widget->s_height: %d\n",
+		s_screen_x, s_screen_y, p_widget->s_width, p_widget->s_height );
+	set_actual_clip(s_screen_x, s_screen_y, s_screen_x + p_widget->s_width, s_screen_y + p_widget->s_height);
 
 #ifdef H_DEBUG	
 	vm_graphic_rect(p_layer_buf, s_screen_x, s_screen_y, 
@@ -820,16 +794,17 @@ void look_paint_label(HLabel *p_label, VMINT i_layer_handle, int i_screen_x, int
 		vm_graphic_fill_rect(p_layer_buf, s_rect_x + 2, s_rect_y + 2, 
 		s_rect_width - 4, s_rect_height - 4 ,VM_COLOR_BLACK, VM_COLOR_RED);    /* Todo draw check */
 
-	vm_graphic_set_clip(s_screen_x + p_widget->s_padding_left, s_screen_y + p_widget->s_padding_top,
+	set_actual_clip(s_screen_x + p_widget->s_padding_left, s_screen_y + p_widget->s_padding_top,
 		s_screen_x + p_widget->s_width - p_widget->s_padding_right, s_screen_y + p_widget->s_height - p_widget->s_padding_bottom);
 
 	vm_graphic_textout(p_layer_buf, s_text_x, s_text_y, 
 		p_ucs2_string, vm_wstrlen(p_ucs2_string), 
 		p_widget->p_widget_ops->get_color(p_widget));
 
+	reset_parent_clip();
+
 	vm_free(p_ucs2_string);
 
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
 }
 
 /*
@@ -847,10 +822,11 @@ void draw_rect_by_widget(VMINT i_layer_handle,HWidget* p_widget, int i_screen_x,
 	if (p_layer_buf == NULL){
 		return;
 	}
+	set_actual_clip(i_screen_x, i_screen_y, i_screen_x + p_widget->s_width, i_screen_y + p_widget->s_height);
 	vm_graphic_fill_rect(p_layer_buf, i_screen_x, i_screen_y,
 		p_widget->s_width, p_widget->s_height, p_widget->i_bgcolor, p_widget->i_bgcolor);
+	reset_parent_clip();
 }
-
 
 /*
 * name : draw_rect_by_widget_trans
@@ -867,8 +843,11 @@ void draw_rect_by_widget_trans(VMINT i_layer_handle,HWidget* p_widget, int i_scr
 	if (p_layer_buf == NULL){
 		return;
 	}
+
+	set_actual_clip(i_screen_x, i_screen_y, i_screen_x + p_widget->s_width, i_screen_y + p_widget->s_height);
 	vm_graphic_rect(p_layer_buf, i_screen_x, i_screen_y,
 		p_widget->s_width, p_widget->s_height, f_color);
+	reset_parent_clip();
 }
 
 /*
@@ -885,8 +864,11 @@ void draw_rect_by_hrect(VMINT i_layer_handle, HRect p_rect, VMUINT16 f_color, VM
 	if (p_layer_buf == NULL) {
 		return;
 	}
+
+	set_actual_clip(p_rect.s_x, p_rect.s_y, p_rect.s_x + p_rect.s_width, p_rect.s_y + p_rect.s_height);
 	vm_graphic_fill_rect(p_layer_buf, p_rect.s_x, p_rect.s_y, 
 		p_rect.s_width, p_rect.s_height, f_color, bg_color);
+	reset_parent_clip();
 }
 
 /*
@@ -903,7 +885,36 @@ void draw_rect_by_hrect_trans(VMINT i_layer_handle, HRect p_rect, VMUINT16 f_col
 	if (p_layer_buf == NULL) {
 		return;
 	}
+
+	set_actual_clip(p_rect.s_x, p_rect.s_y, p_rect.s_x + p_rect.s_width, p_rect.s_y + p_rect.s_height);
 	vm_graphic_rect(p_layer_buf, p_rect.s_x, p_rect.s_y, p_rect.s_width, p_rect.s_height, f_color);
+	reset_parent_clip();
+}
+
+VMWCHAR *gb2312_to_ucs2(char *p_char_str) 
+{
+	int			i_ucs2_max_len;
+	int			i_ucs2_cur_len;
+	VMWCHAR		*p_ucs2_string;
+
+	if (p_char_str == NULL){
+		return NULL;
+	}
+	i_ucs2_max_len = strlen(p_char_str) + 1;
+	if (i_ucs2_max_len < 1) {
+		return NULL;
+	}
+	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
+	if (p_ucs2_string == NULL) {
+		return NULL;
+	}
+	//the second para is the size of bytes,include '\0'
+	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_char_str);
+
+	i_ucs2_cur_len = vm_wstrlen(p_ucs2_string) + 1;
+	p_ucs2_string = vm_realloc(p_ucs2_string, i_ucs2_cur_len* sizeof(VMWCHAR));
+	
+	return p_ucs2_string;
 }
 
 /*
@@ -912,24 +923,15 @@ void draw_rect_by_hrect_trans(VMINT i_layer_handle, HRect p_rect, VMUINT16 f_col
 */
 void draw_gb2312_text_by_hpoint(VMINT i_layer_handle, char *p_char_str, HPoint p_point, VMUINT16 ui_color)
 {
-	int			i_ucs2_max_len;
 	VMWCHAR		*p_ucs2_string;
-	VMUINT8		*p_layer_buf = NULL;
 
 	if ((i_layer_handle < 0)||(p_char_str == NULL)){
 		return;
 	}
-	i_ucs2_max_len = strlen(p_char_str) + 1;
 
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-	//the second para is the size of bytes,include '\0'
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_char_str);
+	p_ucs2_string = gb2312_to_ucs2(p_char_str);
 
 	draw_ucs2_text_by_hpoint(i_layer_handle, p_ucs2_string, p_point, ui_color);
-
 
 	vm_free(p_ucs2_string);
 }
@@ -941,20 +943,13 @@ void draw_gb2312_text_by_hpoint(VMINT i_layer_handle, char *p_char_str, HPoint p
  */
 void draw_gb2312_text_by_widget(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y)
 {
-	int			i_ucs2_max_len;
 	VMWCHAR		*p_ucs2_string;
 
 	if ((i_layer_handle < 0)||(p_widget == NULL)||(p_char_str == NULL)) {
 		return;
 	}
 
-	i_ucs2_max_len = strlen(p_char_str) + 1;
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-	//the second para is the size of bytes,include '\0'
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_char_str);
+	p_ucs2_string = gb2312_to_ucs2(p_char_str);
 
 	draw_ucs2_text_by_widget(i_layer_handle, p_widget, p_ucs2_string, i_screen_x, i_screen_y);
 
@@ -969,26 +964,18 @@ void draw_gb2312_text_by_widget(VMINT i_layer_handle, HWidget* p_widget, char *p
 */
 void draw_gb2312_text_by_widget_oneline(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y)
 {
-	int			i_ucs2_max_len;
 	VMWCHAR		*p_ucs2_string;
 
 	if ((i_layer_handle < 0)||(p_widget == NULL)||(p_char_str == NULL)) {
 		return;
 	}
 
-	i_ucs2_max_len = strlen(p_char_str) + 1;
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_char_str);
+	p_ucs2_string = gb2312_to_ucs2(p_char_str);
 
 	draw_ucs2_text_by_widget_oneline(i_layer_handle, p_widget, p_ucs2_string, i_screen_x, i_screen_y);
 
 	vm_free(p_ucs2_string);
 }
-
 
 /*
 * name : draw_gb2312_text_by_hpoint_center
@@ -998,25 +985,67 @@ void draw_gb2312_text_by_widget_oneline(VMINT i_layer_handle, HWidget* p_widget,
 */
 void draw_gb2312_text_by_widget_center(VMINT i_layer_handle, HWidget* p_widget, char *p_char_str, int i_screen_x, int i_screen_y)
 {
-	int		i_ucs2_max_len;
 	VMWCHAR		*p_ucs2_string;
 
 	if ((i_layer_handle < 0)||(p_widget == NULL)||(p_char_str == NULL)) {
 		return;
 	}
 
-	i_ucs2_max_len = strlen(p_char_str) + 1;
-	p_ucs2_string = vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_char_str);
+	p_ucs2_string = gb2312_to_ucs2(p_char_str);
 
 	draw_ucs2_text_by_widget_center(i_layer_handle, p_widget, p_ucs2_string, i_screen_x, i_screen_y);
 
 	vm_free(p_ucs2_string);
 }
+
+/*
+* name : draw_gb2312_text_by_hrect_center
+* description : draw GB2312 string into a layer
+* description : the string is in the center of the rect
+*/
+void draw_gb2312_text_by_hrect_center(VMINT i_layer_handle, HRect p_rect, char *p_char_str, char c_font, VMUINT16 us_color)
+{
+	VMWCHAR		*p_ucs2_string;
+
+	int		i_str_x;
+	int		i_str_y;
+	int		i_padding_x;
+	int		i_padding_y;
+	int		i_padding_width;
+	int		i_padding_height;
+
+	VMUINT8		*p_layer_buf = NULL;
+
+	if ((i_layer_handle < 0) ||(p_char_str == NULL)) {
+		return;
+	}
+
+	p_ucs2_string = gb2312_to_ucs2(p_char_str);
+
+	p_layer_buf = vm_graphic_get_layer_buffer(i_layer_handle);
+	if (p_layer_buf == NULL) {
+		return;
+	}
+
+	vm_graphic_set_font((c_font & 7) >> 1);
+
+	i_padding_x = p_rect.s_x;
+	i_padding_y = p_rect.s_y;
+	i_padding_width = p_rect.s_width;
+	i_padding_height = p_rect.s_height;
+
+	i_str_x = i_padding_x + (i_padding_width - vm_graphic_get_string_width(p_ucs2_string))/2;
+	i_str_y = i_padding_y + (i_padding_height - vm_graphic_get_string_height(p_ucs2_string))/2;
+
+	set_actual_clip(i_padding_x, i_padding_y, 
+		i_padding_x+i_padding_width, i_padding_y + i_padding_height);
+	vm_graphic_textout(p_layer_buf, i_str_x, i_str_y,
+		p_ucs2_string, vm_wstrlen(p_ucs2_string), us_color);
+	reset_parent_clip();
+
+	vm_free(p_ucs2_string);
+}
+
 
 /*
 * name : draw_ucs2_text_by_hpoint
@@ -1066,13 +1095,13 @@ void draw_ucs2_text_by_widget(VMINT i_layer_handle, HWidget* p_widget, VMWCHAR* 
 	i_padding_width = p_widget->s_width - p_widget->s_padding_left - p_widget->s_padding_right;
 	i_padding_height = p_widget->s_height - p_widget->s_padding_bottom - p_widget->s_padding_top;
 
-	vm_graphic_set_clip(i_padding_x, i_padding_y, 
+	set_actual_clip(i_padding_x, i_padding_y, 
 		i_padding_x + i_padding_width, i_padding_y+i_padding_height);
 
 	vm_graphic_textout(p_layer_buf, i_padding_x, i_padding_y,
 		p_ucs2_string, vm_wstrlen(p_ucs2_string), p_widget->i_color);
 
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+	reset_parent_clip();
 }
 
 /*
@@ -1109,12 +1138,13 @@ void draw_ucs2_text_by_widget_oneline(VMINT i_layer_handle, HWidget* p_widget, V
 	i_str_x = i_padding_x;
 	i_str_y = i_padding_y + (i_padding_height - vm_graphic_get_string_height(p_ucs2_string))/2;
 
-	vm_graphic_set_clip(i_padding_x, i_padding_y, 
+	set_actual_clip(i_padding_x, i_padding_y, 
 		i_padding_x + i_padding_width, i_padding_y + i_padding_height);
 
 	vm_graphic_textout(p_layer_buf, i_str_x, i_str_y,
 		p_ucs2_string, vm_wstrlen(p_ucs2_string), p_widget->i_color);
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+
+	reset_parent_clip();
 }
 
 /*
@@ -1159,8 +1189,8 @@ void draw_ucs2_text_by_widget_more_line(VMINT i_layer_handle, HWidget* p_widget,
 	if (vm_graphic_get_character_width(p_ucs2_string[0])  > i_padding_width) {
 		return;
 	}
-//	vm_graphic_set_clip(i_padding_x, i_padding_y, 
-//		i_padding_x + i_padding_width, i_padding_y + i_padding_height);
+	set_actual_clip(i_padding_x, i_padding_y, 
+		i_padding_x + i_padding_width, i_padding_y + i_padding_height);
 	while(1) {
 		if(vm_graphic_get_string_width(p_ucs2_remain_string) - vm_graphic_get_string_width(p_ucs2_line_string) > i_padding_width) {
 			p_ucs2_line_string--;
@@ -1184,7 +1214,7 @@ void draw_ucs2_text_by_widget_more_line(VMINT i_layer_handle, HWidget* p_widget,
 		}
 		p_ucs2_line_string++;
 	}
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+	reset_parent_clip();
 }
 
 /*
@@ -1222,11 +1252,46 @@ void draw_ucs2_text_by_widget_center(VMINT i_layer_handle, HWidget* p_widget, VM
 	i_str_x = i_padding_x + (i_padding_width - vm_graphic_get_string_width(p_ucs2_string))/2;
 	i_str_y = i_padding_y + (i_padding_height - vm_graphic_get_string_height(p_ucs2_string))/2;
 
-	vm_graphic_set_clip(i_padding_x, i_padding_y, 
+	set_actual_clip(i_padding_x, i_padding_y, 
 		i_padding_x+i_padding_width, i_padding_y + i_padding_height);
 	vm_graphic_textout(p_layer_buf, i_str_x, i_str_y,
 		p_ucs2_string, vm_wstrlen(p_ucs2_string), p_widget->i_color);
-	vm_graphic_set_clip(0, 0, vm_graphic_get_screen_width(), vm_graphic_get_screen_height());
+	reset_parent_clip();
+}
+
+/*
+* name : set_actual_clip
+* description : set the actual clip 
+*/
+void set_actual_clip(VMINT i_left_x1, VMINT i_top_y1, VMINT i_right_x2, VMINT i_bottom_y2) {
+	VMINT i_parent_left_x1 = window->cur_clip_rect.s_x;
+	VMINT i_parent_top_y1 = window->cur_clip_rect.s_y;
+	VMINT i_parent_right_x2 = window->cur_clip_rect.s_x + window->cur_clip_rect.s_width;
+	VMINT i_parent_bottom_y2 = window->cur_clip_rect.s_y + window->cur_clip_rect.s_height;
+
+	if ( (i_left_x1 >= i_parent_right_x2) || (i_right_x2 <= i_parent_left_x1) 
+		|| (i_top_y1 >= i_parent_bottom_y2) || (i_bottom_y2 <= i_parent_top_y1)) {
+		vm_graphic_set_clip(0, 0, 0, 0);
+		return;
+	}
+
+	vm_graphic_set_clip( (i_left_x1 >= i_parent_left_x1) ? (i_left_x1) : (i_parent_left_x1),
+		( (i_top_y1 >= i_parent_top_y1) ? (i_top_y1) : (i_parent_top_y1) ),
+		( (i_right_x2 <= i_parent_right_x2) ? (i_right_x2) : (i_parent_right_x2) ),
+		( (i_bottom_y2 <= i_parent_bottom_y2) ? (i_bottom_y2) : (i_parent_bottom_y2) ) );
+}
+
+/*
+* name : reset_parent_clip
+* description : reset to the parent clip
+*/
+void reset_parent_clip() {
+	VMINT i_parent_left_x1 = window->cur_clip_rect.s_x;
+	VMINT i_parent_top_y1 = window->cur_clip_rect.s_y;
+	VMINT i_parent_right_x2 = window->cur_clip_rect.s_x + window->cur_clip_rect.s_width;
+	VMINT i_parent_bottom_y2 = window->cur_clip_rect.s_y + window->cur_clip_rect.s_height;
+
+	vm_graphic_set_clip( i_parent_left_x1, i_parent_top_y1, i_parent_right_x2, i_parent_bottom_y2);
 }
 
 /*
@@ -1240,20 +1305,13 @@ void get_gb2312_width_and_height(VMINT8* p_gb2312_string, VMINT *i_width, VMINT 
 	VMINT i_cur_height = 0;
 	VMWCHAR* p_string_point = NULL;
 
-	int			i_ucs2_max_len;
 	VMWCHAR		*p_ucs2_string;
 
 	if (p_gb2312_string == NULL) {
 		return;
 	}
 
-	i_ucs2_max_len = strlen(p_gb2312_string) + 1;
-	p_ucs2_string = (VMWCHAR *)vm_malloc(i_ucs2_max_len * sizeof(VMWCHAR));
-	if (p_ucs2_string == NULL) {
-		return;
-	}
-
-	vm_gb2312_to_ucs2(p_ucs2_string, i_ucs2_max_len * 2, p_gb2312_string);
+	p_ucs2_string = gb2312_to_ucs2(p_gb2312_string);
 
 	*i_width = 0;
 	*i_height = 0;
@@ -1283,6 +1341,7 @@ void get_gb2312_width_and_height(VMINT8* p_gb2312_string, VMINT *i_width, VMINT 
 		}
 		p_string_point++;
 	}
+	vm_free(p_ucs2_string);
 
 }
 
@@ -1301,5 +1360,4 @@ void print_string_state(VMWCHAR* p_ucs2_string)
 		printf("%x, ",p_ucs2_string[i]);
 	printf("\n");
 }
-
 

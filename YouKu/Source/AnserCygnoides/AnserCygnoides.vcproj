@@ -252,10 +252,6 @@
 				RelativePath=".\user.c"
 				>
 			</File>
-			<File
-				RelativePath=".\videoitem.c"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Common"
@@ -304,6 +300,14 @@
 				RelativePath="..\Common\tools.h"
 				>
 			</File>
+			<File
+				RelativePath="..\Common\videoitem.c"
+				>
+			</File>
+			<File
+				RelativePath="..\Common\videoitem.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -339,6 +343,14 @@
 			</File>
 			<File
 				RelativePath="..\WidgetLayer\hcontainer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\HHorizontalLayout.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\HHorizontalLayout.h"
 				>
 			</File>
 			<File
@@ -414,6 +426,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\WidgetLayer\HVerticalLayout.c"
+				>
+			</File>
+			<File
+				RelativePath="..\WidgetLayer\HVerticalLayout.h"
+				>
+			</File>
+			<File
 				RelativePath="..\WidgetLayer\hwidget.c"
 				>
 			</File>
@@ -450,15 +470,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Layout.h"
+				>
+			</File>
+			<File
 				RelativePath=".\mainpage.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Prompt.h"
-				>
-			</File>
-			<File
-				RelativePath=".\videoitem.h"
 				>
 			</File>
 		</Filter>

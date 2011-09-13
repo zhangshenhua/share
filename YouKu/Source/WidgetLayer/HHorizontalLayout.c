@@ -41,9 +41,9 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 	p_widget = (HWidget*)(p_node->pv_data);
 
 	s_start_x = p_widget->s_top_x;
-	s_sum_x  = p_widget->s_top_x + p_widget->s_width;
+	s_sum_x  = p_widget->s_top_x + p_widget->p_widget_ops->get_width(p_widget);
 	s_sum_y = p_widget->s_top_y;
-	s_line_height = p_widget->s_height;
+	s_line_height = p_widget->p_widget_ops->get_height(p_widget);
 
 	// save returning value
 	if (NULL != ret_p_rect)
@@ -56,7 +56,7 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 	for(p_node = p_widget_list->p_next->p_next; p_node!= p_widget_list; p_node = p_node->p_next)
 	{
 		p_widget = (HWidget*)(p_node->pv_data);
-		s_sum_x = s_sum_x + st_gap.s_gap_x + p_widget->s_width;
+		s_sum_x = s_sum_x + st_gap.s_gap_x + p_widget->p_widget_ops->get_width(p_widget);
 		
 		/* adjust widgets from the second based the first */
 		/* put widgets in one line */
@@ -66,7 +66,7 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 			p_widget->s_top_y = s_sum_y;
 			
 			/* save the max widget height in one line */
-			if (p_widget->s_height > s_line_height)
+			if (p_widget->p_widget_ops->get_height(p_widget) > s_line_height)
 			{
 				s_line_height = p_widget->s_height;
 			}
@@ -85,9 +85,9 @@ static void validate_layout(HLayout* p_layout, HRect* ret_p_rect)
 			s_line_height = 0;
 			
 			// save height to return 
-			if (p_widget->s_top_y > s_temp_height)
+			if (s_sum_y > s_temp_height)
 			{
-				s_temp_height = p_widget->s_top_y;
+				s_temp_height = s_sum_y;
 			}
 
 			if (s_sum_y <= s_max_height)
@@ -121,19 +121,22 @@ HHorizontalLayout* hhorizontal_layout_new()
 	hlayout_init(&(p_layout->st_layout_base));
 
 	p_layout->st_layout_base.p_ops->validate_layout = validate_layout;
+	p_layout->st_layout_base.p_ops->delete_layout = hhorizontal_layout_delete;
 
 	return p_layout;
 
 }
 
-void hhorizontal_layout_delete(HHorizontalLayout* p_hori_layout)
+void hhorizontal_layout_delete(HLayout* p_hori_layout)
 {
-	if (NULL != p_hori_layout)
+	HHorizontalLayout* p_hori = (HHorizontalLayout*)p_hori_layout;
+
+	if (NULL != p_hori)
 	{
-		hlayout_delete(&(p_hori_layout->st_layout_base));
+		hlayout_delete(&(p_hori->st_layout_base));
 	}
 
-	vm_free(p_hori_layout);
+	vm_free(p_hori);
 }
 
 /*********************EOF******************************/

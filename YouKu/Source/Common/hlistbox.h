@@ -15,27 +15,16 @@
 #include "defines.h"
 #include "hwidget.h"
 #include "hcontainer.h"
+#include "tools.h"
+
+typedef HWidget		Item;
+typedef HContainer*  P_ListBox;
 
 
+extern P_ListBox ListBox_new( A_Rect* p_rect );
+extern void ListBox_delete( P_ListBox p_it );
 
-
-typedef struct ListBox_  ListBox;
-
-struct ListBox_ {
-	//base
-	HContainer* p_HContainer;
-	
-	/*private*/
-	Rect		last_rect;
-	//public:
-
-};
-
-
-extern ListBox* ListBox_new( Rect rect );
-extern void ListBox_delete( ListBox* p_it );
-
-extern void add_item_to_ListBox(ListBox* p_listbox, Item* p_item);
+extern void add_item_to_ListBox(P_ListBox p_listbox, Item* p_item);
 
 
 

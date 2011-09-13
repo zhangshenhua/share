@@ -26,19 +26,20 @@ static void create_layout_ops();
 
 static void add_widget(HLayout* p_layout, HWidget* p_widget)
 {
-	hlist_append(p_layout->p_widget_list, p_widget, NULL);
-	// ?
-	//p_widget->p_parent = p_layout->p_widget_list;
+	//hlist_append(p_layout->p_widget_list, p_widget, NULL);
+	vector_append_data(p_layout->p_vector, p_widget)
 }
 
 static void remove_widget(HLayout* p_layout, HWidget* p_widget)
 {
-	hlist_remove(p_layout->p_widget_list, p_widget);
+	//hlist_remove(p_layout->p_widget_list, p_widget);
+	vector_remove_data(p_layout->p_vector, p_widget);
 }
 
 static void clear_layout(HLayout* p_layout)
 {
-	hlist_clear(p_layout->p_widget_list);
+	//hlist_clear(p_layout->p_widget_list);
+	vector_clear(p_layout->p_vector);
 }
 
 static void set_max_width(HLayout* p_layout, short s_width)
@@ -72,11 +73,15 @@ static LayoutGap get_gap(HLayout* p_layout)
 	return p_layout->st_gap;
 }
 
-static hlist_node_t* get_widget_list(HLayout* p_layout)
+static Vector* get_widget_list(HLayout* p_layout)
 {
-	return p_layout->p_widget_list;
+	return p_layout->p_vector;
 }
 
+static void destroy_widget(HWidget* p_widget)
+{
+	p_widget->p_widget_ops->destroy(p_widget);
+}
 
 void hlayout_init(HLayout* p_layout)
 {
@@ -86,9 +91,9 @@ void hlayout_init(HLayout* p_layout)
 	p_layout->st_gap.s_gap_x = HLAYOUT_GAP;
 	p_layout->st_gap.s_gap_y = HLAYOUT_GAP;
 
-	if (NULL == p_layout->p_widget_list)
+	if (NULL == p_layout->p_vector)
 	{
-		p_layout->p_widget_list = hlist_new();
+		p_layout->p_vector = vector_new(destroy_widget);
 	}
 
 	create_layout_ops();
@@ -100,9 +105,22 @@ void hlayout_delete(HLayout* p_layout)
 {
 	if (NULL != p_layout)
 	{
-		hlist_destroy(&p_layout->p_widget_list);
-	}
+		/*hlist_node_t* p_node;
+		HWidget* p_widget;
 
+		hlist_for_each(p_node, p_layout->p_widget_list)
+		{
+			p_widget = (HWidget*)p_node->pv_data;	
+			p_widget->p_widget_ops->destroy(p_widget);
+			p_node->pv_data = NULL;
+		}
+
+		hlist_destroy(&p_layout->p_widget_list);
+		*/
+
+		vector_delete(p_layout->p_vector);
+
+	}
 }
 
 void create_layout_ops()
@@ -122,6 +140,7 @@ void create_layout_ops()
 		gp_layout_ops->get_gap = get_gap;
 		gp_layout_ops->get_widget_list = get_widget_list;
 		gp_layout_ops->validate_layout = NULL;
+		gp_layout_ops->delete_layout = NULL;
 	}
 }
 /*********************EOF******************************/

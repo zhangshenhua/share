@@ -27,8 +27,10 @@ static const CString c_cstr_tp_btn_img		= "";
 static const CString c_cstr_myk_btn_img		= "";
 static const CString c_cstr_qut_btn_img		= "";
 
-MainPage* MainPage_new()
+MainPage* MainPage_new(   )
 {
+
+
 	MainPage* p_mainpage = checked_malloc(sizeof( MainPage ));
 	p_mainpage->p_container_buttongroup = hcontainer_new();
 	HContainer* p_cntn_button_group = p_mainpage->p_container_buttongroup;
@@ -85,6 +87,7 @@ MainPage* MainPage_new()
 	p_mainpage->base.fire_visible = fire_visible;
 	p_mainpage->base.fire_hiden   = fire_hiden;
 	p_mainpage->base.destroy      = destroy;
+
 	return p_mainpage;
 
 }
@@ -112,11 +115,19 @@ static void destroy(Page *p_this)
 	vm_free(p_this);
 }
 
+void OpenPage(Page* p_it)
+{
+	window->get_page_switch_contrller()->load_new_page()
+}
+
 static void recommend(HWidget *p_source, HEvent *p_evt, void *p_param)
 {
 	OpenPage( recommendpage_new() );
 
 }
+
+
+
 
 static void category(HWidget *p_source, HEvent *p_evt, void *p_param)
 {

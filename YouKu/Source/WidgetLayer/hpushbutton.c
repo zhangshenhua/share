@@ -35,8 +35,11 @@ static void press_pen(HWidget *p_par, short s_x, short s_y){
 
 /*** release_pen***/
 static void release_pen(HWidget *p_par, short s_x, short s_y){
+	HEvent				h_event = {0};
+
 	if (p_par->action_performed){
-		p_par->action_performed(p_par, NULL);
+		h_event.i_event_type = VM_PEN_EVENT_RELEASE;
+		p_par->action_performed(p_par, (HEvent *)&h_event, NULL);
 	}
 }
 /*** end release pen***/

@@ -48,17 +48,18 @@ static void press_pen(HWidget *p_par, short s_x, short s_y){
 /*** release_pen***/
 static void release_pen(HWidget *p_par, short s_x, short s_y){
 	HStatusBar			*p_Me = (HStatusBar *)p_par;
-
+	HEvent				h_event = {0};
 	if (p_par->action_performed){
+		h_event.i_event_type = VM_PEN_EVENT_RELEASE;
 		if (p_Me->pc_left_str){
 			if (p_par->s_padding_left + p_Me->s_left_len > s_x && (0 < s_x)){
-				p_par->action_performed(p_par, (void *)STATUSBAR_LEFT);
+				p_par->action_performed(p_par, (HEvent *)&h_event, (void *)STATUSBAR_LEFT);
 				return;
 			}
 		}
 		if (p_Me->pc_right_str){
 			if ((SCREEN_WIDTH - p_par->s_padding_right - p_Me->s_right_len < s_x) && (s_x < SCREEN_WIDTH)){
-				p_par->action_performed(p_par, (void *)STATUSBAR_RIGHT);
+				p_par->action_performed(p_par, (HEvent *)&h_event, (void *)STATUSBAR_RIGHT);
 				return;
 			}
 		}

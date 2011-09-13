@@ -18,6 +18,8 @@
 
 #include "../Common/hlist.h"
 
+#include "vector.h"
+
 typedef struct _HLayout HLayout;
 typedef struct _HLayoutOperation HLayoutOperation;
 typedef struct _Layout_Gap LayoutGap;
@@ -61,7 +63,8 @@ struct _HLayout
 	LayoutGap st_gap;
 
 	/* list to save all the added widgets */
-	hlist_node_t* p_widget_list;
+	//hlist_node_t* p_widget_list;
+	Vector* p_vector;
 
 	HLayoutOperation* p_ops;
 };
@@ -176,7 +179,7 @@ struct _HLayoutOperation
 	*
 	* Return:			
 	*---------------------------------------------------------------------*/
-	hlist_node_t* (*get_widget_list)(HLayout* p_layout);
+	Vector* (*get_widget_list)(HLayout* p_layout);
 
 	/*---------------------------------
 	* Function Name:	layout_validate
@@ -188,6 +191,17 @@ struct _HLayoutOperation
 	* Return:			void
 	*---------------------------------------------------------------------*/
 	void (*validate_layout)(HLayout* p_layout, HRect* ret_p_rect);
+
+	/*---------------------------------
+	* Function Name:	layout_delete
+	*
+	* Description:		
+	*
+	* Parameters:		
+	*
+	* Return:			void
+	*---------------------------------------------------------------------*/
+	void (*delete_layout)(HLayout* p_layout);
 };
 
 #endif

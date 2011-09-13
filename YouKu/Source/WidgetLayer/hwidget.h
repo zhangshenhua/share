@@ -8,6 +8,7 @@
 #define _HWIDGET_H_
 
 #include "hplatform.h"
+#include "vector.h"
 
 #define H_DEBUG
 
@@ -81,7 +82,21 @@ typedef enum _HClass {
 } HClass;
 
 
-/* Base class */
+/* widget border  */
+typedef struct _HBorder {
+	short s_type;
+	short s_default_color;
+	short s_hover_color;
+	unsigned char uc_left_border;
+	unsigned char uc_right_border;
+	unsigned char uc_top_border;
+	unsigned char uc_bottom_border;
+};
+
+
+
+
+/*   class */
 struct _HWidget {
 
 	/*********************** private member*********************************/	
@@ -145,6 +160,9 @@ struct _HWidget {
 
 	/*operation*/
 	HWidgetOperation *p_widget_ops;
+
+	/*user data*/
+	void *pv_user_data;
 
 	/*event action performed callback*/
 	void (*action_performed)(HWidget *p_source, HEvent *p_evt, void *p_param);
@@ -358,5 +376,8 @@ enum {
 	ATTR_CONTAINER_CALC_FLAG,
 };
 
+Vector * hwidget_new_vector();
+
+HRect calc_intersect_clip(HRect *r1, HRect *r2);
 
 #endif

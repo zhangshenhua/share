@@ -36,7 +36,7 @@ struct _HTextAreaOperation {
 	Function Name: get_text
 	Description: Callback that get text of HTextArea.
 	Para(in) p_htextarea: Pointer of HTextArea self.
-	Return (VMWSTR): Pointer of HTextArea's text.
+	Return (VMWSTR): Pointer of HTextArea's text. You must free the memory by your self.
 	*/
 	char* (*get_text)(HTextArea *p_textarea);
 
@@ -114,7 +114,7 @@ struct _HTextArea {
 
 	/************************* private member **********************/
 	/* HEditor text */
-	char *pc_text;
+	VMWSTR w_text;
 
 	char c_text_change_flag;
 

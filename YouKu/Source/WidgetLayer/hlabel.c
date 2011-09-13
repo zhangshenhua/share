@@ -36,9 +36,9 @@ static void press_pen(HWidget *p_par, short s_x, short s_y){
 
 /*** release_pen***/
 static void release_pen(HWidget *p_par, short s_x, short s_y){
-	if (p_par->action_performed){
+/*	if (p_par->action_performed){
 		p_par->action_performed(p_par, NULL);
-	}
+	}*/
 }
 /*** end release pen***/
 
@@ -83,6 +83,7 @@ static void set_label_row_width_count(HLabel *p_Me){
 		if ('\n' == *pc_tp){
 			i_ret++;
 		}
+		pc_tp++;
 	}
 	i_wh = p_par->p_widget_ops->get_max_width(p_par) - p_par->s_padding_left - p_par->s_padding_right;
 	if (!i_ret){

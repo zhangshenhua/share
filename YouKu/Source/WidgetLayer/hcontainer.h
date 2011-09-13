@@ -10,8 +10,8 @@
 
 #include "hwidget.h"
 #include "himage.h"
-#include "../Common/hlist.h"
 #include "HLayout.h"
+#include "vector.h"
 
 typedef struct _HContainer HContainer;
 typedef struct _HContainerOperation HContainerOperation;
@@ -57,8 +57,8 @@ struct _HContainer {
 	/*a translate coordinate of y*/
 	short s_translate_y;
 
-	/* children nodes */
-	hlist_node_t *p_children;
+	/* children widgets */
+	Vector *p_children;
 
 	/*background image*/
 	HImage *p_bgimg;

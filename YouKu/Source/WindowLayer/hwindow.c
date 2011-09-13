@@ -25,7 +25,9 @@ HWindow *window;
 
 static void hwindow_paint();
 static HPlane * hwindow_get_default_plane();
-static void hwindow_destroy();
+
+static void hwindow_restore_layers();
+static void hwindow_destroy_layers();
 
 /*user define the enter function*/
 extern void app_main();
@@ -53,6 +55,7 @@ static void sys_event_handle(VMINT message, VMINT param)
 
 		case VM_MSG_ACTIVE:
 			vm_log_debug("msg active");
+			hwindow_restore_layers();
 			hwindow_paint();
 			break;
 
@@ -63,11 +66,12 @@ static void sys_event_handle(VMINT message, VMINT param)
 
 		case VM_MSG_INACTIVE:
 			vm_log_debug("msg inactive");
+			hwindow_destroy_layers();
 			break;
 
 		case VM_MSG_QUIT:
 			vm_log_debug("msg quit");
-			hwindow_destroy();
+			hwindow_exit();
 			break;
 	}
 }
@@ -157,6 +161,49 @@ static void hwindow_repaint()
 	hwindow_paint();
 }
 
+
+
+static int hwindow_create_layer(int i_idx, int i_color)
+{
+	int i_layer = -1;
+	switch (i_idx) {
+		case 0:
+		case 1:
+			i_layer = vm_graphic_create_layer(0, 0, window->s_screen_width, window->s_screen_height, i_color);
+			break;
+
+		case 2:
+			//not support yet.
+			break;
+	}
+	return i_layer;
+}
+
+static void hwindow_restore_layers()
+{
+	int i_idx;
+	HPlane *p_plane;
+	for (i_idx = 0; i_idx < sizeof(window->p_planes)/sizeof(HPlane *); i_idx ++) {
+		p_plane = window->p_planes[i_idx];
+		if (p_plane && p_plane->i_handle == -1) {
+			window->p_planes[i_idx]->i_handle = hwindow_create_layer(i_idx, window->p_planes[i_idx]->s_transparent_color);
+		}
+	}
+}
+
+static void hwindow_destroy_layers()
+{
+	int i_idx;
+	HPlane *p_plane;
+	for (i_idx = 0; i_idx < sizeof(window->p_planes)/sizeof(HPlane *); i_idx ++) {
+		p_plane = window->p_planes[i_idx];
+		if (p_plane && p_plane->i_handle != -1) {
+			vm_graphic_delete_layer(p_plane->i_handle);
+			p_plane->i_handle = -1;
+		}
+	}
+}
+
 static HPlane * hwindow_get_default_plane()
 {
 	HPlane *p_plane;
@@ -164,7 +211,7 @@ static HPlane * hwindow_get_default_plane()
 		p_plane = hplane_new();
 		((HWidget *)p_plane)->p_widget_ops->set_enable_bgcolor((HWidget *)p_plane, 1);
 		((HWidget *)p_plane)->p_widget_ops->set_bgcolor((HWidget *)p_plane, VM_COLOR_WHITE);
-		p_plane->i_handle = vm_graphic_create_layer(0, 0, vm_graphic_get_screen_width(),vm_graphic_get_screen_height(),-1);
+		p_plane->i_handle = hwindow_create_layer(0, -1);
 		p_plane->s_plane_index = 0;
 		window->p_planes[0] = p_plane;
 	}
@@ -177,7 +224,7 @@ static HPlane * hwindow_get_popupmenu_plane()
 	if (window->p_planes[1] == NULL) {
 		p_plane = hplane_new();
 		p_plane->s_transparent_color = 0xabcd;
-		p_plane->i_handle = vm_graphic_create_layer(0, 0, vm_graphic_get_screen_width(),vm_graphic_get_screen_height(),p_plane->s_transparent_color);
+		p_plane->i_handle = hwindow_create_layer(1, p_plane->s_transparent_color);
 		p_plane->s_plane_index = 1;
 		window->p_planes[1] = p_plane;
 	}
@@ -189,14 +236,12 @@ static HPlane * hwindow_get_glass_plane()
 	HPlane *p_plane;
 	if (window->p_planes[2] == NULL) {
 		p_plane = hplane_new();
+		p_plane->s_transparent_color = 0xabcd;
+		p_plane->i_handle = hwindow_create_layer(2, p_plane->s_transparent_color);
 		p_plane->s_plane_index = 2;
 		window->p_planes[2] = p_plane;
-	} else {
-		p_plane = window->p_planes[2];
 	}
-	//visible the popup menu plane
-	((HWidget *)p_plane)->p_widget_ops->set_visible((HWidget *)p_plane, 1);
-	return p_plane;
+	return window->p_planes[2];
 }
 
 static PageSwitchController * hwindow_get_page_switch_contrller()
@@ -207,7 +252,7 @@ static PageSwitchController * hwindow_get_page_switch_contrller()
 	return window->p_page_switch_contrller;
 }
 
-static void hwindow_destroy()
+void hwindow_exit()
 {
 	int i_idx;
 	HPlane *p_plane;
@@ -225,6 +270,8 @@ static void hwindow_destroy()
 	hcheckbox_ops_delete();
 	htextinput_ops_delete();
 	htextarea_ops_delete();
+
+	vm_exit_app();
 }
 
 

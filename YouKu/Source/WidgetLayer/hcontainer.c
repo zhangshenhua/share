@@ -10,6 +10,8 @@
 #include "string.h"
 #include "vmgraph.h"
 #include "../WindowLayer/hwindow.h"
+#include "hlookandfeel.h"
+
 
 /*global instance*/
 static HWidgetOperation *gp_hwidget_ops;
@@ -47,7 +49,7 @@ void hcontainer_init(HContainer *p_container)
 	//container enable drag
 //	p_container->base.p_widget_ops->set_enable_drag(&p_container->base, 1);
 	if (p_container->p_children == NULL)
-		p_container->p_children = hlist_new();
+		p_container->p_children = hwidget_new_vector();
 	//by default, container disable focus
 	p_widget->p_widget_ops->set_enable_focus(p_widget, 0);
 }
@@ -64,7 +66,7 @@ void hcontainer_operation_init(HContainerOperation *p_container_ops)
 
 static void hcontainer_add_widget(HContainer *p_container, HWidget *p_widget)
 {
-	hlist_append(p_container->p_children, p_widget, NULL);
+	vector_append_data(p_container->p_children, p_widget);
 	p_widget->p_parent = p_container;
 }
 
@@ -74,30 +76,16 @@ static void hcontainer_add_widget(HContainer *p_container, HWidget *p_widget)
 
 static void hcontainer_remove_widget(HContainer *p_container, HWidget *p_widget)
 {
-	hlist_node_t *pn;
-	HWidget *pw;
-	hlist_for_each(pn, p_container->p_children) {
-		pw = (HWidget *)pn->pv_data;
-		if (pw == p_widget) {
-			p_widget->p_widget_ops->destroy(p_widget);
-			pn->p_prev->p_next = pn->p_next;
-			pn->p_next->p_prev = pn->p_prev;
-			vm_free(pn);
-			break;
-		}
-	}
+	vector_remove_data(p_container->p_children, p_widget);
 }
 
-// static void delete_widget(HContainer *p_container, HWidget *p_widget)
-// {
-// 	hlist_remove(p_container->p_children, p_widget);
-// }
 
 static HWidget* hcontainer_child_at(HContainer *p_container, short s_x, short s_y)
 {
 	HWidget *pw;
-	hlist_node_t *pn;
-	hlist_for_each(pn, p_container->p_children) {
+	VectorNode *pn;
+	//plist = p_container->p_layout ? p_container->p_layout->p_widget_list : p_container->p_children;
+	vector_for_each(pn, p_container->p_children) {
 		pw = (HWidget *)pn->pv_data;
 		if (pw->s_top_x <= s_x && pw->s_top_y <= s_y && 
 			pw->s_top_x + pw->s_width >= s_x && pw->s_top_y + pw->s_height >= s_y) {
@@ -110,13 +98,7 @@ static HWidget* hcontainer_child_at(HContainer *p_container, short s_x, short s_
 static void hcontainer_remove_all(HContainer *p_container)
 {
 	HWidget *pw;
-	hlist_node_t *pn;
-	hlist_for_each(pn, p_container->p_children) {
-		pw = (HWidget *)pn->pv_data;
-		pw->p_widget_ops->destroy(pw);
-		pn->pv_data = NULL;
-	}
-	hlist_clear(p_container->p_children);
+	vector_clear(p_container->p_children);
 	pw = (HWidget *)p_container;
 	pw_clear_attr(pw, ATTR_CONTAINER_CALC_FLAG);
 }
@@ -157,7 +139,7 @@ static void hcontainer_scroll(HContainer *p_container, short s_dx, short s_dy)
 static HRect calc_children_preffered_size(HContainer *pc)
 {
 	HWidget *pw;
-	hlist_node_t *pn;
+	VectorNode *pn;
 	HRect rect = {0};
 	if (pc->p_layout) {
 		pw = (HWidget *)pc;
@@ -165,7 +147,7 @@ static HRect calc_children_preffered_size(HContainer *pc)
 		pc->p_layout->s_max_height = pw->p_widget_ops->get_max_height(pw);
 		pc->p_layout->p_ops->validate_layout(pc->p_layout, &rect);
 	} else {
-		hlist_for_each(pn, pc->p_children) {
+		vector_for_each(pn, pc->p_children) {
 			pw = (HWidget *)pn->pv_data;
 			pw->p_widget_ops->get_width(pw);
 			pw->p_widget_ops->get_height(pw);
@@ -233,6 +215,21 @@ static void hcontainer_set_bgimg(HContainer *p_container, HImage *p_img)
 
 static void hcontainer_set_layout(HContainer *p_container, HLayout *p_layout)
 {
+	VectorNode *p_pos;
+	HWidget *p_widget;
+	if (p_layout) {
+		if (!p_container->p_layout)
+			vector_delete(p_container->p_children);
+		//TODO: set layout's widgets parent
+		p_container->p_children = p_layout->p_ops->get_widget_list(p_layout);
+		vector_for_each(p_pos, p_container->p_children) {
+			p_widget = (HWidget *)p_pos->pv_data;
+			p_widget->p_parent = p_container;
+		}
+	} else {
+		if (p_container->p_layout)
+			p_container->p_children = hwidget_new_vector();
+	}
 	p_container->p_layout = p_layout;
 }
 
@@ -240,11 +237,13 @@ static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, 
 {
 	HWidget *pw;
 	HContainer *pc;
-	hlist_node_t *pn;
+	VectorNode *pn;
 	short s_w;
 	short s_h;
 	short s_tmp_x;
 	short s_tmp_y;
+	HRect old_clip = window->cur_clip_rect;
+	HRect cur_clip;
 	pc = (HContainer *)p_widget;
 
 	//paint container self
@@ -253,7 +252,15 @@ static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, 
 	s_h = p_widget->p_widget_ops->get_max_height(p_widget) > p_widget->p_widget_ops->get_height(p_widget) ?
 		p_widget->s_height : p_widget->s_max_height;
 	//TODO: clip  the container rect(s_screen_x, s_screen_y, s_w, s_h)
-	vm_graphic_set_layer_clip(i_handle, s_screen_x, s_screen_y, s_screen_x + s_w, s_screen_y + s_h);
+	cur_clip.s_x = s_screen_x;
+	cur_clip.s_y = s_screen_y;
+	cur_clip.s_width = s_w;
+	cur_clip.s_height = s_h;
+	cur_clip = calc_intersect_clip(&window->cur_clip_rect, &cur_clip);
+	vm_graphic_set_layer_clip(i_handle, cur_clip.s_x, cur_clip.s_y, cur_clip.s_x + cur_clip.s_width, cur_clip.s_y + cur_clip.s_height);
+	//restore the container's clip
+	window->cur_clip_rect = cur_clip;
+
 	if (p_widget->p_widget_ops->is_enable_bgcolor(p_widget)) {
 		//TODO: fill the container rect(s_screen_x, s_screen_y, s_w, s_h) with bgcolor
 		vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handle), s_screen_x, s_screen_y, s_w, s_h, (VMINT16)p_widget->i_bgcolor, (VMINT16)p_widget->i_bgcolor);
@@ -262,7 +269,8 @@ static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, 
 	if (pc->p_bgimg)
 		pc->p_bgimg->p_oper->paint(pc->p_bgimg, i_handle, s_screen_x, s_screen_y);
 	//paint children
-	hlist_for_each(pn, pc->p_children) {
+//	plist = pc->p_layout ? pc->p_layout->p_widget_list : pc->p_children;
+	vector_for_each(pn, pc->p_children) {
 		pw = (HWidget *)pn->pv_data;
 		if (!pw->p_widget_ops->is_visible(pw))
 			continue;
@@ -272,6 +280,7 @@ static void hcontainer_paint(HWidget *p_widget, int i_handle, short s_screen_x, 
 			pw->p_widget_ops->paint(pw, i_handle, s_tmp_x, s_tmp_y);
 		}
 	}
+	window->cur_clip_rect = old_clip;
 }
 
 static void hcontainer_notify_size_changed(HWidget *p_widget)
@@ -296,9 +305,12 @@ static int hcontainer_can_scroll(HContainer *p_container)
 
 void hcontainer_delete(HContainer *p_container)
 {
-	hcontainer_remove_all(p_container);
-	vm_free(p_container->p_children);
-	vm_free(p_container);
+	//TODO: here delete layout
+	if (p_container->p_layout) {
+		p_container->p_layout->p_ops->delete_layout(p_container->p_layout);
+	} else {
+		vector_delete(p_container->p_children);
+	}
 }
 
 

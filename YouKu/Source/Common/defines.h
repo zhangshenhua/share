@@ -22,7 +22,5 @@ typedef char	bool;
 						   struct typename
 
 
-#define SCREEN_WIDTH    vm_graphic_get_screen_width()
-#define SCREEN_HEIGHT	vm_graphic_get_screen_height()
 
 #endif

@@ -13,7 +13,10 @@
 #include "hwidget.h"
 #include "hcontainer.h"
 #include "videoitem.h"
-#include "new"
+#include "new.h"
+#include "hlabel.h"
+#include "hpushbutton.h"
+#include "tools.h"
 
 static void callback_videoitem(HWidget *p_source, HEvent *p_evt, void *p_param);
 static void callback_videodetail(HWidget *p_source, HEvent *p_evt, void *p_param);
@@ -28,9 +31,14 @@ static void callback_videodetail(HWidget *p_source, HEvent *p_evt, void *p_param
 /* 7.返回指针							*/	
 
 
-VideoItem* VideoItem_new( VID vid, HImage* p_himg_video, char* cstr_title, float f_starlevel) {
+VideoItem* VideoItem_new( VID vid, P_Image p_himg_video, char* cstr_title, float f_starlevel) {
+#if 0
+
+
+	
 	/* 1.声明参与者					 */
 	/* 2.为参与者分配内存			 */
+
 
 	VideoItem   *		p_vitem_result		=	checked_malloc(sizeof(VideoItem));
 
@@ -41,9 +49,9 @@ VideoItem* VideoItem_new( VID vid, HImage* p_himg_video, char* cstr_title, float
 	p_vitem_result->p_base_container		=	hcontainer_new()		;
 
 	/* 3.设置坐标					 */
-	p_vitem_result->base.p_widget_ops->set_position		( p_vitem_result,		0, 0 );
-	p_vitem_result->base.p_widget_ops->set_width		( p_vitem_result,		VIDEO_ITEM_WIDTH  );
-	p_vitem_result->base.p_widget_ops->set_height		( p_vitem_result,		VIDEO_ITEM_HEIGHT );
+	p_vitem_result->p_base_container->base.p_widget_ops->set_position	( p_vitem_result,		0, 0 );
+	p_vitem_result->p_base_container->base.p_widget_ops->set_width		( p_vitem_result,		VIDEO_ITEM_WIDTH  );
+	p_vitem_result->p_base_container->base.p_widget_ops->set_height		( p_vitem_result,		VIDEO_ITEM_HEIGHT );
 
 	p_himg_videoimage->p_oper->set_position				( p_himg_videoimage,	VIDEO_IMAGE_LEFT,  VIDEO_IMAGE_TOP );
 	p_himg_videoimage->p_oper->set_size					( p_himg_videoimage,	VIDEO_IMAGE_WIDTH, VIDEO_IMAGE_HEIGHT);
@@ -76,7 +84,30 @@ VideoItem* VideoItem_new( VID vid, HImage* p_himg_video, char* cstr_title, float
 	p_vitem_result->p_base_container->p_container_ops->add_widget( p_vitem_result, p_himg_stars			);
 	p_vitem_result->p_base_container->p_container_ops->add_widget( p_vitem_result, p_hlabel_title		);
 	p_vitem_result->p_base_container->p_container_ops->add_widget( p_vitem_result, p_hpshbtn_detail		);
+
 	/* 7.返回指针							*/	
+#else
+	VideoItem   *		p_vitem_result		=	checked_malloc(sizeof(VideoItem));
+	p_vitem_result->p_base_container		=	hcontainer_new();
+	
+	p_vitem_result->p_base_container->p_container_ops->add_widget(
+		p_vitem_result->p_base_container,
+		set_widget_rect(p_himg_video, 
+						&Rect(VIDEO_IMAGE_LEFT, VIDEO_IMAGE_TOP, VIDEO_IMAGE_WIDTH, VIDEO_IMAGE_HEIGHT));
+		
+		
+
+	p_vitem_result->p_base_container->p_container_ops->add_widget(
+		p_vitem_result->p_base_container,
+		make_starlevel( f_starlevel ),
+		);
+
+
+	
+
+#endif
+
+	
 	return	p_vitem_result;
 
 }

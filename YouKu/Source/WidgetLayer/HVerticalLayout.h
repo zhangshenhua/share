@@ -26,7 +26,7 @@ typedef struct _HVerticalLayout
 
 HVerticalLayout* hvertical_layout_new();
 
-void hvertical_layout_delete(HVerticalLayout* p_vert_layout);
+void hvertical_layout_delete(HLayout* p_vert_layout);
 
 #endif
 /*********************EOF******************************/

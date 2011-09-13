@@ -95,9 +95,6 @@ static hcheckbox_change_state(HCheckBox *p_checkbox)
 		p_checkbox->c_check_state = HCHECKBOX_UNSELECTED;
 
 	p_checkbox->base.p_widget_ops->repaint((HWidget *)p_checkbox);
-
-	if (p_checkbox->base.action_performed)
-		p_checkbox->base.action_performed((HWidget *)p_checkbox, NULL);
 }
 
 /***************** Base class Callback OP *****************/
@@ -106,21 +103,25 @@ static hcheckbox_change_state(HCheckBox *p_checkbox)
 static void hcheckbox_pen_press(HWidget *p_widget, short s_x, short s_y)
 {
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
+	HPenEvent pen_event;
 
 #ifdef H_DEBUG
 	vm_log_debug("hcheckbox_pen_press");
 #endif
 
-	if(!p_checkbox->base.p_widget_ops->is_enable_focus(p_widget))
-		return;
-
-	p_checkbox->base.p_widget_ops->set_focus(p_widget, 1);
+	/* call pen press action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_TAP;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_checkbox->base.action_performed)
+		p_checkbox->base.action_performed((HWidget *)p_checkbox, (HEvent *)&pen_event, NULL);
 }
 
 /*pen release event callback*/
 static void hcheckbox_pen_release(HWidget *p_widget, short s_x, short s_y)
 {
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
+	HPenEvent pen_event;
 
 #ifdef H_DEBUG
 	vm_log_debug("hcheckbox_pen_release");
@@ -131,12 +132,20 @@ static void hcheckbox_pen_release(HWidget *p_widget, short s_x, short s_y)
 
 	if (p_checkbox->base.p_widget_ops->has_focus(p_widget)) 
 		hcheckbox_change_state(p_checkbox);
+
+	/* call pen release action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_RELEASE;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_checkbox->base.action_performed)
+		p_checkbox->base.action_performed((HWidget *)p_checkbox, (HEvent *)&pen_event, NULL);
 }
 
 /*keyboard press event callback*/
 static void hcheckbox_key_press(HWidget *p_widget, int keycode)
 {
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
+	HKeyEvent key_event;
 
 #ifdef H_DEBUG
 	vm_log_debug("hcheckbox_key_press");
@@ -147,6 +156,12 @@ static void hcheckbox_key_press(HWidget *p_widget, int keycode)
 
 	if (VM_KEY_OK == keycode && p_checkbox->base.p_widget_ops->has_focus(p_widget))
 		hcheckbox_change_state(p_checkbox);
+
+	/* call key press action callback function */
+	key_event.base.i_event_type = VM_KEY_DOWN;
+	key_event.i_keycode = keycode;
+	if (p_checkbox->base.action_performed)
+		p_checkbox->base.action_performed((HWidget *)p_checkbox, (HEvent *)&key_event, NULL);
 }
 
 /*whether the wiHCheckBoxdget is a container*/
@@ -184,7 +199,6 @@ static short hcheckbox_get_prefered_width(HWidget *p_widget)
 	VMWSTR w_str;
 	int i_len = 0;
 	int i_prefered_width = 0;
-	char c_font;
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
 
 #ifdef H_DEBUG
@@ -197,9 +211,8 @@ static short hcheckbox_get_prefered_width(HWidget *p_widget)
 	i_len = strlen(p_checkbox->pc_label);
 	w_str = (VMWSTR)vm_malloc((i_len + 1)* sizeof(VMWCHAR));
 	vm_gb2312_to_ucs2(w_str, (i_len + 1) * sizeof(VMWCHAR), p_checkbox->pc_label);
-
-	c_font = (p_checkbox->base.c_font & 7) >> 1; 
-	vm_graphic_set_font(c_font);
+ 
+	vm_graphic_set_font(((p_checkbox->base.c_font) & 7) >> 1);
 	i_prefered_width = vm_graphic_get_string_width(w_str) + vm_graphic_get_string_height(w_str)
 		+ p_checkbox->base.s_padding_left + p_checkbox->base.s_padding_right + 4;
 
@@ -217,7 +230,6 @@ static short hcheckbox_get_prefered_height(HWidget *p_widget)
 {
 	int i_prefered_height;
 	int i_font_height;
-	char c_font;
 	HCheckBox *p_checkbox = (HCheckBox *)p_widget;
 	i_prefered_height = 0;
 
@@ -227,13 +239,11 @@ static short hcheckbox_get_prefered_height(HWidget *p_widget)
 
 	if (p_checkbox->base.s_prefered_height)
 		return p_checkbox->base.s_prefered_height;
-
-	c_font = (p_checkbox->base.c_font & 7) >> 1; 
-	vm_graphic_set_font(c_font);
+ 
+	vm_graphic_set_font((p_checkbox->base.c_font & 7) >> 1);
 	i_font_height = vm_graphic_get_character_height();
 
 	i_prefered_height = i_font_height + p_checkbox->base.s_padding_top + p_checkbox->base.s_padding_bottom;
-
 	p_checkbox->base.s_prefered_height = i_prefered_height;
 
 	return i_prefered_height;
@@ -346,6 +356,10 @@ extern void hcheckbox_delete(HCheckBox *p_checkbox)
 /* delete HCheckBox global operatons */
 extern void hcheckbox_ops_delete()
 {
+#ifdef H_DEBUG
+	vm_log_debug("hcheckbox_ops_delete");
+#endif
+
 	if (p_base_ops)
 		vm_free(p_base_ops);
 

@@ -57,10 +57,11 @@ HPlane * hplane_new()
 	// new ph->p_content
 	ph->p_content = hcontainer_new();
 	((HWidget *)ph->p_content)->p_parent = (HContainer *)ph;
-	hlist_append(((HContainer *)ph)->p_children, ph->p_content, NULL);
+	vector_append_data(((HContainer *)ph)->p_children, ph->p_content);
 // 	pw = (HWidget *)ph->p_content;
 // 	pw->p_widget_ops->set_max_width(pw, s_screen_width);
 // 	pw->p_widget_ops->set_max_height(pw, s_screen_height);
+	ph->i_handle = -1;
 	
 #ifdef H_DEBUG
 	pw = (HWidget *)ph;
@@ -73,12 +74,23 @@ HPlane * hplane_new()
 
 static void reset_plane_child_height(HPlane *p_plane)
 {
-	short s_h = ((HWidget *)p_plane)->p_widget_ops->get_max_height((HWidget *)p_plane);
-	if (p_plane->p_top_widget)
-		s_h -= p_plane->p_top_widget->p_widget_ops->get_prefered_height(p_plane->p_top_widget);
-	if (p_plane->p_bottom_widget)
-		s_h -= p_plane->p_bottom_widget->p_widget_ops->get_prefered_height(p_plane->p_bottom_widget);
-	((HWidget *)p_plane->p_content)->p_widget_ops->set_max_height((HWidget *)p_plane->p_content, s_h);
+	short s_tmp_h1 = 0;
+	short s_tmp_h2 = 0;
+	if (p_plane->p_top_widget) {
+		p_plane->p_top_widget->p_widget_ops->validate(p_plane->p_top_widget);
+		s_tmp_h1 = p_plane->p_top_widget->s_height;
+		if (p_plane->p_top_widget->s_width< window->s_screen_width)
+			p_plane->p_top_widget->s_width = window->s_screen_width;
+	}
+	if (p_plane->p_bottom_widget) {
+		p_plane->p_bottom_widget->p_widget_ops->validate(p_plane->p_bottom_widget);
+		s_tmp_h2 = p_plane->p_bottom_widget->s_height;
+		p_plane->p_bottom_widget->s_top_y = window->s_screen_height - s_tmp_h2;
+		if (p_plane->p_bottom_widget->s_width < window->s_screen_width)
+			p_plane->p_bottom_widget->s_width = window->s_screen_width;
+	}
+	((HWidget *)p_plane->p_content)->s_top_y = s_tmp_h1;
+	((HWidget *)p_plane->p_content)->p_widget_ops->set_max_height((HWidget *)p_plane->p_content, window->s_screen_height - s_tmp_h1 - s_tmp_h2);
 }
 
 static void set_top_widget(HPlane *p_plane, HWidget *p_widget)
@@ -89,12 +101,14 @@ static void set_top_widget(HPlane *p_plane, HWidget *p_widget)
 		return;
 
 	if (p_plane->p_top_widget) {
-		hlist_remove(((HContainer *)p_plane)->p_children, p_plane->p_top_widget);
-		p_plane->p_top_widget->p_widget_ops->destroy(p_plane->p_top_widget);
+		vector_remove_data(p_plane->base.p_children, p_plane->p_top_widget);
 	}
 	p_plane->p_top_widget = p_widget;
-	if (p_widget)
-		hlist_insert(((HContainer *)p_plane)->p_children, p_widget, 0, NULL);
+	if (p_widget) {
+		vector_insert_data(((HContainer *)p_plane)->p_children, 0, p_widget);
+		p_widget->p_parent = (HContainer *)p_plane;
+		p_widget->s_top_x = p_widget->s_top_y = 0;
+	}
 	reset_plane_child_height(p_plane);
 }
 
@@ -105,12 +119,13 @@ static void set_bottom_widget(HPlane *p_plane, HWidget *p_widget)
 	if (p_plane->p_bottom_widget == p_widget)
 		return;
 	if (p_plane->p_bottom_widget) {
-		hlist_remove(((HContainer *)p_plane)->p_children, p_plane->p_bottom_widget);
-		p_plane->p_top_widget->p_widget_ops->destroy(p_plane->p_top_widget);
+		vector_remove_data(p_plane->base.p_children, p_plane->p_bottom_widget);
 	}
 	p_plane->p_bottom_widget = p_widget;
-	if (p_widget)
-		hlist_append(((HContainer *)p_plane)->p_children, p_widget, NULL);
+	if (p_widget) {
+		vector_append_data(((HContainer *)p_plane)->p_children, p_widget);
+		p_widget->p_parent = (HContainer *)p_plane;
+	}
 	reset_plane_child_height(p_plane);
 }
 
@@ -170,7 +185,7 @@ static void hplane_remove_widget(HPlane *p_plane, HWidget *p_widget)
 	if (p_widget == p_plane->p_own_focus_widget)
 		p_plane->p_own_focus_widget = NULL;
 	p_cnt->p_container_ops->remove_widget(p_cnt, p_widget);
-	if (p_cnt->p_children->p_next == p_cnt->p_children) {
+	if (p_cnt->p_children->i_size == 0) {
 		//there have no child widget any more
 		hplane_reset_content(p_cnt);
 	}
@@ -183,12 +198,19 @@ static void hplane_remove_all(HPlane *p_plane)
 	p_cnt->p_container_ops->remove_all(p_cnt);
 	hplane_reset_content(p_cnt);
 	p_plane->p_own_focus_widget = NULL;
+	set_top_widget(p_plane, NULL);
+	set_bottom_widget(p_plane, NULL);
 }
 
 static void hplane_validate(HWidget *p_widget)
 {
 	HPlane *p_plane = (HPlane *)p_widget;
+	short s_mw = ((HWidget *)p_plane->p_content)->p_widget_ops->get_max_width((HWidget *)p_plane->p_content);
 	((HWidget *)p_plane->p_content)->p_widget_ops->validate((HWidget *)p_plane->p_content);
+
+	if (p_plane->p_content->base.s_width < s_mw) {
+		((HWidget *)p_plane->p_content)->s_width = s_mw;
+	}
 }
 
 static void hplane_add_key_down(HPlane *p_plane, HWidget *p_from_widget, HWidget *p_to_widget)
@@ -228,18 +250,25 @@ static HPoint old_widget_pos;
 static HPoint old_screen_pos;
 static char has_been_moved_out;
 
+#define  _max_(a,b) (a > b ? a : b)
+#define  _min_(a,b) (a < b ? a : b)
+
 static HWidget *child_at_recursive(HContainer *p_c, short s_x, short s_y)
 {
 	HWidget *pw;
-	hlist_node_t *pn;
+	VectorNode *pn;
+	short s_mw, s_mh;
 	s_x -= ((HWidget *)p_c)->s_padding_left;
 	s_y -= ((HWidget *)p_c)->s_padding_top;
 	s_x -= p_c->s_translate_x;
 	s_y -= p_c->s_translate_y;
-	hlist_for_each(pn, p_c->p_children) {
+//	plist = p_c->p_layout ? p_c->p_layout->p_widget_list : p_c->p_children;
+	vector_for_each(pn, p_c->p_children) {
 		pw = (HWidget *)pn->pv_data;
+		s_mw = pw->p_widget_ops->get_max_width(pw);
+		s_mh = pw->p_widget_ops->get_max_height(pw);
 		if (pw->s_top_x <= s_x && pw->s_top_y <= s_y && 
-			pw->s_top_x + pw->s_width >= s_x && pw->s_top_y + pw->s_height >= s_y) {
+			pw->s_top_x + _min_(pw->s_width, s_mw) >= s_x && pw->s_top_y + _min_(pw->s_height, s_mh) >= s_y) {
 			if (pw->p_widget_ops->is_container(pw)) {
 				return child_at_recursive((HContainer *)pw, s_x - pw->s_top_x, s_y - pw->s_top_y);
 			} else {
@@ -369,10 +398,10 @@ static void hplane_pen_move(HWidget *p_widget, short s_x, short s_y)
 		try_scroll(s_dx, s_dy);
 		return;
 	}
-	if (p_cur_press_widget->s_top_x <= old_widget_pos.s_x &&
-		p_cur_press_widget->s_top_y <= old_widget_pos.s_y &&
-		p_cur_press_widget->s_width >= old_widget_pos.s_x &&
-		p_cur_press_widget->s_height >= old_widget_pos.s_y) {
+	if (0 <= old_widget_pos.s_x &&
+		0 <= old_widget_pos.s_y &&
+		_min_(p_cur_press_widget->s_width, p_cur_press_widget->s_max_width) >= old_widget_pos.s_x &&
+		_min_(p_cur_press_widget->s_height, p_cur_press_widget->s_max_height) >= old_widget_pos.s_y) {
 		if (has_been_moved_out) {
 			has_been_moved_out = 0;
 			p_cur_press_widget->p_widget_ops->pen_enter(p_cur_press_widget, old_widget_pos.s_x, old_widget_pos.s_y);
@@ -398,11 +427,11 @@ static HWidget * find_next_enable_focus_widget(HPlane *p_plane, int i_dir)
 	KeyFocusNode *p_node = NULL;
 	HWidget *pw = NULL, *pw2;
 	HContainer *pc;
-	hlist_node_t *pn;
+	VectorNode *pn;
 	short s_dx1, s_dy1, s_dx2, s_dy2;
 	if (i_dir == VM_KEY_DOWN || i_dir == VM_KEY_UP)
 		p_node = p_plane->p_key_down_head;
-	else 
+	else
 		p_node = p_plane->p_key_right_head;
 	for (; p_node; p_node = p_node->p_next) {
 		if (i_dir == VM_KEY_DOWN || i_dir == VM_KEY_RIGHT) {
@@ -423,7 +452,8 @@ static HWidget * find_next_enable_focus_widget(HPlane *p_plane, int i_dir)
 #define _abs_(a) (a>0? a : -a)
 	//not find then ,find by relative position int the same container
 	pc = p_plane->p_own_focus_widget->p_parent;
-	hlist_for_each(pn, pc->p_children) {
+//	plist = pc->p_layout ? pc->p_layout->p_widget_list : pc->p_children;
+	vector_for_each(pn, pc->p_children) {
 		pw2 = (HWidget *)pn->pv_data;
 		if (!pw2->p_widget_ops->is_visible(pw2) || !pw2->p_widget_ops->is_enable_focus(pw2))
 			continue;
@@ -458,14 +488,14 @@ static HWidget * find_next_enable_focus_widget(HPlane *p_plane, int i_dir)
 				}
 				break;
 
-			case VM_KEY_EVENT_UP:
+			case VM_KEY_UP:
 				if (pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y < 0) {
 					if (pw) {
 						s_dx1 = _abs_(pw->s_top_x - p_plane->p_own_focus_widget->s_top_x);
 						s_dy1 = _abs_(pw->s_top_y - p_plane->p_own_focus_widget->s_top_y);
 						s_dx2 = _abs_(pw2->s_top_x - p_plane->p_own_focus_widget->s_top_x);
 						s_dy2 = _abs_(pw2->s_top_y - p_plane->p_own_focus_widget->s_top_y);
-						if (s_dx1 + s_dy1 < s_dx2 + s_dy2)
+						if (s_dx1 + s_dy1 > s_dx2 + s_dy2)
 							pw = pw2;
 					} else {
 						pw = pw2;
@@ -506,12 +536,18 @@ static void hplane_key_press(HWidget *p_widget, int i_keycode)
 			} else {
 				pw = find_next_enable_focus_widget(p_plane, i_keycode);
 				if (pw) {
+					
 					p_plane->p_own_focus_widget->p_widget_ops->set_focus(p_plane->p_own_focus_widget, 0);
-					p_plane->p_own_focus_widget->p_widget_ops->focus_changed(p_plane->p_own_focus_widget, 0);
+					if (p_plane->p_own_focus_widget->p_widget_ops->focus_changed) {
+						p_plane->p_own_focus_widget->p_widget_ops->focus_changed(p_plane->p_own_focus_widget, 0);
+					}
 					p_plane->p_own_focus_widget->p_widget_ops->repaint(p_plane->p_own_focus_widget);
+					
 					p_plane->p_own_focus_widget = pw;
 					pw->p_widget_ops->set_focus(pw, 1);
-					pw->p_widget_ops->focus_changed(pw, 1);
+					if (pw->p_widget_ops->focus_changed) {
+						pw->p_widget_ops->focus_changed(pw, 1);
+					}
 					pw->p_widget_ops->repaint(pw);
 				}
 			}
@@ -588,6 +624,7 @@ static void hplane_key_repeat(HWidget *p_widget, int i_keycode)
 	}
 }
 
+
 static void hplane_paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y)
 {
 	HPlane *p_plane = (HPlane *)p_widget;
@@ -604,6 +641,10 @@ static void hplane_paint(HWidget *p_widget, int i_handle, short s_screen_x, shor
 			break;
 		}
 	}
+	window->cur_clip_rect.s_x = 0;
+	window->cur_clip_rect.s_y = 0;
+	window->cur_clip_rect.s_width = window->s_screen_width;
+	window->cur_clip_rect.s_height = window->s_screen_height;
 	hcontainer_paint_PF(p_widget, i_handle, s_screen_x, s_screen_y);
 }
 

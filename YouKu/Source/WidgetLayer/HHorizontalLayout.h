@@ -25,7 +25,7 @@ typedef struct _HHorizontalLayout
 
 HHorizontalLayout* hhorizontal_layout_new();
 
-void hhorizontal_layout_delete(HHorizontalLayout* p_hori_layout);
+void hhorizontal_layout_delete(HLayout* p_hori_layout);
 
 #endif
 /*********************EOF******************************/

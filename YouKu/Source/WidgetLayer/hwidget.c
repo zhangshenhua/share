@@ -9,6 +9,7 @@
 #include "vmsys.h"
 #include "string.h"
 #include "vmgraph.h"
+#include "vector.h"
 
 #include "hwidget.h"
 #include "hcontainer.h"
@@ -284,7 +285,7 @@ static short get_max_height(HWidget *p_widget)
 		if (p_widget->p_parent) {
 			p = (HWidget *)p_widget->p_parent;
 			p_widget->s_max_height = p->p_widget_ops->get_max_height(p) - 
-				p->s_padding_top - p->s_padding_bottom - p_widget->s_top_y;
+				p->s_padding_top - p->s_padding_bottom;
 		}
 	}
 	return p_widget->s_max_height;
@@ -325,8 +326,76 @@ static void set_padding_bottom(HWidget *p_widget, unsigned char s_padding_bottom
 	p_widget->s_padding_bottom = s_padding_bottom;
 }
 
-/*paint the widget*/
-//static void paint(HWidget *p_widget, int i_handle, short s_screen_x, short s_screen_y);
+/*translate the widget point to screen point, if the p_widget is not in a HPlane, then return Point{-1,-1}*/
+static HPoint get_screen_point(HWidget *p_widget, short s_x, short s_y)
+{
+	HPoint point;
+	point.s_x = s_x + p_widget->s_top_x;
+	point.s_y = s_y + p_widget->s_top_y;
+	if (p_widget->p_widget_ops->is_plane(p_widget)) {
+		return point;
+	}
+	for (p_widget = (HWidget *)p_widget->p_parent; p_widget && p_widget->p_parent; p_widget = (HWidget *)p_widget->p_parent) {
+		point.s_x += p_widget->s_top_x + ((HContainer *)p_widget)->s_translate_x + p_widget->s_padding_left;
+		point.s_y += p_widget->s_top_y + ((HContainer *)p_widget)->s_translate_y + p_widget->s_padding_top;
+	}
+	if (p_widget->p_widget_ops->is_plane(p_widget)) {
+		return point;
+	}
+	//the p_widet is not in a HPlane
+	point.s_x = -1;
+	point.s_y = -1;
+	return point;
+}
+
+HRect calc_intersect_clip(HRect *r1, HRect *r2) {
+	HRect rect = {0};
+	if ( (r2->s_x >= r1->s_x + r1->s_width) || (r2->s_x + r2->s_width <= r1->s_x) 
+		|| (r2->s_y >= r1->s_y + r1->s_height) || (r2->s_y + r2->s_height <= r1->s_y)) {
+			return rect;
+	}
+	rect.s_x = (r2->s_x >= r1->s_x) ? (r2->s_x) : (r1->s_x);
+	rect.s_y = (r2->s_y >= r1->s_y) ? (r2->s_y) : (r1->s_y);
+	rect.s_width = ((r2->s_x + r2->s_width <= r1->s_x + r1->s_width) ? (r2->s_x + r2->s_width) : (r1->s_x + r1->s_width)) - rect.s_x;
+	rect.s_height = ((r2->s_y + r2->s_height <= r1->s_y + r1->s_height) ? (r2->s_y + r2->s_height) : (r1->s_y + r1->s_height)) - rect.s_y;
+	return rect;
+}
+
+#define  _min_(a,b) ((a) < (b) ? (a) : (b))
+
+static HRect calc_repaint_clip(HWidget *p_widget)
+{
+	HRect rect = {0};
+	HRect r1, r2;
+	HWidget *p_parent;
+	Vector *p_vec;
+	VectorNode *p_pos, *p_n;
+	HPoint point;
+	r1.s_x = r1.s_y = 0;
+	r1.s_width = window->s_screen_width;
+	r1.s_height = window->s_screen_height;
+	p_vec = hwidget_new_vector();
+	vector_append_data(p_vec, p_widget);
+	for (p_parent = (HWidget *)p_widget->p_parent; p_parent; p_parent = (HWidget *)p_parent->p_parent) {
+		vector_append_data(p_vec, p_parent);
+	}
+	vector_for_each_reverse(p_pos, p_vec) {
+		p_parent = (HWidget *)p_pos->pv_data;
+		point = get_screen_point(p_parent, 0, 0);
+		r2.s_x = point.s_x;
+		r2.s_y = point.s_y;
+		r2.s_width = _min_(p_parent->s_width, p_parent->s_max_width);
+		r2.s_height = _min_(p_parent->s_height, p_parent->s_max_height);
+		rect = calc_intersect_clip(&r1, &r2);
+		r1 = rect;
+	}
+	vector_for_each_safe(p_pos, p_n, p_vec) {
+		vector_take_down(p_vec, p_pos);
+		vm_free(p_pos);
+	}
+	vm_free(p_vec);
+	return rect;
+}
 
 /*only repaint the widget itself*/
 static void repaint(HWidget *p_widget)
@@ -336,13 +405,38 @@ static void repaint(HWidget *p_widget)
 	int i_bgcolor_enable;
 	int i_bgcolor;
 	short  i_idx, i_count;
+	HRect clip_rect;
 	p = p_widget->p_widget_ops->get_screen_point(p_widget, 0, 0);
 	i_handles[0] = p_widget->p_widget_ops->get_paint_handle(p_widget);
 	i_bgcolor_enable = p_widget->p_widget_ops->is_enable_bgcolor(p_widget);
 	if (!i_bgcolor_enable /*&& !p_widget->p_widget_ops->is_container(p_widget)*/) {
 		i_bgcolor = p_widget->p_widget_ops->get_default_bgcolor(p_widget);
 		//TODO: use i_bgcolor to fill a rect(p_widget->s_width,p_widget->s_height) at position p
-		vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handles[0]), p.s_x, p.s_y, p_widget->s_width, p_widget->s_height, i_bgcolor, i_bgcolor);
+		if (p_widget->p_parent) {
+			clip_rect = calc_repaint_clip((HWidget *)p_widget->p_parent);
+			window->cur_clip_rect = clip_rect;
+			clip_rect.s_x = p.s_x;
+			clip_rect.s_y = p.s_y;
+			clip_rect.s_width = _min_(p_widget->s_width, p_widget->s_max_width);
+			clip_rect.s_height = _min_(p_widget->s_height, p_widget->s_max_height);
+			clip_rect = calc_intersect_clip(&clip_rect, &window->cur_clip_rect);
+			vm_graphic_fill_rect(vm_graphic_get_layer_buffer(i_handles[0]), clip_rect.s_x, clip_rect.s_y, clip_rect.s_width, clip_rect.s_height, i_bgcolor, i_bgcolor);
+		} else {
+			window->cur_clip_rect.s_x = 0;
+			window->cur_clip_rect.s_y = 0;
+			window->cur_clip_rect.s_width = window->s_screen_width;
+			window->cur_clip_rect.s_height = window->s_screen_height;
+		}
+	} else {
+		if (p_widget->p_parent) {
+			clip_rect = calc_repaint_clip((HWidget *)p_widget->p_parent);
+			window->cur_clip_rect = clip_rect;
+		} else {
+			window->cur_clip_rect.s_x = 0;
+			window->cur_clip_rect.s_y = 0;
+			window->cur_clip_rect.s_width = window->s_screen_width;
+			window->cur_clip_rect.s_height = window->s_screen_height;
+		}
 	}
 	p_widget->p_widget_ops->paint(p_widget, i_handles[0], p.s_x, p.s_y);
 	//TODO: flush the screen
@@ -379,27 +473,6 @@ static void invalidate(HWidget *p_widget)
 	p_widget->s_prefered_height = 0;
 }
 
-/*translate the widget point to screen point, if the p_widget is not in a HPlane, then return Point{-1,-1}*/
-static HPoint get_screen_point(HWidget *p_widget, short s_x, short s_y)
-{
-	HPoint point;
-	point.s_x = s_x + p_widget->s_top_x;
-	point.s_y = s_y + p_widget->s_top_y;
-	if (p_widget->p_widget_ops->is_plane(p_widget)) {
-		return point;
-	}
-	for (p_widget = (HWidget *)p_widget->p_parent; p_widget && p_widget->p_parent; p_widget = (HWidget *)p_widget->p_parent) {
-		point.s_x += p_widget->s_top_x + ((HContainer *)p_widget)->s_translate_x + p_widget->s_padding_left;
-		point.s_y += p_widget->s_top_y + ((HContainer *)p_widget)->s_translate_y + p_widget->s_padding_top;
-	}
-	if (p_widget->p_widget_ops->is_plane(p_widget)) {
-		return point;
-	}
-	//the p_widet is not in a HPlane
-	point.s_x = -1;
-	point.s_y = -1;
-	return point;
-}
 
 /*when the widget size(width/height) change call it to notify parent recalculate its size*/
 static void notify_size_changed(HWidget *p_widget)
@@ -645,4 +718,16 @@ void hwidget_ops_delete()
 {
 	if (gp_widget_ops)
 		vm_free(gp_widget_ops);
+}
+
+static void vector_destroy(void *pv_data)
+{
+	((HWidget *)pv_data)->p_widget_ops->destroy((HWidget *)pv_data);
+}
+
+Vector * hwidget_new_vector()
+{
+	Vector *p_vec;
+	p_vec = vector_new(vector_destroy);
+	return p_vec;
 }

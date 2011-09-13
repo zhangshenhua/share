@@ -6,6 +6,9 @@
 ****************************************************************/
 
 #include "htextinput.h"
+#include "hcheckbox.h"
+#include "hplane.h"
+#include "../WindowLayer/hwindow.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -130,16 +133,11 @@ void htextinput_input_method_callback(VMINT state, VMWSTR str)
 	vm_free(p_buf);
 
 	p_textinput_buf->base.p_widget_ops->repaint((HWidget *)p_textinput_buf);
-
-	/* call user's action */
-	if (p_textinput_buf->base.action_performed)
-		p_textinput_buf->base.action_performed((HWidget *)p_textinput_buf, NULL);
-
 	p_textinput_buf = NULL;
 }
 
 /* Call input method by HTextInput */
-static void call_input_method(HTextInput *p_textinput)
+static void htextinput_call_input_method(HTextInput *p_textinput)
 {
 	VMWSTR str;
 
@@ -164,73 +162,153 @@ static void call_input_method(HTextInput *p_textinput)
 static void htextinput_pen_press(HWidget *p_widget, short s_x, short s_y)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+	HPenEvent pen_event;
 
 #ifdef H_DEBUG
 	vm_log_debug("htextinput_pen_press");
 #endif // H_DEBU
 
-	/* check enable state */
-	if (!p_textinput->base.p_widget_ops->is_enable(p_widget))
-		return;
-
-	/* check focus and set focus */
-	if (p_textinput->base.p_widget_ops->is_enable_focus(p_widget))
-		p_textinput->base.p_widget_ops->set_focus(p_widget, 1);
-
 	/* record x axis of tap pointer as moving start */
 	s_move_from_x = s_x;
 
-	p_textinput->base.p_widget_ops->repaint(p_widget);
+	/* call pen press action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_TAP;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, (HEvent *)&pen_event, NULL);
 }
 
 /* Pen release event callback */
 static void htextinput_pen_release(HWidget *p_widget, short s_x, short s_y)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+	HPenEvent pen_event;
 
 #ifdef H_DEBUG
 	vm_log_debug("htextinput_pen_release");
 #endif // H_DEBU
+	
+	/* repaint focus effect */
+	p_textinput->base.p_widget_ops->repaint(p_widget);
 
-	if (!p_textinput->base.p_widget_ops->is_enable(p_widget))
-		return;
+	/* call pen release action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_RELEASE;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, (HEvent *)&pen_event, NULL);
 }
 
 /* Pen move event callback */
 static void htextinput_pen_move(HWidget *p_widget, short s_x, short s_y)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+	HPenEvent pen_event;
+	int i_move = 0;
 
 #ifdef H_DEBUG
 	vm_log_debug("htextinput_pen_move");
 #endif // H_DEBU
 
 	/* get HTextInput's text x axis moving offset */
-	if ((s_x - s_move_from_x) > 2)
-		p_textinput->s_move_offset += 2;
-
-	if ((s_x - s_move_from_x) < -2)
-		p_textinput->s_move_offset -= 2;
-
+	p_textinput->s_move_offset += s_x - s_move_from_x;
 	s_move_from_x = s_x;
+	p_textinput->s_move_offset = p_textinput->s_move_offset > 0 ? 0 : p_textinput->s_move_offset;
+
 	p_widget->p_widget_ops->repaint(p_widget);
+
+	/* call pen move action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_MOVE;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, (HEvent *)&pen_event, NULL);
+}
+
+/* pen double click callback*/
+static void htextinput_pen_double_click(HWidget *p_widget, short s_x, short s_y)
+{
+	HTextInput *p_textinput = (HTextInput *)p_widget;
+	HPenEvent pen_event;
+
+	htextinput_call_input_method((HTextInput *)p_widget);
+
+	/* call pen double click action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_DOUBLE_CLICK;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, (HEvent *)&pen_event, NULL);
+}
+
+/* select input method callback */
+static void select_input_action(HWidget *p_widget, HEvent *p_event, void *para)
+{
+	HPlane *p_plane = window->get_popupmenu_plane();
+
+	p_plane->p_plane_ops->remove_widget(p_plane, p_widget);
+
+	((HWidget *)p_plane)->p_widget_ops->set_visible((HWidget *)p_plane, 0);
+	window->repaint();
+}
+
+/* pen long tap callback call popup menu to select input method */
+static void htextinput_pen_long_tap(HWidget *p_widget, short s_x, short s_y)
+{
+	HTextInput *p_textinput = (HTextInput *)p_widget;
+	HCheckBox *p_checkbox = hcheckbox_new("select input method");
+	HPlane *p_plane = window->get_popupmenu_plane();
+	HPenEvent pen_event;
+
+	p_plane->p_plane_ops->add_widget(p_plane, (HWidget *)p_checkbox);
+	p_checkbox->base.p_widget_ops->set_enable_bgcolor((HWidget *)p_checkbox, 1);
+	p_checkbox->base.p_widget_ops->set_bgcolor((HWidget *)p_checkbox, VM_COLOR_GREEN);
+
+	p_checkbox->base.s_top_x = (vm_graphic_get_screen_width() - p_checkbox->base.p_widget_ops->get_width((HWidget *)p_checkbox)) / 2;
+	p_checkbox->base.s_top_y = (vm_graphic_get_screen_height() - p_checkbox->base.p_widget_ops->get_height((HWidget *)p_checkbox)) / 2;
+
+	p_checkbox->base.action_performed = select_input_action;
+	((HWidget *)p_plane)->p_widget_ops->set_visible((HWidget *)p_plane, 1);
+	p_plane->p_content->base.p_widget_ops->invalidate((HWidget *)p_plane->p_content);
+	window->validate();
+	window->repaint();
+
+	/* call pen long tap action callback function */
+	pen_event.base.i_event_type = VM_PEN_EVENT_LONG_TAP;
+	pen_event.s_x = s_x;
+	pen_event.s_y = s_y;
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, (HEvent *)&pen_event, NULL);
 }
 
 /* Keyboard press event callback */
 static void htextinput_key_press(HWidget *p_widget, int keycode)
 {
 	HTextInput *p_textinput = (HTextInput *)p_widget;
+	HKeyEvent key_event;
 
 #ifdef H_DEBUG
 	vm_log_debug("htextinput_key_press");
 #endif // H_DEBU
 
-	if (!p_textinput->base.p_widget_ops->is_enable(p_widget))
-		return;
-
 	/* if keycode is ok , call input method */
 	if (VM_KEY_OK == keycode)
-		call_input_method(p_textinput);
+		htextinput_call_input_method(p_textinput);
+
+	if (VM_KEY_LEFT == keycode) {
+		p_textinput->s_move_offset -= 2;
+	}
+
+	if (VM_KEY_RIGHT == keycode) {
+		p_textinput->s_move_offset += 2;
+	}
+
+	/* call key down action callback function */
+	key_event.base.i_event_type = VM_KEY_DOWN;
+	key_event.i_keycode = keycode;
+	if (p_textinput->base.action_performed)
+		p_textinput->base.action_performed((HWidget *)p_textinput, (HEvent *)&key_event, NULL);
 }
 
 /* Whether the HCheckBox is a container */
@@ -360,6 +438,8 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 		p_base_ops->pen_press = htextinput_pen_press;
 		p_base_ops->pen_release = htextinput_pen_release;
 		p_base_ops->pen_move = htextinput_pen_move;
+		p_base_ops->pen_double_click = htextinput_pen_double_click;
+		p_base_ops->pen_long_tap = htextinput_pen_long_tap;
 		p_base_ops->key_press = htextinput_key_press;
 		p_base_ops->is_container = htextinput_is_container;
 		p_base_ops->is_plane = htextinput_is_plane;
@@ -378,6 +458,7 @@ extern HTextInput * htextinput_new(int i_is_password, int i_input_method)
 	p_textinput->p_textinput_ops = p_textinput_ops;
 	p_textinput->base.p_widget_ops = p_base_ops;
 	p_textinput->base.action_performed = NULL;
+	p_textinput->s_move_offset = 0;
 
 	/* init HWiget attr */
 	p_textinput->base.s_padding_left = 4;
@@ -406,6 +487,10 @@ extern void textinput_delete(HTextInput *p_textinput)
 /* delete HTextInput global operations */
 extern void htextinput_ops_delete()
 {
+#ifdef H_DEBUG
+	vm_log_debug("htextinput_ops_delete");
+#endif // H_DEBUG
+
 	if (p_textinput_ops)
 		vm_free(p_textinput_ops);
 	if (p_base_ops)
